@@ -1,0 +1,99 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
+
+apply plugin: 'com.github.dcendents.android-maven'
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 4
+        versionName "1.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets.main {
+        jniLibs.srcDir 'src/main/libs'
+        jni.srcDirs = [] //disable automatic ndk-build call
+    }
+}
+// 配置GreenDao基本参数
+greendao {
+    schemaVersion 1 //当前数据库版本
+    // 生成文件包名（一般为app包名+生成文件的文件夹名）
+//    daoPackage 'com.garyliang.greendao.gen'
+
+    //生成文件路径
+//    targetGenDir 'src/main/java'
+}
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    /**
+     *
+     * 沉浸状态栏
+     * */
+    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
+    compile 'com.android.support:design:28.1.1'
+    /**
+     * 注解
+     */
+    compile('com.jakewharton:butterknife:10.0.0') {
+        exclude group: 'com.android.support'
+    }
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+    compile 'org.greenrobot:eventbus:3.1.1'
+    compile 'com.android.support:support-dynamic-animation:28.1.1'
+    /**
+     * 上下拉刷新
+     */
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:+'
+    compile 'io.reactivex.rxjava2:rxjava:2.2.2'
+    compile 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    /**
+     * 数据库
+     */
+    compile 'org.greenrobot:greendao:3.2.2'
+    /*rx-android-java*/
+    compile 'com.trello:rxlifecycle:1.0'
+    compile 'com.trello:rxlifecycle-components:1.0'
+    /**
+     * rotrofit
+     */
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
+    compile 'net.zetetic:android-database-sqlcipher:3.5.9@aar'
+    /**
+     * 图片框架
+     */
+    //    compile 'com.facebook.fresco:fresco:1.11.0'
+    compile 'com.qmuiteam:qmui:+'
+    //    compile 'com.qmuiteam:arch:+'
+    //    compile 'com.qmuiteam:qmuilint:+'
+    compile 'com.hjq:toast:3.0'
+    /**
+     *  图片框架
+     */
+    compile 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <dimen name="text_size9">9sp</dimen>
+    <dimen name="text_size10">10sp</dimen>
+    <dimen name="text_size11">11sp</dimen>
+    <dimen name="text_size12">12sp</dimen>
+    <dimen name="text_size13">13sp</dimen>
+    <dimen name="text_size14">14sp</dimen>
+    <dimen name="text_size15">15sp</dimen>
+    <dimen name="text_size16">16sp</dimen>
+    <dimen name="text_size17">17sp</dimen>
+    <dimen name="text_size18">18sp</dimen>
+    <dimen name="text_size19">19sp</dimen>
+    <dimen name="text_size20">20sp</dimen>
+    <dimen name="text_size21">21sp</dimen>
+    <dimen name="text_size22">22sp</dimen>
+    <dimen name="text_size23">23sp</dimen>
+    <dimen name="text_size24">24sp</dimen>
+    <dimen name="text_size25">25sp</dimen>
+    <dimen name="text_size26">26sp</dimen>
+    <dimen name="text_size27">27sp</dimen>
+    <dimen name="text_size28">28sp</dimen>
+    <dimen name="text_size29">29sp</dimen>
+    <dimen name="text_size30">30sp</dimen>
+
+    <dimen name="text_size38">38sp</dimen>
+
+
+    <dimen name="item_height40">40dp</dimen>
+    <dimen name="item_height45">45dp</dimen>
+    <dimen name="item_height48">48dp</dimen>
+    <dimen name="item_height50">50dp</dimen>
+    <dimen name="item_height60">60dp</dimen>
+    <dimen name="item_height70">70dp</dimen>
+</resources>

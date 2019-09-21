@@ -1,0 +1,55 @@
+<resources>
+    <string name="ok_notifyTitle">prompt</string>
+    <string name="ok_notifyMsg">The current application lacks the necessary permissions。\n\nPlease click\"Setting\"-\"permissions\"-Open required permissions.</string>
+    <string name="ok_setting">Setting</string>
+    <string name="ok_cancel">Cancel</string>
+
+    <string name="main_net_error">Network connection failed</string>
+    <string name="webview_error">Check to see if the phone is connected to the network\n then tap the screen to reload</string>
+    <string name="main_service_error">Network access exception</string>
+    <string name="main_service_net_error">Access error code</string>
+
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_confim">Ok</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_exit">Exit</string>
+    <string name="btn_refresh">Refresh</string>
+    <string name="btn_submit">Submit</string>
+
+    <string name="main_process">processing</string>
+    <string name="main_process_success">Successful</string>
+    <string name="main_process_fail">Faile</string>
+    <string name="main_tologin">Logging</string>
+    <string name="main_tologin_success">Successful</string>
+    <string name="main_process_getting">Accessing information</string>
+    <string name="main_process_getting_fail">Acquisition failure</string>
+    <string name="main_loading">loading</string>
+
+    <string name="main_submit">processing</string>
+    <string name="main_submit_success">Successful</string>
+    <string name="main_submit_failed">Faile</string>
+
+    <string name="main_exit">Press exit procedure again</string>
+
+    <string name="head_protrait_setting">Head set</string>
+    <string name="useredit_photo_photograph">Taking pictures</string>
+    <string name="useredit_photo_albums">Album</string>
+    <string name="more_user_management_add_user_no_photo_ablbum">No photo album installed</string>
+    <string name="more_user_management_add_user_sd">No SD card</string>
+    <string name="more_user_management_no_show_drawable">Cannot display this type of image</string>
+    <string name="more_user_management_no_show_file">Cannot display this type file</string>
+    <string name="more_user_management_error">Failed to get file address</string>
+    <string name="error">Error</string>
+
+
+    <string name="tip_dialog_1">Your phone does not grant suspension window permission. Please try again after opening</string>
+    <string name="tip_dialog_2">Now go open</string>
+    <string name="tip_dialog_3">Not open at last</string>
+
+    <string name="tip_dialog_4">No data</string>
+    <string name="jurisdiction">No permission is given</string>
+
+
+    <string name="format_unit_price">¥ %s</string>
+</resources>
