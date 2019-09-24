@@ -1,8 +1,10 @@
-package com.zhifeng.wineculture;
+package com.zhifeng.wineculture.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.zhifeng.wineculture.R;
 
 public class MainActivity extends AppCompatActivity {
 
