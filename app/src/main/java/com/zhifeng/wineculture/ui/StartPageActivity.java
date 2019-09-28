@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lgh.huanglib.util.base.BaseActivity;
 import com.zhifeng.wineculture.R;
-import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.util.List;
 
@@ -53,6 +52,7 @@ public class StartPageActivity extends BaseActivity {
 //            jumpActivityNotFinish(this, GuidePageActivity.class);
 //            finish();
 //        }
+        startActivity(new Intent(this,MainActivity.class));
     }
 
     @Override

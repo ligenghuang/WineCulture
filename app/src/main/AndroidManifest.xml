@@ -20,6 +20,21 @@
         android:theme="@style/activity_theme">
         <activity android:name=".ui.my.AddAddressActivity"></activity>
         <activity android:name=".ui.my.AddressListActivity" />
+        <activity android:name=".ui.my.AboutWineCultureActivity" />
+        <activity android:name=".ui.my.MyCommentsActivity" />
+        <activity android:name=".ui.my.MyFootPrintActivity" />
+        <activity android:name=".ui.my.MyCollectActivity" />
+        <activity android:name=".ui.my.ProxyActivity" />
+        <activity android:name=".ui.my.PopularizeActivity" />
+        <activity android:name=".ui.my.MyTeamActivity" />
+        <activity android:name=".ui.my.MemberCenterActivity" />
+        <activity android:name=".ui.my.ServiceActivity" />
+        <activity android:name=".ui.my.ToBeCommentActivity" />
+        <activity android:name=".ui.my.ToBeReceivedActivity" />
+        <activity android:name=".ui.my.ToBeShippedActivity" />
+        <activity android:name=".ui.my.ObligationActivity" />
+        <activity android:name=".ui.my.MyOrderActivity" />
+        <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.StartPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
