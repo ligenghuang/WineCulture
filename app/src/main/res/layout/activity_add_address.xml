@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.my.AddAddressActivity">
+
+    <include layout="@layout/layout_title_black_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_f2"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingRight="15dp">
+
+                    <!--todo 收货人-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="@string/add_address_tab_1"
+                            android:textColor="@color/color_15"
+                            android:textSize="@dimen/text_size12"
+                            android:textStyle="bold" />
+
+
+                        <EditText
+                            android:id="@+id/et_consignee"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="@string/add_address_tab_2"
+                            android:textColor="@color/color_15"
+                            android:maxLength="10"
+                            android:textColorHint="@color/color_9"
+                            android:textSize="@dimen/text_size12" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_1" />
+
+                    <!--todo 联系电话-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="@string/add_address_tab_3"
+                            android:textColor="@color/color_15"
+                            android:textSize="@dimen/text_size12"
+                            android:textStyle="bold" />
+
+
+                        <EditText
+                            android:id="@+id/et_mobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="@string/add_address_tab_4"
+                            android:textColor="@color/color_15"
+                            android:inputType="phone"
+                            android:maxLength="11"
+                            android:textColorHint="@color/color_9"
+                            android:textSize="@dimen/text_size12" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_1" />
+
+                    <!--todo 收货地址-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="@string/add_address_tab_5"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
+                            android:textColor="@color/color_15"
+                            android:textSize="@dimen/text_size12"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/tv_district"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textColor="@color/color_15"
+                            android:textSize="@dimen/text_size12"
+                            android:textStyle="bold"
+                            android:gravity="center_vertical"
+                            android:hint="@string/add_address_tab_6"
+                            android:drawableRight="@drawable/icon_more"
+                            />
+
+
+
+                    </LinearLayout>
+
+                    <View style="@style/line_1" />
+
+                    <!--todo 详细地址-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="@string/add_address_tab_7"
+                            android:textColor="@color/color_15"
+                            android:textSize="@dimen/text_size12"
+                            android:textStyle="bold" />
+
+
+                        <EditText
+                            android:id="@+id/et_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:hint="@string/add_address_tab_8"
+                            android:textColor="@color/color_15"
+                            android:textColorHint="@color/color_9"
+                            android:textSize="@dimen/text_size12" />
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_address_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/selector_address_default"/>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_address_tab_10"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size12"
+                        android:textStyle="bold"/>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_address_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_address_tab_9"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/dp_10"
+                android:padding="15dp"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/shape_btn_save_bg"
+                android:gravity="center"/>
+
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -57,4 +57,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation project(':HuangLib')
     implementation 'cn.bingoogolapple:bga-banner:+'
+    implementation 'com.superluo:textbannerview:1.0.2'
 }

@@ -250,7 +250,8 @@ public abstract class BaseFragment extends RootFragment {
     }
 
     protected void showToast(String text) {
-        CustomToast.showToasts(getContext(), text);
+        ToastUtils.getToast().cancel();
+        ToastUtils.show(text);
     }
 
     protected void showToast(int text) {

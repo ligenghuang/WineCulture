@@ -18,6 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
+        <activity android:name=".ui.my.AddAddressActivity"></activity>
+        <activity android:name=".ui.my.AddressListActivity" />
         <activity android:name=".ui.StartPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
