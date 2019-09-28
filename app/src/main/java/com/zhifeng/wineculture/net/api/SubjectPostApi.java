@@ -3,7 +3,7 @@ package com.zhifeng.wineculture.net.api;
 import com.lgh.huanglib.retrofitlib.Api.BaseApi;
 import com.lgh.huanglib.retrofitlib.listener.HttpOnNextListener;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-import com.zhifeng.cattle.net.WebUrlUtil;
+import com.zhifeng.wineculture.net.WebUrlUtil;
 
 import retrofit2.Retrofit;
 import rx.Observable;

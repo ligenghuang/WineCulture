@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WineCulture</string>
+
+
+    <string name="main_tab_1">首页</string>
+    <string name="main_tab_2">分类</string>
+    <string name="main_tab_3">购物车</string>
+    <string name="main_tab_4">我的</string>
 </resources>
