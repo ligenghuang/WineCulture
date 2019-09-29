@@ -24,6 +24,8 @@ import butterknife.OnClick;
  */
 
 public class MyFragment extends UserBaseFragment<MyAction> {
+    @BindView(R.id.top_view)
+    View topView;
     @BindView(R.id.iv)
     ImageView iv;
     @BindView(R.id.tvName)
@@ -44,6 +46,7 @@ public class MyFragment extends UserBaseFragment<MyAction> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_fragment_my, container, false);
         ButterKnife.bind(this, view);
+        mImmersionBar.setStatusBarView(getActivity(), topView);
         return view;
     }
 

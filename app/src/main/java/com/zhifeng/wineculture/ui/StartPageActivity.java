@@ -52,7 +52,6 @@ public class StartPageActivity extends BaseActivity {
 //            jumpActivityNotFinish(this, GuidePageActivity.class);
 //            finish();
 //        }
-        startActivity(new Intent(this,MainActivity.class));
     }
 
     @Override

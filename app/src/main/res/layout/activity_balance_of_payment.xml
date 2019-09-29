@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="@string/balance_of_payment_tab_1"
+            android:text="@string/balance_of_payment_tab_2"
             android:textColor="@color/payment_text_selector"
             android:background="@drawable/selector_balance_of_payment"
             android:textSize="@dimen/text_size15"/>

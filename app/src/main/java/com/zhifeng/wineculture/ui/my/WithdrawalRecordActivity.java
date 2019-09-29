@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.WithdrawalRecordAction;
@@ -58,6 +59,30 @@ public class WithdrawalRecordActivity extends UserBaseActivity<WithdrawalRecordA
     protected WithdrawalRecordAction initAction() {
         return new WithdrawalRecordAction(this,this);
     }
+
+    @Override
+    protected void init() {
+        super.init();
+        mActicity = this;
+        mContext = this;
+    }
+
+    /**
+     * 初始化标题栏
+     */
+    @Override
+    protected void initTitlebar() {
+        mImmersionBar
+                .statusBarView(R.id.top_view)
+                .keyboardEnable(true)
+                .statusBarDarkFont(true, 0.2f)
+                .addTag("WithdrawalRecordActivity")  //给上面参数打标记，以后可以通过标记恢复
+                .navigationBarWithKitkatEnable(false)
+                .init();
+        toolbar.setNavigationOnClickListener(view -> finish());
+        fTitleTv.setText(ResUtil.getString(R.string.member_center_tab_6));
+    }
+
 
     @Override
     public void getWithdrawalRecord() {
