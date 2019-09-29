@@ -83,7 +83,7 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
                 .navigationBarWithKitkatEnable(false)
                 .init();
         toolbar.setNavigationOnClickListener(view -> finish());
-//        fTitleTv.setText(ResUtil.getString(R.string.my_tab_19));
+        fTitleTv.setText(ResUtil.getString(R.string.my_myaddress));
     }
 
     @Override

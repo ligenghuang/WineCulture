@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.my.BalanceActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="100dp"
+        android:background="@drawable/shape_my_top_bg">
+
+        <include layout="@layout/layout_title_white_bar"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="-90dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/icon_member_center_card_bg">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance_tab_1"
+            android:textSize="@dimen/text_size12"
+            android:textColor="@color/color_15"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥100.00"
+            android:textStyle="bold"
+            android:textColor="@color/color_cc1b21"
+            android:textSize="@dimen/text_size24"
+            android:layout_marginBottom="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance_tab_2"
+            android:textSize="@dimen/text_size12"
+            android:textColor="@color/color_6"
+            android:layout_marginBottom="@dimen/dp_10"/>
+
+        <TextView
+            android:id="@+id/tv_balance_opening_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_btn_save_bg"
+            android:text="@string/balance_tab_3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size13"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:paddingTop="7dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="7dp"
+            android:layout_marginBottom="12dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_balance_transfer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size15"
+        android:textColor="@color/white"
+        android:padding="15dp"
+        android:text="@string/balance_tab_4"
+        android:gravity="center"
+        android:background="@drawable/shape_btn_save_bg"/>
+
+    <TextView
+        android:id="@+id/tv_balance_withdrawal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size15"
+        android:textColor="@color/color_c99e5e"
+        android:padding="15dp"
+        android:text="@string/balance_tab_5"
+        android:gravity="center"
+        android:background="@drawable/shape_withdrawal_btn_bg"/>
+
+</LinearLayout>

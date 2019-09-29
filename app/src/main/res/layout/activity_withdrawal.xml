@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f2"
+    android:orientation="vertical"
+    tools:context=".ui.my.WithdrawalActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_my_top_bg"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_title_white_bar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_balance_withdrawal"
+                android:drawablePadding="6dp"
+                android:text="@string/balance_withdrawal_tab_1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size12"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_withdrawal_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="￥100.00"
+                android:textColor="@color/color_cc1b21"
+                android:textSize="@dimen/text_size18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_withdrawal_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="当日限额：2000"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size11"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/icon_member_center_card_bg"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance_withdrawal_tab_3"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size12" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/ll_pay_type_ali"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/selector_withdrawal_pay_type" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icon_balance_ali"
+                    android:drawablePadding="6dp"
+                    android:text="@string/balance_withdrawal_tab_4"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size12" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_pay_type_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/selector_withdrawal_pay_type" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/icon_balance_bank"
+                    android:drawablePadding="6dp"
+                    android:text="@string/balance_withdrawal_tab_5"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size12" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/et_withdrawal_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:drawableRight="@drawable/icon_more"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size11"
+            android:textColorHint="@color/color_9"
+            android:hint="@string/balance_withdrawal_tab_6"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/icon_member_center_card_bg"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance_withdrawal_tab_7"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size12" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textColor="@color/color_15"
+                android:textSize="@dimen/text_size12"
+                android:layout_marginRight="@dimen/dp_10"
+                />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="@dimen/dp_10"
+                android:background="@color/color_7d"
+                android:layout_marginRight="7dp"
+                />
+
+            <EditText
+                android:id="@+id/et_withdrawal_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:textSize="@dimen/text_size11"
+                android:textColor="@color/color_15"
+                android:textColorHint="@color/color_9"
+                android:inputType="numberDecimal"
+                android:hint="@string/balance_withdrawal_tab_8"/>
+
+            <TextView
+                android:id="@+id/tv_withdrawal_money_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:textColor="@color/color_006cff"
+                android:textSize="@dimen/text_size11"
+                android:text="@string/balance_withdrawal_tab_9"/>
+
+
+        </LinearLayout>
+
+        <View style="@style/line_1"/>
+
+        <TextView
+            android:id="@+id/tv_withdrawal_money_poundage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size12"
+            android:textColor="@color/color_15"
+            android:text="@string/balance_withdrawal_tab_10"
+            android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_withdrawal_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_btn_save_bg"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size15"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/balance_withdrawal_tab_11"/>
+
+</LinearLayout>

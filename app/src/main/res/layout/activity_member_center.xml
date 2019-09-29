@@ -1,9 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_f2"
     tools:context=".ui.my.MemberCenterActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_member_center_top_bg"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_title_white_bar"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/item_height40"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/icon_avatar"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_member_center_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="采蘑菇的小菇凉"
+                    android:textSize="@dimen/text_size15"
+                    android:textColor="@color/white"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_member_center_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:textColor="@color/white"
+                    android:text="13800000000"
+                    android:textSize="@dimen/text_size12"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_member_center_lever"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_level"
+                android:textSize="@dimen/text_size12"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="普通会员"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/icon_member_center_card_bg"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="-25dp"
+        android:padding="@dimen/dp_10">
+
+       <LinearLayout
+           android:id="@+id/ll_member_center_balance"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:gravity="center_vertical">
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/member_center_tab_1"
+               android:textColor="@color/color_e46910"
+               android:layout_marginRight="15dp"
+               android:textSize="@dimen/text_size12"/>
+
+           <TextView
+               android:id="@+id/tv_member_center_balance"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:text="￥100.00"
+               android:textSize="@dimen/text_size15"
+               android:textColor="@color/color_e46910"
+               android:textStyle="bold"/>
+
+           <ImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/icon_more"/>
+
+       </LinearLayout>
+
+
+        <View style="@style/line_1"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/dp_10">
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_member_center_can_use"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_member_center_can_use"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥100.00"
+                    android:textSize="@dimen/text_size15"
+                    android:textColor="@color/color_e46910"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/dp_10"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/member_center_tab_2"
+                    android:textColor="@color/color_e46910"
+                    android:textSize="@dimen/text_size12"/>
+
+
+            </LinearLayout>
+
+            <View
+                style="@style/line_2"/>
+
+            <LinearLayout
+                android:id="@+id/ll_member_center_to_be_determined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_member_center_to_be_determined"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥100.00"
+                    android:textSize="@dimen/text_size15"
+                    android:textColor="@color/color_e46910"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/dp_10"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/member_center_tab_3"
+                    android:textColor="@color/color_e46910"
+                    android:textSize="@dimen/text_size12"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_balance_of_payments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_member_center_text_bg"
+            android:padding="@dimen/dp_10"
+            android:text="@string/member_center_tab_4"
+            android:drawableLeft="@drawable/icon_balance_of_payments"
+            android:drawablePadding="@dimen/dp_10"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size15"
+            android:layout_marginBottom="@dimen/dp_10"
+            />
+
+        <TextView
+            android:id="@+id/tv_transfer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_member_center_text_bg"
+            android:padding="@dimen/dp_10"
+            android:text="@string/member_center_tab_5"
+            android:drawableLeft="@drawable/icon_transfer"
+            android:drawablePadding="@dimen/dp_10"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size15"
+            android:layout_marginBottom="@dimen/dp_10"
+            />
+
+        <TextView
+            android:id="@+id/tv_withdrawal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_member_center_text_bg"
+            android:padding="@dimen/dp_10"
+            android:text="@string/member_center_tab_6"
+            android:drawableLeft="@drawable/icon_withdrawal"
+            android:drawablePadding="@dimen/dp_10"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size15"
+            android:layout_marginBottom="@dimen/dp_10"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

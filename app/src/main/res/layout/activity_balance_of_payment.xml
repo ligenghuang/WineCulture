@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.my.BalanceOfPaymentActivity">
+
+    <include layout="@layout/layout_title_black_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height45"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_tab_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/payment_text_selector"
+            android:text="@string/balance_of_payment_tab_1"
+            android:background="@drawable/selector_balance_of_payment"
+            android:textSize="@dimen/text_size15"/>
+
+        <TextView
+            android:id="@+id/tv_tab_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/balance_of_payment_tab_1"
+            android:textColor="@color/payment_text_selector"
+            android:background="@drawable/selector_balance_of_payment"
+            android:textSize="@dimen/text_size15"/>
+
+    </LinearLayout>
+
+    <com.lgh.huanglib.util.cusview.CustomViewPager
+        android:id="@+id/my_pager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>

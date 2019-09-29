@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/dp_10"
+        android:gravity="center_vertical">
+
+
+        <ImageView
+            android:id="@+id/iv_item_avatar"
+            android:layout_width="@dimen/item_height40"
+            android:layout_height="@dimen/item_height40"
+            android:src="@drawable/icon_avatar"
+            android:layout_marginRight="7dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="采蘑菇的小菇凉"
+                android:textSize="@dimen/text_size12"
+                android:textColor="@color/color_15"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_item_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="采蘑菇的小菇凉"
+                android:textSize="@dimen/text_size12"
+                android:textColor="@color/color_15"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_item_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance_tab_4"
+            android:textColor="@color/color_c99e5e"
+            android:textSize="@dimen/text_size15"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <View style="@style/line_1"/>
+
+</LinearLayout>

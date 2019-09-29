@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.my.TransferSearchActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_my_top_bg"
+        android:orientation="vertical">
+
+
+        <include layout="@layout/layout_title_white_right_bar"/>
+
+
+        <LinearLayout
+            android:id="@+id/ll_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/shape_transfer_search_bg"
+            android:gravity="center"
+            android:padding="8dp">
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_transfer_search"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:drawableLeft="@drawable/icon_transfer_search"-->
+<!--                android:drawablePadding="6dp"-->
+<!--                android:text="@string/home_tab_1"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:visibility="gone"-->
+<!--                android:textSize="@dimen/text_size14" />-->
+
+            <EditText
+                android:id="@+id/et_transfer_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_transfer_search"
+                android:drawablePadding="6dp"
+                android:background="@color/transparent"
+                android:hint="@string/balance_transfer_tab_1"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size14"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:text="@string/balance_transfer_tab_2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size15"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dp_10"
+        android:padding="12dp"
+        android:background="@drawable/icon_member_center_card_bg"
+        tools:listitem="@layout/layout_item_transfer_search"/>
+
+
+</LinearLayout>

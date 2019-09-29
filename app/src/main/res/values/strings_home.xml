@@ -6,17 +6,30 @@
     <string name="home_tab_3">猜你喜欢</string>
 
 
-    <string name="address_list_tab_1">新增收货地址</string>
-
-    <string name="add_address_tab_1">收货人</string>
-    <string name="add_address_tab_2">收货人姓名</string>
-    <string name="add_address_tab_3">联系电话</string>
-    <string name="add_address_tab_4">用于物流通知</string>
-    <string name="add_address_tab_5">所在地址</string>
-    <string name="add_address_tab_6">请选择</string>
-    <string name="add_address_tab_7">详细地址</string>
-    <string name="add_address_tab_8">请输入详细地址信息，如街道、小区、楼栋号、单元室、门牌号等</string>
-    <string name="add_address_tab_9">保存</string>
-    <string name="add_address_tab_10">设置为默认地址</string>
-
+    <string name="goods_detail_tab_1">客服</string>
+    <string name="goods_detail_tab_2">购物车</string>
+    <string name="goods_detail_tab_3">立即购买</string>
+    <string name="goods_detail_tab_4">关注</string>
+    <string name="goods_detail_tab_5">配送</string>
+    <string name="goods_detail_tab_6">运费</string>
+    <string name="goods_detail_tab_7">免运费</string>
+    <string name="goods_detail_tab_8">规格</string>
+    <string name="goods_detail_tab_9">已选\"默认\"</string>
+    <string name="goods_detail_tab_10">商品评价</string>
+    <string name="goods_detail_tab_11">查看全部</string>
+    <string name="goods_detail_tab_12">(%0$s)</string>
+    <string name="goods_detail_tab_13">图片详情</string>
+    <string name="goods_detail_tab_14">产品参数</string>
+    <string name="goods_detail_tab_15">销量：%0$s</string>
+    <string name="goods_detail_tab_16">库存：%0$s</string>
+    <string name="goods_detail_tab_17">已关注</string>
+    <string name="goods_detail_tab_18">首页</string>
+    <string name="goods_detail_tab_19">分类</string>
+    <string name="goods_detail_tab_20">购物车</string>
+    <string name="goods_detail_tab_21">我的</string>
+    <string name="goods_detail_tab_22">商品评价</string>
+    <string name="goods_detail_tab_23">查看全部</string>
+    <string name="goods_detail_tab_24">购买数量</string>
+    <string name="goods_detail_tab_25">确定</string>
+    <string name="goods_detail_tab_26">已选\" %0$s \"</string>
 </resources>

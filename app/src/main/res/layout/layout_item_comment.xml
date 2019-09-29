@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:padding="15dp"
+    android:layout_height="wrap_content">
+
+    <!--头像-->
+    <ImageView
+        android:id="@+id/iv_item_comment_avatar"
+        android:layout_width="27dp"
+        android:src="@drawable/icon_avatar"
+        android:layout_height="27dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:layout_marginLeft="6dp">
+
+        <!--昵称-->
+        <TextView
+            android:id="@+id/tv_item_comment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_6"
+            android:textSize="@dimen/text_size12"
+            android:layout_marginBottom="5dp"
+            android:text="33**55"/>
+
+        <!--评价时间-->
+        <TextView
+            android:id="@+id/tv_item_comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size11"
+            android:textColor="@color/color_9"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:text="2019-08-08  18:08"
+            />
+
+        <!--评价内容-->
+        <TextView
+            android:id="@+id/tv_item_comment_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收到了，自从我用这个产品来健身后我已经比以前瘦了10斤，我还要再买…… "
+            android:textColor="@color/color_6"
+            android:textSize="@dimen/text_size12"/>
+
+
+        <!--评价图片-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_item_comment_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:spanCount="4"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:itemCount="3"
+            tools:listitem="@layout/layout_item_comment_img"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>
