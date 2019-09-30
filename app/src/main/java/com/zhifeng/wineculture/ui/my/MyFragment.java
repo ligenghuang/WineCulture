@@ -1,5 +1,6 @@
 package com.zhifeng.wineculture.ui.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,7 @@ public class MyFragment extends UserBaseFragment<MyAction> {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_fragment_my, container, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_my, container, false);
         ButterKnife.bind(this, view);
         mImmersionBar.setStatusBarView(getActivity(), topView);
         return view;
@@ -62,52 +63,75 @@ public class MyFragment extends UserBaseFragment<MyAction> {
 
     @OnClick({R.id.tvMyOrder, R.id.tv_obligation, R.id.tv_toBeShipped, R.id.tv_toBeReceived, R.id.tv_toBeComment, R.id.tv_service, R.id.tv_memberCenter, R.id.tv_myteam, R.id.tv_popularize, R.id.tv_proxy, R.id.tv_myCollect, R.id.tv_myFootprint, R.id.tv_myComments, R.id.tv_myAddress, R.id.tv_aboutWineCulture})
     public void onViewClicked(View view) {
+        int position = -1;
         switch (view.getId()) {
             case R.id.tvMyOrder:
-                jumpActivityNotFinish(mContext,MyOrderActivity.class);
+                //todo 我的订单
+                position = 0;
                 break;
             case R.id.tv_obligation:
-                jumpActivityNotFinish(mContext,ObligationActivity.class);
+                //todo 待付款
+                position = 1;
                 break;
             case R.id.tv_toBeShipped:
-                jumpActivityNotFinish(mContext,ToBeShippedActivity.class);
+                //todo 待发货
+                position = 2;
                 break;
             case R.id.tv_toBeReceived:
-                jumpActivityNotFinish(mContext,ToBeReceivedActivity.class);
+                //todo 待收货
+                position = 3;
                 break;
             case R.id.tv_toBeComment:
-                jumpActivityNotFinish(mContext,ToBeCommentActivity.class);
+                //todo 待评价
+                position = 4;
                 break;
             case R.id.tv_service:
-                jumpActivityNotFinish(mContext,ServiceActivity.class);
+                //todo 售后
+                jumpActivityNotFinish(mContext, ServiceActivity.class);
                 break;
             case R.id.tv_memberCenter:
-                jumpActivityNotFinish(mContext,MemberCenterActivity.class);
+                //todo 会员中心
+                jumpActivityNotFinish(mContext, MemberCenterActivity.class);
                 break;
             case R.id.tv_myteam:
-                jumpActivityNotFinish(mContext,MyTeamActivity.class);
+                //todo 我的团队
+                jumpActivityNotFinish(mContext, MyTeamActivity.class);
                 break;
             case R.id.tv_popularize:
-                jumpActivityNotFinish(mContext,PopularizeActivity.class);
+                //todo 我要推广
+                jumpActivityNotFinish(mContext, PopularizeActivity.class);
                 break;
             case R.id.tv_proxy:
-                jumpActivityNotFinish(mContext,ProxyActivity.class);
+                //todo 代理预约
+//                jumpActivityNotFinish(mContext, ProxyActivity.class);
+                showToast("此功能待开发");
                 break;
             case R.id.tv_myCollect:
-                jumpActivityNotFinish(mContext,MyCollectActivity.class);
+                //todo 我的收藏
+                jumpActivityNotFinish(mContext, MyCollectActivity.class);
                 break;
             case R.id.tv_myFootprint:
-                jumpActivityNotFinish(mContext,MyFootPrintActivity.class);
+                //todo 我的足迹
+                jumpActivityNotFinish(mContext, MyFootPrintActivity.class);
                 break;
             case R.id.tv_myComments:
-                jumpActivityNotFinish(mContext,MyCommentsActivity.class);
+                //todo 我的评论
+                jumpActivityNotFinish(mContext, MyCommentsActivity.class);
                 break;
             case R.id.tv_myAddress:
-                jumpActivityNotFinish(mContext,AddressListActivity.class);
+                //todo 收货地址
+                jumpActivityNotFinish(mContext, AddressListActivity.class);
                 break;
             case R.id.tv_aboutWineCulture:
-                jumpActivityNotFinish(mContext,AboutWineCultureActivity.class);
+                //todo 关于酒文化
+                jumpActivityNotFinish(mContext, AboutWineCultureActivity.class);
                 break;
+        }
+        if (position != -1) {
+            //todo 我的订单
+            Intent i = new Intent(mContext, MyOrderActivity.class);
+            i.putExtra("position", position);
+            startActivity(i);
         }
     }
 }

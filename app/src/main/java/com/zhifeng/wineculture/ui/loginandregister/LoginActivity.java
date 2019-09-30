@@ -1,18 +1,19 @@
-package com.zhifeng.wineculture.ui.login;
+package com.zhifeng.wineculture.ui.loginandregister;
 
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.lgh.huanglib.util.data.ResUtil;
+import com.lgh.huanglib.util.base.ActivityStack;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.LoginAction;
 import com.zhifeng.wineculture.ui.impl.LoginView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,14 +35,12 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     EditText etMobile;
     @BindView(R.id.etPwd)
     EditText etPwd;
-    @BindView(R.id.tvRegister)
-    TextView tvRegister;
-    @BindView(R.id.tvForgetPwd)
-    TextView tvForgetPwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityStack.getInstance().addActivity(new WeakReference<>(this));
+        binding();
     }
 
     @Override
@@ -57,10 +56,8 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     @Override
     protected void init() {
         super.init();
-        mContext=this;
-        mActicity=this;
-        tvRegister.setText(Html.fromHtml(ResUtil.getString(R.string.login_register)));
-        tvForgetPwd.setText(Html.fromHtml(ResUtil.getString(R.string.login_forgetPwd)));
+        mActicity = this;
+        mContext = this;
     }
 
     /**
@@ -82,21 +79,31 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     @Override
     protected void onResume() {
         super.onResume();
-        baseAction.toRegister();
+//        baseAction.toRegister();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        baseAction.toUnRegister();
+//        baseAction.toUnRegister();
     }
 
-    @OnClick({R.id.ivHidePwd, R.id.btnLogin})
+    private void login() {
+
+    }
+
+    @OnClick({R.id.ivHidePwd, R.id.btnLogin,R.id.tvRegister,R.id.tvForgetPwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivHidePwd:
                 break;
             case R.id.btnLogin:
+                login();
+                break;
+            case R.id.tvRegister:
+                jumpActivityNotFinish(mContext, RegisterActivity.class);
+                break;
+            case R.id.tvForgetPwd:
                 break;
         }
     }

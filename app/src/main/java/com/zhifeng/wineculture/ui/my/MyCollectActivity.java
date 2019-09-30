@@ -1,13 +1,21 @@
 package com.zhifeng.wineculture.ui.my;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.BaseAction;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
+
+import butterknife.BindView;
 
 /**
  * @ClassName:
@@ -16,6 +24,17 @@ import java.lang.ref.WeakReference;
  * @Date: 2019/9/28 18:05
  */
 public class MyCollectActivity extends UserBaseActivity {
+    @BindView(R.id.top_view)
+    View topView;
+    @BindView(R.id.f_title_tv)
+    TextView fTitleTv;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.rv)
+    RecyclerView rv;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +64,8 @@ public class MyCollectActivity extends UserBaseActivity {
                 .addTag("MyCollectActivity")  //给上面参数打标记，以后可以通过标记恢复
                 .navigationBarWithKitkatEnable(false)
                 .init();
-//        toolbar.setNavigationOnClickListener(view -> finish());
-//        fTitleTv.setText(R.string.login_login);
+        toolbar.setNavigationOnClickListener(view -> finish());
+        fTitleTv.setText(R.string.my_mycollect);
     }
 
     @Override

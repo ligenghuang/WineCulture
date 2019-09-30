@@ -2,6 +2,7 @@
 <resources>
     <string name="my_id">ID：</string>
     <string name="my_myorder">我的订单</string>
+    <string name="my_allOrder">全部</string>
     <string name="my_obligation">待付款</string>
     <string name="my_tobeshipped">待发货</string>
     <string name="my_tobereceived">待收货</string>
@@ -85,4 +86,58 @@
     <string name="withdrawal_record_tab_6">审核失败</string>
     <string name="withdrawal_record_tab_7">已审核</string>
 
+
+    <string name="myorder_goodsPrice">%0$s</string>
+    <string name="myorder_goodsNum">x%0$s</string>
+    <string name="myorder_totalGoodsNum">共%0$s件商品</string>
+    <string name="myorder_total">合计：</string>
+    <string name="myorder_totalGoodsPrice">￥%0$s</string>
+    <string name="myorder_cancel">取消</string>
+    <string name="myorder_paynow">立即支付</string>
+    <string name="myorder_returnofgoods">退货</string>
+    <string name="myorder_lookuplogistics">查看物流</string>
+    <string name="myorder_confirmtakeover">确认收货</string>
+    <string name="myorder_comment">评价</string>
+
+    <string name="orderdetail_waitToPay">等待买家付款</string>
+    <string name="orderdetail_transit">你的货物正在往你家赶</string>
+    <string name="orderdetail_reveived">你的货物已签收</string>
+    <string name="orderdetail_comment">请你评价</string>
+    <string name="orderdetail_receiver">收货人：</string>
+    <string name="orderdetail_goodsPrice">￥%0$s</string>
+    <string name="orderdetail_goodsNum">x%0$s</string>
+    <string name="orderdetail_totalGoodsPrice">商品总价</string>
+    <string name="orderdetail_remainder">余额</string>
+    <string name="orderdetail_postage">邮费</string>
+    <string name="orderdetail_payPrice">实付费</string>
+    <string name="orderdetail_remark">买家留言：</string>
+    <string name="orderdetail_orderNo">订单编号：</string>
+    <string name="orderdetail_createTime">下单时间：</string>
+    <string name="orderdetail_cancel">取消订单</string>
+    <string name="orderdetail_payNow">立即支付</string>
+
+    <string name="usercenter_remainder">余额</string>
+    <string name="usercenter_price">￥%0$s</string>
+    <string name="usercenter_usable">可使用</string>
+    <string name="usercenter_toBeDetermined">待确定</string>
+    <string name="usercenter_myIncomeOrOutcome">我的收支</string>
+    <string name="usercenter_transferRecord">转账记录</string>
+    <string name="usercenter_withdrawRecord">提现记录</string>
+
+    <string name="myteam_myteam">我的团队</string>
+    <string name="myteam_teamMemberNum">团队总人数</string>
+    <string name="myteam_teamMemberNum2">%0$s</string>
+    <string name="myteam_teamList">团队列表</string>
+    <string name="myteam_normalMember">普通会员</string>
+    <string name="myteam_vip">vip</string>
+    <string name="myteam_vip1">vip1</string>
+    <string name="myteam_userId">用户id</string>
+    <string name="myteam_name">昵称</string>
+    <string name="myteam_mobile">电话</string>
+    <string name="myteam_order">订单</string>
+    <string name="myteam_lookup">查看</string>
+
+    <string name="popularize_invitationCode">我的邀请码</string>
+    <string name="popularize_id">ID：</string>
+    <string name="popularize_scan">用手机扫一扫二维码获得优质商品</string>
 </resources>

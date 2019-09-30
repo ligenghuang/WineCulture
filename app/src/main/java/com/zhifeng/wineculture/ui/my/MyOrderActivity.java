@@ -1,13 +1,25 @@
 package com.zhifeng.wineculture.ui.my;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.base.MyFragmentPagerAdapter;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.BaseAction;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @ClassName:
@@ -16,6 +28,31 @@ import java.lang.ref.WeakReference;
  * @Date: 2019/9/28 18:06
  */
 public class MyOrderActivity extends UserBaseActivity {
+    @BindView(R.id.top_view)
+    View topView;
+    @BindView(R.id.f_title_tv)
+    TextView fTitleTv;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tvAllOrders)
+    TextView tvAllOrders;
+    @BindView(R.id.tvObligation)
+    TextView tvObligation;
+    @BindView(R.id.tvToBeShipped)
+    TextView tvToBeShipped;
+    @BindView(R.id.tvToBeReceived)
+    TextView tvToBeReceived;
+    @BindView(R.id.tvToBeComment)
+    TextView tvToBeComment;
+    @BindView(R.id.vp)
+    ViewPager vp;
+    private final int position0 = 0;
+    private final int position1 = 1;
+    private final int position2 = 2;
+    private final int position3 = 3;
+    private final int position4 = 4;
+    private int currentPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +68,42 @@ public class MyOrderActivity extends UserBaseActivity {
     @Override
     protected void init() {
         super.init();
+        mActicity = this;
+        mContext = this;
+        currentPosition = getIntent().getIntExtra("position", 0);
+        loadView();
+    }
+
+    @Override
+    protected void initView() {
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        //全部
+        OrderFragment allOrderFragment = new OrderFragment(position0);
+        allOrderFragment.setUserVisibleHint(currentPosition == position0);
+        fragments.add(allOrderFragment);
+        //待付款
+        OrderFragment obligationFragment = new OrderFragment(position1);
+        obligationFragment.setUserVisibleHint(currentPosition == position1);
+        fragments.add(obligationFragment);
+        //待发货
+        OrderFragment toBeShippedFragment = new OrderFragment(position2);
+        toBeShippedFragment.setUserVisibleHint(currentPosition == position2);
+        fragments.add(toBeShippedFragment);
+        //待收货
+        OrderFragment toBeReceivedFragment = new OrderFragment(position3);
+        toBeReceivedFragment.setUserVisibleHint(currentPosition == position3);
+        fragments.add(toBeReceivedFragment);
+        //待评价
+        OrderFragment toBeCommentFragment = new OrderFragment(position4);
+        toBeCommentFragment.setUserVisibleHint(currentPosition == position4);
+        fragments.add(toBeCommentFragment);
+
+        MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+        vp.setAdapter(adapter);
+        new Handler().postDelayed(() -> {
+            vp.setCurrentItem(currentPosition);
+            setSelect(currentPosition);
+        }, 200);
     }
 
     /**
@@ -45,12 +118,60 @@ public class MyOrderActivity extends UserBaseActivity {
                 .addTag("MyOrderActivity")  //给上面参数打标记，以后可以通过标记恢复
                 .navigationBarWithKitkatEnable(false)
                 .init();
-//        toolbar.setNavigationOnClickListener(view -> finish());
-//        fTitleTv.setText(R.string.login_login);
+        toolbar.setNavigationOnClickListener(view -> finish());
+        fTitleTv.setText(R.string.my_myorder);
+    }
+
+    @Override
+    protected void loadView() {
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setSelect(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
     protected BaseAction initAction() {
         return null;
+    }
+
+    private void setSelect(int position) {
+        tvAllOrders.setSelected(position == position0);
+        tvObligation.setSelected(position == position1);
+        tvToBeShipped.setSelected(position == position2);
+        tvToBeReceived.setSelected(position == position3);
+        tvToBeComment.setSelected(position == position4);
+    }
+
+    @OnClick({R.id.tvAllOrders, R.id.tvObligation, R.id.tvToBeShipped, R.id.tvToBeReceived, R.id.tvToBeComment})
+    public void onViewClicked(View view) {
+        int position = position0;
+        switch (view.getId()) {
+            case R.id.tvObligation:
+                position = position1;
+                break;
+            case R.id.tvToBeShipped:
+                position = position2;
+                break;
+            case R.id.tvToBeReceived:
+                position = position3;
+                break;
+            case R.id.tvToBeComment:
+                position = position4;
+                break;
+        }
+        vp.setCurrentItem(position);
     }
 }
