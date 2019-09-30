@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/top_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/transparent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height40"
+        android:background="@color/white">
+
+
+        <TextView
+            android:id="@+id/tv_cart_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/cart_tab_1"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size15"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_cart_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:padding="5dp"
+            android:src="@drawable/icon_cart_menu" />
+
+        <TextView
+            android:id="@+id/tv_cart_detele"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_toLeftOf="@id/iv_cart_menu"
+            android:text="@string/cart_tab_2"
+            android:textColor="@color/color_c99e5e"
+            android:textSize="@dimen/text_size12" />
+
+
+    </RelativeLayout>
+
+
+    <include layout="@layout/layout_cart" />
+</LinearLayout>

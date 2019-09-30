@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp"
+        app:contentPadding="@dimen/dp_10">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_item_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/selector_withdrawal_pay_type"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:padding="@dimen/dp_10"
+                />
+
+
+            <ImageView
+                android:id="@+id/iv_item_cart_img"
+                android:layout_width="115dp"
+                android:layout_height="115dp"
+                android:layout_marginRight="12dp"
+                android:layout_toRightOf="@id/iv_item_cart"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_goods_img"/>
+
+            <TextView
+                android:id="@+id/tv_item_cart_goods_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_item_cart_img"
+                android:layout_marginRight="@dimen/item_height70"
+                android:layout_marginTop="6dp"
+                android:textSize="@dimen/text_size15"
+                android:textColor="@color/color_15"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_alignTop="@id/iv_item_cart_img"
+                android:text="卡布奇诺手机第三季度等级分级卡布奇诺手机第三季度等级分级"/>
+
+
+            <TextView
+                android:id="@+id/tv_item_cart_goods_spec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="规格显示"
+                android:layout_toRightOf="@id/iv_item_cart_img"
+                android:textColor="@color/color_15"
+                android:textSize="@dimen/text_size12"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_below="@id/tv_item_cart_goods_name"/>
+
+            <TextView
+                android:id="@+id/tv_item_cart_goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥888.00"
+                android:textSize="@dimen/text_size15"
+                android:textColor="@color/color_cc1b21"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/iv_item_cart_img"
+                android:layout_below="@id/tv_item_cart_goods_spec"
+                android:layout_marginTop="@dimen/dp_10"/>
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:layout_alignBaseline="@id/tv_item_cart_goods_price"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_hollow_circle"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/tv_item_goods_subtract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="-"
+                    android:gravity="center"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size12" />
+
+                <View style="@style/line_2" />
+
+                <EditText
+                    android:id="@+id/et_item_goods_num"
+                    android:layout_width="@dimen/item_height45"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:text="12"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size12"
+                    android:layout_height="wrap_content"/>
+
+                <View style="@style/line_2" />
+
+                <TextView
+                    android:id="@+id/tv_item_goods_add"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="+"
+                    android:gravity="center"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size12" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

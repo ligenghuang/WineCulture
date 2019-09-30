@@ -18,6 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
+        <activity android:name=".ui.cart.CartActivity"></activity>
+        <activity android:name=".ui.my.BookingGoodsActivity" />
+        <activity android:name=".ui.cart.CartSubmitOrdersActivity" />
+        <activity android:name=".ui.home.GoodsDetailActivity" />
         <activity android:name=".ui.home.GoodsDetailActivity" />
         <activity android:name=".ui.my.WithdrawalRecordActivity" />
         <activity android:name=".ui.my.TransferRecordActivity" />

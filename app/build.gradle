@@ -58,4 +58,5 @@ dependencies {
     implementation project(':HuangLib')
     implementation 'cn.bingoogolapple:bga-banner:+'
     implementation 'com.superluo:textbannerview:1.0.2'
+    implementation 'com.lxj:xpopup:1.8.10-x'
 }

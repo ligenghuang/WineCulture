@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.cart.CartActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="0dp">
+
+        <View
+            android:id="@+id/top_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/transparent"
+            android:navigationIcon="@drawable/ic_chevron_left_black_55dp"
+            app:navigationIcon="@drawable/ic_chevron_left_black_55dp">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:gravity="center_vertical"
+               android:orientation="horizontal">
+
+
+               <TextView
+                   android:id="@+id/f_title_tv"
+                   android:layout_width="match_parent"
+                   android:layout_weight="1"
+                   android:gravity="center"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:lines="1"
+                   android:text="@string/cart_tab_1"
+                   android:textColor="@color/black"
+                   android:textSize="@dimen/text_size16" />
+
+               <TextView
+                   android:id="@+id/tv_cart_detele"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerVertical="true"
+                   android:layout_marginRight="@dimen/dp_10"
+                   android:layout_toLeftOf="@id/iv_cart_menu"
+                   android:text="@string/cart_tab_2"
+                   android:textColor="@color/color_c99e5e"
+                   android:textSize="@dimen/text_size12" />
+
+               <ImageView
+                   android:id="@+id/iv_cart_menu"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_centerVertical="true"
+                   android:layout_marginRight="12dp"
+                   android:padding="5dp"
+                   android:src="@drawable/icon_cart_menu" />
+
+
+           </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#f1f2f5" />
+    </LinearLayout>
+
+    <include layout="@layout/layout_cart"/>
+
+</LinearLayout>

@@ -170,8 +170,6 @@ public class MainActivity extends UserBaseActivity {
                 myPager.setAdapter(fragmentPagerAdapter);
                 myPager.setCurrentItem(Position, false);
                 myPager.setOffscreenPageLimit(fragmentSize);
-
-
             }
         }, 500);
 

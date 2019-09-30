@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_cart_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="@color/color_f2">
+
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dp_10"
+                tools:itemCount="2"
+                tools:listitem="@layout/layout_item_cart"/>
+
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height50"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_cart_selector_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cart_tab_5"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/selector_withdrawal_pay_type"
+                android:drawablePadding="20dp"
+                android:textColor="@color/color_15"
+                android:textSize="@dimen/text_size12"
+                />
+
+            <TextView
+                android:id="@+id/tv_cart_total_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:text="总计： ￥0"
+                android:textSize="@dimen/text_size12"
+                android:textColor="@color/color_15"
+                android:gravity="center"/>
+
+
+            <TextView
+                android:id="@+id/tv_cart_settlement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size15"
+                android:text="@string/cart_tab_6"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/shape_btn_save_bg"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_cart_null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/color_f2"
+        android:gravity="center">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_cart_null"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_c"
+            android:textSize="@dimen/text_size15"
+            android:text="@string/cart_tab_3"
+            android:layout_marginTop="25dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_to_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cart_tab_4"
+            android:textSize="@dimen/text_size15"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="20dp"
+            android:paddingBottom="@dimen/dp_10"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/shape_btn_save_bg"
+            />
+
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

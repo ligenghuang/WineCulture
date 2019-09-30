@@ -86,6 +86,11 @@
     <string name="withdrawal_record_tab_6">审核失败</string>
     <string name="withdrawal_record_tab_7">已审核</string>
 
+    <string name="booking_goods_tab_1">联系人</string>
+    <string name="booking_goods_tab_2">联系电话</string>
+    <string name="booking_goods_tab_3">联系地址</string>
+    <string name="booking_goods_tab_4">我要预约领商品</string>
+
 
     <string name="myorder_goodsPrice">%0$s</string>
     <string name="myorder_goodsNum">x%0$s</string>
