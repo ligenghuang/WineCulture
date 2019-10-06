@@ -24,17 +24,21 @@
         android:padding="@dimen/dp_10">
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:drawableStart="@drawable/icon_login_countries"
             android:drawablePadding="20dp"
+            android:textSize="@dimen/text_size15"
+            android:textColor="@color/color_15"
             android:text="@string/login_country" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:textSize="@dimen/text_size15"
+            android:textColor="@color/color_15"
             android:text="@string/login_China" />
     </LinearLayout>
 
@@ -58,6 +62,8 @@
             android:layout_marginStart="20dp"
             android:drawableStart="@drawable/icon_login_phone"
             android:drawablePadding="20dp"
+            android:textSize="@dimen/text_size15"
+            android:textColor="@color/color_15"
             android:text="@string/login_num" />
 
         <EditText
@@ -68,8 +74,10 @@
             android:background="@null"
             android:inputType="phone"
             android:maxLength="11"
-            android:text="@string/login_numHint"
-            android:textColor="@color/color_999999" />
+            android:hint="@string/login_numHint"
+            android:textSize="@dimen/text_size15"
+            android:textColor="@color/color_15"
+            android:textColorHint="@color/color_999999" />
     </LinearLayout>
 
     <View
@@ -92,6 +100,8 @@
             android:layout_marginStart="20dp"
             android:drawableStart="@drawable/icon_login_pwd"
             android:drawablePadding="20dp"
+            android:textSize="@dimen/text_size15"
+            android:textColor="@color/color_15"
             android:text="@string/login_pwd" />
 
         <EditText
@@ -103,7 +113,10 @@
             android:background="@null"
             android:hint="@string/login_pwdHint"
             android:inputType="textPassword"
-            android:textColor="@color/color_999999" />
+            android:maxLength="9"
+            android:textSize="@dimen/text_size15"
+            android:textColor="@color/color_15"
+            android:textColorHint="@color/color_999999" />
 
         <ImageView
             android:id="@+id/ivHidePwd"

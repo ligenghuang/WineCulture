@@ -61,7 +61,10 @@ public class MyFragment extends UserBaseFragment<MyAction> {
 
     }
 
-    @OnClick({R.id.tvMyOrder, R.id.tv_obligation, R.id.tv_toBeShipped, R.id.tv_toBeReceived, R.id.tv_toBeComment, R.id.tv_service, R.id.tv_memberCenter, R.id.tv_myteam, R.id.tv_popularize, R.id.tv_proxy, R.id.tv_myCollect, R.id.tv_myFootprint, R.id.tv_myComments, R.id.tv_myAddress, R.id.tv_aboutWineCulture})
+    @OnClick({R.id.tvMyOrder, R.id.tv_obligation, R.id.tv_toBeShipped, R.id.tv_toBeReceived,
+            R.id.tv_toBeComment, R.id.tv_service, R.id.tv_memberCenter, R.id.tv_myteam,
+            R.id.tv_popularize, R.id.tv_proxy, R.id.tv_myCollect, R.id.tv_myFootprint,
+            R.id.tv_myComments, R.id.tv_myAddress, R.id.tv_aboutWineCulture,R.id.iv_booking_goods})
     public void onViewClicked(View view) {
         int position = -1;
         switch (view.getId()) {
@@ -125,6 +128,10 @@ public class MyFragment extends UserBaseFragment<MyAction> {
             case R.id.tv_aboutWineCulture:
                 //todo 关于酒文化
                 jumpActivityNotFinish(mContext, AboutWineCultureActivity.class);
+                break;
+            case R.id.iv_booking_goods:
+                //todo 我要预约商品
+                jumpActivityNotFinish(mContext,BookingGoodsActivity.class);
                 break;
         }
         if (position != -1) {

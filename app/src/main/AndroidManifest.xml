@@ -22,7 +22,6 @@
         <activity android:name=".ui.my.BookingGoodsActivity" />
         <activity android:name=".ui.cart.CartSubmitOrdersActivity" />
         <activity android:name=".ui.home.GoodsDetailActivity" />
-        <activity android:name=".ui.home.GoodsDetailActivity" />
         <activity android:name=".ui.my.WithdrawalRecordActivity" />
         <activity android:name=".ui.my.TransferRecordActivity" />
         <activity android:name=".ui.my.WithdrawalActivity" />

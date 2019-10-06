@@ -1,13 +1,16 @@
 package com.zhifeng.wineculture.ui.loginandregister;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.LoginAction;
 import com.zhifeng.wineculture.ui.impl.LoginView;
@@ -76,21 +79,51 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         fTitleTv.setText(R.string.login_login);
     }
 
+    /**
+     * 登录
+     * @param phone
+     * @param pwd
+     */
+    @Override
+    public void login(String phone, String pwd) {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            loadDialog();
+            baseAction.login(phone,pwd);
+        }
+    }
+
+    /**
+     * 登录成功
+     */
+    @Override
+    public void loginSuccess() {
+
+    }
+
+    /**
+     * 失败
+     * @param message
+     * @param code
+     */
+    @Override
+    public void onError(String message, int code) {
+
+        loadDiss();
+        showNormalToast(message);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-//        baseAction.toRegister();
+        baseAction.toRegister();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        baseAction.toUnRegister();
+        baseAction.toUnregister();
     }
 
-    private void login() {
-
-    }
 
     @OnClick({R.id.ivHidePwd, R.id.btnLogin,R.id.tvRegister,R.id.tvForgetPwd})
     public void onViewClicked(View view) {
@@ -98,7 +131,7 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
             case R.id.ivHidePwd:
                 break;
             case R.id.btnLogin:
-                login();
+                Login();
                 break;
             case R.id.tvRegister:
                 jumpActivityNotFinish(mContext, RegisterActivity.class);
@@ -107,4 +140,22 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
                 break;
         }
     }
+
+    private void Login() {
+        //todo 判断是否输入手机号码
+        if (TextUtils.isEmpty(etMobile.getText().toString())){
+            showNormalToast(ResUtil.getString(R.string.login_numHint));
+            return;
+        }
+
+        //TODO 判断是否输入密码
+        if(TextUtils.isEmpty(etPwd.getText().toString())){
+            showNormalToast(ResUtil.getString(R.string.login_pwdHint));
+            return;
+        }
+
+        login(etMobile.getText().toString(),etPwd.getText().toString());
+    }
+
+
 }

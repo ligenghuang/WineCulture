@@ -10,6 +10,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lgh.huanglib.util.base.BaseActivity;
 import com.zhifeng.wineculture.R;
+import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.util.List;
 
@@ -67,9 +69,9 @@ public class StartPageActivity extends BaseActivity {
                 @Override
                 public void run() {
                     //todo 判断是否登录跳转不同页面
-//                    Intent intent = new Intent(mContext, MySp.iSLoginLive(mContext)?MainActivity.class: LoginActivity.class);
-//                    startActivity(intent);
-                    jumpActivity(mContext,MainActivity.class);
+                    Intent intent = new Intent(mContext, MySp.iSLoginLive(mContext)?MainActivity.class: LoginActivity.class);
+                    startActivity(intent);
+//                    jumpActivity(mContext,MainActivity.class);
                     isNeedAnim = false;
                     finish();
                 }
