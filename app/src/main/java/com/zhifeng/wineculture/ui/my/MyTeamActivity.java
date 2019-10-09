@@ -77,7 +77,7 @@ public class MyTeamActivity extends UserBaseActivity {
                 .navigationBarWithKitkatEnable(false)
                 .init();
         toolbar.setNavigationOnClickListener(view -> finish());
-        fTitleTv.setText(R.string.login_login);
+        fTitleTv.setText(R.string.myteam_myteam);
     }
 
     @Override

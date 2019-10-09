@@ -18,9 +18,12 @@ public class WebUrlUtil {
     public static String BASE_URL;
 
     /**
-     * 登录或注册
+     * 登录
      */
-    public static final String POST_LOGIN = "user/doLogin";
+    public static final String POST_LOGIN = "user/login";
 
-
+    /**
+     * 注册
+     */
+    public static final String POST_REGISTER = "user/register";
 }

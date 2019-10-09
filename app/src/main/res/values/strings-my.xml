@@ -134,8 +134,8 @@
     <string name="myteam_teamMemberNum2">%0$s</string>
     <string name="myteam_teamList">团队列表</string>
     <string name="myteam_normalMember">普通会员</string>
-    <string name="myteam_vip">vip</string>
-    <string name="myteam_vip1">vip1</string>
+    <string name="myteam_vip">VIP</string>
+    <string name="myteam_vip1">VIP1</string>
     <string name="myteam_userId">用户id</string>
     <string name="myteam_name">昵称</string>
     <string name="myteam_mobile">电话</string>

@@ -122,7 +122,7 @@
             android:textColorHint="@color/color_999999" />
 
         <ImageView
-            android:id="@+id/ivHidePwd"
+            android:id="@+id/ivShowPwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"

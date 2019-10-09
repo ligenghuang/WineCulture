@@ -5,7 +5,7 @@
     android:background="@drawable/shape_my_top_bg"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_title_black_bar" />
+    <include layout="@layout/layout_title_white_right_bar" />
 
     <LinearLayout
         android:layout_width="match_parent"

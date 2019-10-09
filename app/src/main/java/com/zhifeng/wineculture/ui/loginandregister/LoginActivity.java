@@ -125,10 +125,10 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     }
 
 
-    @OnClick({R.id.ivHidePwd, R.id.btnLogin,R.id.tvRegister,R.id.tvForgetPwd})
+    @OnClick({R.id.ivShowPwd, R.id.btnLogin,R.id.tvRegister,R.id.tvForgetPwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ivHidePwd:
+            case R.id.ivShowPwd:
                 break;
             case R.id.btnLogin:
                 Login();

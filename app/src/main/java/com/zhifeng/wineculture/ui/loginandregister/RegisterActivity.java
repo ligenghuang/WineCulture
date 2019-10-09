@@ -11,7 +11,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ValidateUtils;
 import com.zhifeng.wineculture.R;
-import com.zhifeng.wineculture.actions.BaseAction;
+import com.zhifeng.wineculture.actions.RegisterAction;
+import com.zhifeng.wineculture.modules.RegisterDto;
+import com.zhifeng.wineculture.ui.impl.RegisterView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
@@ -19,7 +21,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterActivity extends UserBaseActivity {
+public class RegisterActivity extends UserBaseActivity<RegisterAction> implements RegisterView {
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
@@ -73,35 +75,49 @@ public class RegisterActivity extends UserBaseActivity {
     }
 
     @Override
-    protected BaseAction initAction() {
-        return null;
+    protected RegisterAction initAction() {
+        return new RegisterAction(this, this);
     }
 
-    private void register() {
-        String mobile=etMobile.getText().toString();
-        if (TextUtils.isEmpty(mobile)){
+    @Override
+    public void register() {
+        String mobile = etMobile.getText().toString();
+        if (TextUtils.isEmpty(mobile)) {
             showNormalToast(R.string.register_numHint);
             return;
         }
-        if (ValidateUtils.isPhone2(mobile)){
+        if (!ValidateUtils.isPhone2(mobile)) {
             showNormalToast(R.string.register_rightMobileHint);
             return;
         }
-        String pwd=etPwd.getText().toString();
-        if (TextUtils.isEmpty(pwd)){
+        String pwd = etPwd.getText().toString();
+        if (TextUtils.isEmpty(pwd)) {
             showNormalToast(R.string.register_newPwdHint);
             return;
         }
-        String confirmPwd=etConfirmPwd.getText().toString();
-        if (TextUtils.isEmpty(confirmPwd)){
+        String confirmPwd = etConfirmPwd.getText().toString();
+        if (TextUtils.isEmpty(confirmPwd)) {
             showNormalToast(R.string.register_comfirmPwdHint);
             return;
         }
-        String code=etCode.getText().toString();
-        if (TextUtils.isEmpty(code)){
+        String code = etCode.getText().toString();
+        if (TextUtils.isEmpty(code)) {
             showNormalToast(R.string.register_codeHint);
             return;
         }
+        baseAction.register(mobile,code,pwd,confirmPwd);
+    }
+
+    @Override
+
+    public void registerSuccess(RegisterDto registerDto) {
+        showNormalToast(R.string.register_success);
+        finish();
+    }
+
+    @Override
+    public void onError(String message, int code) {
+        showNormalToast(message);
     }
 
     @OnClick({R.id.tvGetCode, R.id.btnRegister})
