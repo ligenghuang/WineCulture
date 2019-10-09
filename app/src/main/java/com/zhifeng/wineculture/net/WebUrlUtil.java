@@ -9,9 +9,9 @@ public class WebUrlUtil {
     static {
         //配合retrofit，需要以/结尾
         if (BuildConfig.DEBUG) {
-            BASE_URL = "http://cattle.zhifengwangluo.com/api/";
+            BASE_URL = "http://jiuwenhua.zhifengwangluo.com/api/";
         } else {
-            BASE_URL = "http://cattle.zhifengwangluo.com/api/";
+            BASE_URL = "http://jiuwenhua.zhifengwangluo.com/api/";
         }
     }
 

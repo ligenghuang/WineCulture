@@ -27,7 +27,7 @@ public class LoginAction extends BaseAction<LoginView> {
      */
     public void login(String phone,String pwd){
         post(WebUrlUtil.POST_LOGIN,false, service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("phone",phone,"pwd",pwd), WebUrlUtil.POST_LOGIN)));
+                service.PostData(CollectionsUtils.generateMap("phone",phone,"user_password",pwd), WebUrlUtil.POST_LOGIN)));
     }
 
     /**
