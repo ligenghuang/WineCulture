@@ -3,6 +3,7 @@ package com.zhifeng.wineculture.actions;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.HomeView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -30,7 +31,7 @@ public class HomeAction extends BaseAction<HomeView> {
      * 获取首页数据
      */
     public void getHome(){
-
+        post(WebUrlUtil.POST_INDEX_INDEX,false,service -> manager.runHttp(service.PostData(WebUrlUtil.POST_INDEX_INDEX)));
     }
 
     /**
@@ -56,6 +57,12 @@ public class HomeAction extends BaseAction<HomeView> {
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
+                    case WebUrlUtil.POST_INDEX_INDEX:
+                        if (aBoolean){
+
+                        }
+                        view.onError(msg,action.getErrorType());
+                        break;
                 }
 
             }

@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.wineculture.modules.HomeDto;
 
 /**
   *
@@ -17,5 +18,5 @@ public interface HomeView extends BaseView {
      * 获取首页数据
      */
     void getHomeData();
-    void getHomeDataSuccess();
+    void getHomeDataSuccess(HomeDto homeDto);
 }

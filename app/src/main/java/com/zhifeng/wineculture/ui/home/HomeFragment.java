@@ -15,6 +15,7 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.HomeAction;
 import com.zhifeng.wineculture.adapters.BannerHome;
+import com.zhifeng.wineculture.modules.HomeDto;
 import com.zhifeng.wineculture.ui.impl.HomeView;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
 import com.zhifeng.wineculture.utils.view.TextBannerView;
@@ -132,7 +133,7 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
      * 获取首页数据 成功
      */
     @Override
-    public void getHomeDataSuccess() {
+    public void getHomeDataSuccess(HomeDto homeDto) {
         loadDiss();
         refreshLayout.finishRefresh();
 

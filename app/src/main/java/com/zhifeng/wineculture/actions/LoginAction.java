@@ -1,9 +1,15 @@
 package com.zhifeng.wineculture.actions;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.GeneralDto;
+import com.zhifeng.wineculture.modules.LoginDto;
+import com.zhifeng.wineculture.modules.RegisterDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.LoginView;
 
@@ -14,6 +20,13 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Predicate;
 
+/**
+ * description: 登录
+ * autour: huang
+ * date: 2019/10/6 21:05
+ * update: 2019/10/6
+ * version:
+ */
 public class LoginAction extends BaseAction<LoginView> {
     public LoginAction(RxAppCompatActivity _rxAppCompatActivity, LoginView loginView) {
         super(_rxAppCompatActivity);
@@ -53,6 +66,26 @@ public class LoginAction extends BaseAction<LoginView> {
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
+                    case WebUrlUtil.POST_LOGIN:
+                        //todo 登录
+                        if (aBoolean){
+                           try{
+                               LoginDto loginDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<LoginDto>() {
+                               }.getType());
+                               if (loginDto.getStatus() == 200) {
+                                   view.loginSuccess(loginDto);
+                                   return;
+                               }
+                               view.onError(loginDto.getMsg(), loginDto.getStatus());
+                           }catch (JsonSyntaxException e){
+                               GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                               }.getType());
+
+                               view.onError(generalDto.getMsg(),generalDto.getStatus());
+                           }
+                        }
+                        view.onError(msg,action.getErrorType());
+                        break;
                 }
 
             }

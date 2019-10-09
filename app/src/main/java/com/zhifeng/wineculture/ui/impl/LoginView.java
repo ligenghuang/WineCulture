@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.wineculture.modules.LoginDto;
 
 /**
  * description: 登录
@@ -13,5 +14,5 @@ public interface LoginView extends BaseView {
 
 
     void login(String phone,String pwd);
-    void loginSuccess();
+    void loginSuccess(LoginDto loginDto);
 }

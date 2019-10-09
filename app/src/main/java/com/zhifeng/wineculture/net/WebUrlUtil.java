@@ -26,4 +26,9 @@ public class WebUrlUtil {
      * 注册
      */
     public static final String POST_REGISTER = "user/register";
+
+    /**
+     * 首页
+     */
+    public static final String POST_INDEX_INDEX = "index/index";
 }

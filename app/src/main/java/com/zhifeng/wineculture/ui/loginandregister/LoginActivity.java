@@ -2,8 +2,13 @@ package com.zhifeng.wineculture.ui.loginandregister;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.DigitsKeyListener;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -13,8 +18,11 @@ import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.LoginAction;
+import com.zhifeng.wineculture.modules.LoginDto;
+import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.LoginView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
 
@@ -38,6 +46,19 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     EditText etMobile;
     @BindView(R.id.etPwd)
     EditText etPwd;
+
+
+    //是否显示密码
+    boolean isShow = false;
+    @BindView(R.id.ivShowPwd)
+    ImageView ivShowPwd;
+    @BindView(R.id.btnLogin)
+    Button btnLogin;
+    @BindView(R.id.tvRegister)
+    TextView tvRegister;
+    @BindView(R.id.tvForgetPwd)
+    TextView tvForgetPwd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,14 +102,15 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
 
     /**
      * 登录
+     *
      * @param phone
      * @param pwd
      */
     @Override
     public void login(String phone, String pwd) {
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             loadDialog();
-            baseAction.login(phone,pwd);
+            baseAction.login(phone, pwd);
         }
     }
 
@@ -96,12 +118,15 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
      * 登录成功
      */
     @Override
-    public void loginSuccess() {
-
+    public void loginSuccess(LoginDto loginDto) {
+        loadDiss();
+        MySp.setAccessToken(mContext, loginDto.getData().getToken());
+        jumpActivity(mContext, MainActivity.class);
     }
 
     /**
      * 失败
+     *
      * @param message
      * @param code
      */
@@ -125,10 +150,19 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     }
 
 
-    @OnClick({R.id.ivShowPwd, R.id.btnLogin,R.id.tvRegister,R.id.tvForgetPwd})
+    @OnClick({R.id.ivShowPwd, R.id.btnLogin, R.id.tvRegister, R.id.tvForgetPwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivShowPwd:
+                //todo 显示 隐藏密码
+                etPwd.setKeyListener(DigitsKeyListener.getInstance("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+                if (isShow) {
+                    etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                isShow = !isShow;
+                ivShowPwd.setSelected(isShow);
                 break;
             case R.id.btnLogin:
                 Login();
@@ -143,18 +177,18 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
 
     private void Login() {
         //todo 判断是否输入手机号码
-        if (TextUtils.isEmpty(etMobile.getText().toString())){
+        if (TextUtils.isEmpty(etMobile.getText().toString())) {
             showNormalToast(ResUtil.getString(R.string.login_numHint));
             return;
         }
 
         //TODO 判断是否输入密码
-        if(TextUtils.isEmpty(etPwd.getText().toString())){
+        if (TextUtils.isEmpty(etPwd.getText().toString())) {
             showNormalToast(ResUtil.getString(R.string.login_pwdHint));
             return;
         }
 
-        login(etMobile.getText().toString(),etPwd.getText().toString());
+        login(etMobile.getText().toString(), etPwd.getText().toString());
     }
 
 
