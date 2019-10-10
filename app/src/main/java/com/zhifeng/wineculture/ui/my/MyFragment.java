@@ -8,9 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gyf.barlibrary.ImmersionBar;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.MyAction;
+import com.zhifeng.wineculture.modules.UserInfoDto;
+import com.zhifeng.wineculture.ui.MainActivity;
+import com.zhifeng.wineculture.ui.impl.MyView;
+import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +31,7 @@ import butterknife.OnClick;
  * @Version: 1.0
  */
 
-public class MyFragment extends UserBaseFragment<MyAction> {
+public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.iv)
@@ -47,18 +54,63 @@ public class MyFragment extends UserBaseFragment<MyAction> {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_my, container, false);
         ButterKnife.bind(this, view);
-        mImmersionBar.setStatusBarView(getActivity(), topView);
+        ImmersionBar.setStatusBarView(getActivity(), topView);
+        binding();
         return view;
     }
 
     @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+        if (isVisible){
+            getUserInfo();
+        }
+    }
+
+    @Override
     protected MyAction initAction() {
-        return null;
+        return new MyAction((RxAppCompatActivity) mActivity,this);
     }
 
     @Override
     protected void initialize() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
+    }
+
+    @Override
+    public void getUserInfo() {
+        baseAction.getUserInfo();
+    }
+
+    @Override
+    public void getUserInfoSuccess(UserInfoDto userInfoDto) {
+        tvName.setText(userInfoDto.getData().getRealname());
+        tvId.setText(String.valueOf(userInfoDto.getData().getId()));
+    }
+
+    @Override
+    public void noLogin() {
+        loadDiss();
+        showToast("登录过期，请重新登录！");
+        MainActivity.Position = 0;
+        MySp.clearAllSP(mContext);
+        jumpActivityNotFinish(mContext, LoginActivity.class);
+    }
+
+    @Override
+    public void onError(String message, int code) {
+        showToast(message);
     }
 
     @OnClick({R.id.tvMyOrder, R.id.tv_obligation, R.id.tv_toBeShipped, R.id.tv_toBeReceived,

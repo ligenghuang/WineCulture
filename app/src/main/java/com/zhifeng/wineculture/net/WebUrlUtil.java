@@ -23,6 +23,11 @@ public class WebUrlUtil {
     public static final String POST_LOGIN = "user/login";
 
     /**
+     * 发送验证码
+     */
+    public static final String POST_SEND_VERIFY_CODE = "user/sendVerifyCode";
+
+    /**
      * 注册
      */
     public static final String POST_REGISTER = "user/register";
@@ -31,4 +36,9 @@ public class WebUrlUtil {
      * 首页
      */
     public static final String POST_INDEX_INDEX = "index/index";
+
+    /**
+     * 我的
+     */
+    public static final String POST_USER_INFO = "user/user_info";
 }

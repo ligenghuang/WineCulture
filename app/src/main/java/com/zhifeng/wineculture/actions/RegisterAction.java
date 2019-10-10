@@ -9,6 +9,7 @@ import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.modules.RegisterDto;
+import com.zhifeng.wineculture.modules.SendVerifyCodeDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.RegisterView;
 
@@ -21,6 +22,10 @@ public class RegisterAction extends BaseAction<RegisterView> {
     public RegisterAction(RxAppCompatActivity _rxAppCompatActivity, RegisterView registerView) {
         super(_rxAppCompatActivity);
         attachView(registerView);
+    }
+
+    public void sendVerifyCode(String phone) {
+        post(WebUrlUtil.POST_SEND_VERIFY_CODE, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("phone", phone), WebUrlUtil.POST_SEND_VERIFY_CODE)));
     }
 
     public void register(String phone, String verify_code, String user_password, String confirm_password) {
@@ -40,14 +45,29 @@ public class RegisterAction extends BaseAction<RegisterView> {
                 .all(integer -> (integer == 200)).subscribe(aBoolean -> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
-            if (WebUrlUtil.POST_REGISTER.equals(action.getIdentifying())) {
-                RegisterDto registerDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<RegisterDto>() {
-                }.getType());
-                if (registerDto.getStatus() == 200) {
-                    view.registerSuccess(registerDto);
-                    return;
-                }
-                view.onError(registerDto.getMsg(), registerDto.getStatus());
+            switch (action.getIdentifying()) {
+                case WebUrlUtil.POST_SEND_VERIFY_CODE:
+                    if (aBoolean) {
+                        SendVerifyCodeDto sendVerifyCodeDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<SendVerifyCodeDto>() {
+                        }.getType());
+                        if (sendVerifyCodeDto.getStatus() == 200) {
+                            view.sendVerifyCodeSuccess(sendVerifyCodeDto);
+                            return;
+                        }
+                    }
+                    view.sendVerifyCodeFail(msg, action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_REGISTER:
+                    if (aBoolean) {
+                        RegisterDto registerDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<RegisterDto>() {
+                        }.getType());
+                        if (registerDto.getStatus() == 200) {
+                            view.registerSuccess(registerDto);
+                            return;
+                        }
+                    }
+                    view.onError(msg, action.getErrorType());
+                    break;
             }
         });
     }

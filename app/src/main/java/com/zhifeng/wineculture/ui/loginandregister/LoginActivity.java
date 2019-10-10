@@ -161,6 +161,8 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
                 } else {
                     etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
+                String text = etPwd.getText().toString();
+                etPwd.setSelection(text.length());
                 isShow = !isShow;
                 ivShowPwd.setSelected(isShow);
                 break;

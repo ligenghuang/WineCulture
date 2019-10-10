@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.loginandregister;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import com.lgh.huanglib.util.data.ValidateUtils;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.RegisterAction;
 import com.zhifeng.wineculture.modules.RegisterDto;
+import com.zhifeng.wineculture.modules.SendVerifyCodeDto;
 import com.zhifeng.wineculture.ui.impl.RegisterView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
@@ -20,7 +22,12 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
+/**
+ * @ClassName:
+ * @Description: 注册页
+ * @Author: Administrator
+ * @Date: 2019/10/10 14:16
+ */
 public class RegisterActivity extends UserBaseActivity<RegisterAction> implements RegisterView {
     @BindView(R.id.top_view)
     View topView;
@@ -38,6 +45,7 @@ public class RegisterActivity extends UserBaseActivity<RegisterAction> implement
     EditText etCode;
     @BindView(R.id.tvGetCode)
     TextView tvGetCode;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +88,32 @@ public class RegisterActivity extends UserBaseActivity<RegisterAction> implement
     }
 
     @Override
+    public void sendVerifyCode() {
+        String phone = etMobile.getText().toString();
+        if (TextUtils.isEmpty(phone)) {
+            showNormalToast(R.string.register_numHint);
+            return;
+        }
+        if (!ValidateUtils.isPhone2(phone)) {
+            showNormalToast(R.string.register_rightMobileHint);
+            return;
+        }
+        baseAction.sendVerifyCode(phone);
+    }
+
+    @Override
+    public void sendVerifyCodeSuccess(SendVerifyCodeDto sendVerifyCodeDto) {
+        showNormalToast(sendVerifyCodeDto.getData());
+        tvGetCode.setEnabled(false);
+        countDownTimer = new MyCountDownTimer(60 * 1000, 1000).start();
+    }
+
+    @Override
+    public void sendVerifyCodeFail(String msg, int code) {
+        showNormalToast(msg);
+    }
+
+    @Override
     public void register() {
         String mobile = etMobile.getText().toString();
         if (TextUtils.isEmpty(mobile)) {
@@ -105,11 +139,10 @@ public class RegisterActivity extends UserBaseActivity<RegisterAction> implement
             showNormalToast(R.string.register_codeHint);
             return;
         }
-        baseAction.register(mobile,code,pwd,confirmPwd);
+        baseAction.register(mobile, code, pwd, confirmPwd);
     }
 
     @Override
-
     public void registerSuccess(RegisterDto registerDto) {
         showNormalToast(R.string.register_success);
         finish();
@@ -120,12 +153,59 @@ public class RegisterActivity extends UserBaseActivity<RegisterAction> implement
         showNormalToast(message);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
     @OnClick({R.id.tvGetCode, R.id.btnRegister})
     public void onClick(View view) {
         if (view.getId() == R.id.tvGetCode) {
-
+            sendVerifyCode();
         } else {
             register();
+        }
+    }
+
+    private class MyCountDownTimer extends CountDownTimer {
+
+        /**
+         * @param millisInFuture    The number of millis in the future from the call
+         *                          to {@link #start()} until the countdown is done and {@link #onFinish()}
+         *                          is called.
+         * @param countDownInterval The interval along the way to receive
+         *                          {@link #onTick(long)} callbacks.
+         */
+        private MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            int second = (int) (millisUntilFinished / 1000);
+            String text = second + "秒";
+            tvGetCode.setText(text);
+        }
+
+        @Override
+        public void onFinish() {
+            tvGetCode.setEnabled(true);
+            tvGetCode.setText(R.string.register_getcode);
         }
     }
 }
