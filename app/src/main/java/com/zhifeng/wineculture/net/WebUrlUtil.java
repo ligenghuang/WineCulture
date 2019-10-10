@@ -38,6 +38,26 @@ public class WebUrlUtil {
     public static final String POST_INDEX_INDEX = "index/index";
 
     /**
+     * 分类
+     */
+    public static final String POST_GOODS_CATEGORYLIST = "goods/categorylist";
+
+    /**
+     * 商品详情
+     */
+    public static final String POST_GOODS_DETAIL = "goods/goodsDetail";
+
+    /**
+     * 取消关注
+     */
+    public static final String POST_DELETE_COLLECTION = "Collection/collection";
+
+    /**
+     * 加入购物车
+     */
+    public static final String POST_ADDCART = "Cart/addCart";
+
+    /**
      * 我的
      */
     public static final String POST_USER_INFO = "user/user_info";

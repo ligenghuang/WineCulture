@@ -11,12 +11,13 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginTop="28dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/shape_login_image" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/dp_10">
@@ -47,7 +48,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/dp_10">
@@ -72,7 +73,8 @@
             android:inputType="phone"
             android:maxLength="11"
             android:textColor="@color/color_15"
-            android:textColorHint="@color/color_999999" />
+            android:textColorHint="@color/color_999999"
+            android:textSize="@dimen/text_size15" />
     </LinearLayout>
 
     <View
@@ -84,7 +86,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/dp_10">
@@ -108,7 +110,8 @@
             android:inputType="textPassword"
             android:maxLength="16"
             android:textColor="@color/color_15"
-            android:textColorHint="@color/color_999999" />
+            android:textColorHint="@color/color_999999"
+            android:textSize="@dimen/text_size15" />
     </LinearLayout>
 
     <View
@@ -120,7 +123,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/dp_10">
@@ -144,7 +147,8 @@
             android:inputType="textPassword"
             android:maxLength="16"
             android:textColor="@color/color_15"
-            android:textColorHint="@color/color_999999" />
+            android:textColorHint="@color/color_999999"
+            android:textSize="@dimen/text_size15" />
 
     </LinearLayout>
 
@@ -157,7 +161,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/dp_10">
@@ -181,7 +185,8 @@
             android:inputType="number"
             android:maxLength="6"
             android:textColor="@color/color_15"
-            android:textColorHint="@color/color_999999" />
+            android:textColorHint="@color/color_999999"
+            android:textSize="@dimen/text_size15" />
 
         <TextView
             android:id="@+id/tvGetCode"
@@ -189,7 +194,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
             android:text="@string/register_getcode"
-            android:textColor="@color/blue" />
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size13" />
     </LinearLayout>
 
     <View
@@ -207,5 +213,7 @@
         android:layout_marginEnd="@dimen/dp_10"
         android:background="@drawable/shape_login_btn"
         android:text="@string/register_register"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size15"
+        android:textStyle="bold" />
 </LinearLayout>

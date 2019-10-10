@@ -1,8 +1,14 @@
 package com.zhifeng.wineculture.actions;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.ClassifyDto;
+import com.zhifeng.wineculture.modules.GeneralDto;
+import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.ClassifyView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -30,7 +36,7 @@ public class ClassifyAction extends BaseAction<ClassifyView> {
      * 获取分类数据
      */
     public void getClassifyData(){
-
+        post(WebUrlUtil.POST_GOODS_CATEGORYLIST,false,service -> manager.runHttp(service.PostData(WebUrlUtil.POST_GOODS_CATEGORYLIST)));
     }
 
 
@@ -57,6 +63,26 @@ public class ClassifyAction extends BaseAction<ClassifyView> {
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
+                    case WebUrlUtil.POST_GOODS_CATEGORYLIST:
+                        if (aBoolean){
+                            try{
+                                ClassifyDto classifyDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<ClassifyDto>() {
+                                }.getType());
+                                if (classifyDto.getStatus() == 200) {
+                                    view.getClassifyDataSuccess(classifyDto);
+                                    return;
+                                }
+                                view.onError(classifyDto.getMsg(), classifyDto.getStatus());
+                            }catch (JsonSyntaxException e){
+                                GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                                }.getType());
+
+                                view.onError(generalDto.getMsg(),generalDto.getStatus());
+                                return;
+                            }
+                        }
+                        view.onError(msg,action.getErrorType());
+                        break;
                 }
 
             }

@@ -21,6 +21,7 @@ import com.zhifeng.wineculture.actions.BaseAction;
 import com.zhifeng.wineculture.ui.cart.CartFragment;
 import com.zhifeng.wineculture.ui.classify.ClassifyFragment;
 import com.zhifeng.wineculture.ui.home.HomeFragment;
+import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.ui.my.MyFragment;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.data.MySp;
@@ -201,17 +202,17 @@ public class MainActivity extends UserBaseActivity {
                 break;
             case R.id.lin_3:
                 //todo 判断是否已经登录
-//                if (!MySp.iSLoginLive(mContext)) {
-//                    jumpActivityNotFinish(mContext, LoginActivity.class);
-//                    return false;
-//                }
+                if (!MySp.iSLoginLive(mContext)) {
+                    jumpActivityNotFinish(mContext, LoginActivity.class);
+                    return false;
+                }
                 Position = POIONTTHREE;
                 break;
             case R.id.lin_4:
-//                if (!MySp.iSLoginLive(mContext)) {
-//                    jumpActivityNotFinish(mContext, LoginActivity.class);
-//                    return false;
-//                }
+                if (!MySp.iSLoginLive(mContext)) {
+                    jumpActivityNotFinish(mContext, LoginActivity.class);
+                    return false;
+                }
                 Position = POIONTFOUR;
                 break;
             default:

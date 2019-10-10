@@ -3,36 +3,57 @@ package com.zhifeng.wineculture.ui.home;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.config.GlideApp;
 import com.lgh.huanglib.util.cusview.richtxtview.ImageLoader;
 import com.lgh.huanglib.util.cusview.richtxtview.XRichText;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.BaseAction;
+import com.zhifeng.wineculture.actions.GoodsDetailAction;
+import com.zhifeng.wineculture.adapters.BannerGoods;
+import com.zhifeng.wineculture.modules.GoodsDetailDto;
 import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.cart.CartActivity;
+import com.zhifeng.wineculture.ui.impl.GoodsDetailView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.listener.AppBarStateChangeListener;
+import com.zhifeng.wineculture.utils.sku.BaseSkuModel;
+import com.zhifeng.wineculture.utils.sku.ItemClickListener;
+import com.zhifeng.wineculture.utils.sku.ProductModel;
+import com.zhifeng.wineculture.utils.sku.Sku;
+import com.zhifeng.wineculture.utils.sku.UiData;
+import com.zhifeng.wineculture.utils.sku.adapter.SkuAdapter;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -49,7 +70,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * @Version: 1.0
  */
 
-public class GoodsDetailActivity extends UserBaseActivity {
+public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> implements GoodsDetailView {
 
     @BindView(R.id.banner_main)
     BGABanner bannerMain;
@@ -114,6 +135,30 @@ public class GoodsDetailActivity extends UserBaseActivity {
 
     String content;//图片详情
     String content_param;//产品参数
+    int inventory;//库存
+    String goodsId;
+    GoodsDetailDto.DataBean dataBean;
+    String goodsName = "";
+    String service;
+    int sku_id = -1;
+    int cart_number = 1;
+    boolean isCollection = false;
+
+    /**
+     * 轮播图所需参数
+     */
+    BannerGoods banner;
+
+    List<String> imgs = new ArrayList<>();
+    List<String> tips = new ArrayList<>();
+    List<String> url = new ArrayList<>();
+
+    private int comment_count;
+
+    private ProductModel testData;
+    UiData mUiData;
+
+    boolean isBuy = false;
 
     @Override
     public int intiLayout() {
@@ -128,8 +173,8 @@ public class GoodsDetailActivity extends UserBaseActivity {
     }
 
     @Override
-    protected BaseAction initAction() {
-        return null;
+    protected GoodsDetailAction initAction() {
+        return new GoodsDetailAction(this, this);
     }
 
     /**
@@ -148,6 +193,7 @@ public class GoodsDetailActivity extends UserBaseActivity {
                 .init();
         toolbar.setNavigationOnClickListener(view -> finish());
 
+        goodsId = String.valueOf(getIntent().getIntExtra("goods_id", 0));
     }
 
     @Override
@@ -155,7 +201,21 @@ public class GoodsDetailActivity extends UserBaseActivity {
         super.init();
         mActicity = this;
         mContext = this;
+
+        //轮播图
+        banner = new BannerGoods();
+        bannerMain.setAdapter(banner);
+
+//        goodsDetailCommentListAdapter = new GoodsDetailCommentListAdapter(mContext);
+//        rvComment.setLayoutManager(new LinearLayoutManager(mContext));
+//        rvComment.setAdapter(goodsDetailCommentListAdapter);
+
+        loadDialog();
+        getGoodsDetail();
+        loadView();
+
     }
+
 
     @Override
     protected void loadView() {
@@ -180,17 +240,157 @@ public class GoodsDetailActivity extends UserBaseActivity {
         });
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        baseAction.toRegister();
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        baseAction.toUnregister();
-//    }
+    /**
+     * 获取商品详情
+     */
+    @Override
+    public void getGoodsDetail() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.getGoodsDetail(goodsId);
+        }
+    }
+
+    /**
+     * 获取商品详情成功
+     *
+     * @param goodsDetailDto
+     */
+    @Override
+    public void getGoodsDetailSucces(GoodsDetailDto goodsDetailDto) {
+        loadDiss();
+        dataBean = goodsDetailDto.getData();
+        tvGoodsOriginalPrice.setText("￥" + dataBean.getOriginal_price());//原价
+        tvGoodsOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        tvGoodsPrice.setText("￥" + dataBean.getPrice());//价格
+        tvGoodsName.setText(dataBean.getGoods_name());//商品名称
+        goodsName = dataBean.getGoods_name();
+        fTitleTv.setText(goodsName);
+        setBanner(dataBean.getImg());
+        tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, dataBean.getNumber_sales() + ""));//销量
+        tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, dataBean.getStock() + ""));//库存
+        double freight = Double.parseDouble(dataBean.getShipping_price());
+        tvGoodsFreight.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "￥" + dataBean.getShipping_price());//运费
+        isCollection = dataBean.getCollection() == 1;
+        tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
+
+        comment_count = dataBean.getComment_count();
+        tvGoodsCommentCount.setText(ResUtil.getFormatString(R.string.goods_detail_tab_12, comment_count + ""));//评价数量
+//        goodsDetailCommentListAdapter.refresh(dataBean.getCommentlist());//评价列表
+        content = dataBean.getContent();//图片详情
+        content_param = dataBean.getContent_param();//产品参数
+        setSelectedLin(Position);
+        //todo 初始化规格
+        initUiData(dataBean);
+//        service = dataBean.getService();
+    }
+
+    /**
+     * 取消关注或关注
+     */
+    @Override
+    public void deleteOrAddCollection() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.deleteOrAddCollection(goodsId + "");
+        }
+    }
+
+    /**
+     * 取消关注或关注成功
+     */
+    @Override
+    public void deleteOrAddCollection(String msg) {
+        loadDiss();
+        showNormalToast(msg);
+        isCollection = !isCollection;
+        tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
+    }
+
+    /**
+     * 加入购物车
+     *
+     * @param sku_id
+     * @param cart_number
+     */
+    @Override
+    public void addCart(int sku_id, int cart_number) {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.addCart(sku_id, cart_number);
+        }
+    }
+
+    /**
+     * 加入购物车成功
+     *
+     * @param msg
+     */
+    @Override
+    public void addCartSuccess(String msg) {
+        loadDiss();
+        if (mUiData.getBottomSheetDialog() != null) {
+            mUiData.getBottomSheetDialog().dismiss();
+        }
+        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_33));
+
+    }
+
+    /**
+     * 立即购买
+     *
+     * @param sku_id
+     * @param cart_number
+     */
+    @Override
+    public void buyNow(int sku_id, int cart_number) {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.buyNow(sku_id, cart_number);
+        }
+    }
+
+    /**
+     * 立即购买成功  跳转至下单页面
+     *
+     * @param cartId
+     */
+    @Override
+    public void buyNowSuccess(int cartId) {
+        if (mUiData.getBottomSheetDialog() != null) {
+            mUiData.getBottomSheetDialog().dismiss();
+        }
+        loadDiss();
+//        if (inventory < 1) {
+//            showNormalToast(R.string.cart_tab_35);
+//            return;
+//        }
+        //todo 2019 10 10 订单页面
+//        startActivity(TemporaryActivity.class, "cartId", String.valueOf(cartId));
+    }
+
+    /**
+     * 失败
+     *
+     * @param message
+     * @param code
+     */
+    @Override
+    public void onError(String message, int code) {
+        loadDiss();
+        showNormalToast(message);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
+    }
 
     @OnTouch({R.id.tv_type_1, R.id.tv_type_2})
     public boolean onTouch(View v) {
@@ -229,6 +429,259 @@ public class GoodsDetailActivity extends UserBaseActivity {
                 break;
         }
     }
+
+    /**
+     * 初始化规格
+     *
+     * @param dataBean
+     */
+    private void initUiData(GoodsDetailDto.DataBean dataBean) {
+        mUiData = new UiData();
+        GoodsDetailDto.DataBean.SpecBean specBean = dataBean.getSpec();
+        List<GoodsDetailDto.DataBean.SpecBean.GoodsSkuBean> goodsSkuBeans = specBean.getGoods_sku();
+        List<GoodsDetailDto.DataBean.SpecBean.SpecAttrBean> specAttrBeans = specBean.getSpec_attr();
+        // 设置组合数据"1;2726;95"=“型号；颜色；尺寸”
+        testData = new ProductModel();
+
+        for (int i = 0; i < specAttrBeans.size(); i++) {
+            GoodsDetailDto.DataBean.SpecBean.SpecAttrBean specAttrBean = specAttrBeans.get(i);
+            ProductModel.AttributesEntity group01 = new ProductModel.AttributesEntity();
+            group01.setName(specAttrBean.getSpec_name());
+            for (int j = 0; j < goodsSkuBeans.size(); j++) {
+                GoodsDetailDto.DataBean.SpecBean.GoodsSkuBean goodsSkuBean = goodsSkuBeans.get(j);
+                String str = goodsSkuBean.getSku_attr().substring(2, goodsSkuBean.getSku_attr().lastIndexOf("\""));
+                L.d("lgh_sku", "sku = " + str);
+                L.d("lgh_sku", "specAttrBean.getSpec_id() = " + specAttrBean.getSpec_id());
+                if (str.equals(specAttrBean.getSpec_id() + "")) {
+                    for (int k = 0; k < specAttrBean.getRes().size(); k++) {
+                        GoodsDetailDto.DataBean.SpecBean.SpecAttrBean.ResBean resBean = specAttrBean.getRes().get(k);
+                        L.d("lgh_sku", "resBean.getAttr_id() = " + resBean.getAttr_id());
+                        L.d("lgh_sku", "goodsSkuBean.getSku_attr1() = " + goodsSkuBean.getSku_attr1());
+                        if (String.valueOf(resBean.getAttr_id()).equals(goodsSkuBean.getSku_attr1())) {
+                            L.d("lgh_sku", "sku = " + str);
+                            testData.getProductStocks().put(goodsSkuBean.getSku_attr1(), new BaseSkuModel(Double.parseDouble(goodsSkuBean.getPrice()), Double.parseDouble(goodsSkuBean.getGroupon_price()),
+                                    goodsSkuBean.getInventory(), goodsSkuBean.getVirtual_sales(),
+                                    goodsSkuBean.getSku_id(), resBean.getAttr_name()));
+                            group01.getAttributeMembers().add(j, new ProductModel.AttributesEntity.AttributeMembersEntity(1, goodsSkuBean.getSku_id(), resBean.getAttr_name(), goodsSkuBean.getPrice(), goodsSkuBean.getSku_attr1()));
+                        }
+                    }
+                }
+            }
+            testData.getAttributes().add(0, group01);//第一组
+        }
+
+    }
+
+    /**
+     * @param productModel
+     * @param IsBuy        判断 0加入购物车、1立即购买 、2查看规格
+     */
+    private void showBottomSheetDialog(ProductModel productModel, int IsBuy) {
+        if (mUiData.getBottomSheetDialog() == null) {
+            mUiData.getSelectedEntities().clear();
+            mUiData.getAdapters().clear();
+            View view = getLayoutInflater().inflate(R.layout.bottom_sheet, null);
+            ImageView ivClose = view.findViewById(R.id.iv_close);
+            TextView subtract = view.findViewById(R.id.tv_item_goods_subtract);
+            TextView add = view.findViewById(R.id.tv_item_goods_add);
+            TextView tvGoodsNum = view.findViewById(R.id.et_item_goods_num);
+            TextView save = view.findViewById(R.id.save);
+            LinearLayout llList = (LinearLayout) view.findViewById(R.id.ll_list);//列表
+            tvGoodsNum.setText(cart_number + "");
+            ivClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //关闭
+                    mUiData.getBottomSheetDialog().dismiss();
+                }
+            });
+
+            /**
+             * 减
+             */
+            subtract.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (inventory == -1) {
+                        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_28));
+                    } else {
+                        if (cart_number == 1) {
+                            cart_number = 1;
+                            tvGoodsNum.setText(cart_number + "");
+                            showNormalToast(ResUtil.getString(R.string.cart_tab_7));
+                        } else {
+                            cart_number = cart_number - 1;
+                            tvGoodsNum.setText(cart_number + "");
+                        }
+                        L.e("lgh_cart", "subtract = " + tvGoodsNum);
+                    }
+                }
+            });
+
+            /**
+             * 加
+             */
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (inventory == -1) {
+                        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_28));
+                    } else {
+                        if (cart_number >= inventory) {
+                            showNormalToast(ResUtil.getString(R.string.cart_tab_8));
+                        } else {
+                            cart_number = cart_number + 1;
+                            tvGoodsNum.setText(cart_number + "");
+                        }
+                    }
+                    L.e("lgh_cart", "add = " + cart_number);
+                }
+            });
+            /***********************************商品数量 end*****************************************/
+            save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (sku_id == -1) {
+                        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_31));
+                    } else {
+                        switch (IsBuy) {
+                            case 0:
+                                //加入购物车
+                                addCart(sku_id, cart_number);
+                                break;
+                            case 1:
+                                //立即购买
+                                buyNow(sku_id, cart_number);
+                                break;
+                            case 2:
+                                //选择规格
+                                mUiData.getBottomSheetDialog().dismiss();
+                                break;
+                        }
+                    }
+                }
+            });
+            //添加list组
+            for (int i = 0; i < testData.getAttributes().size(); i++) {
+                View viewList = getLayoutInflater().inflate(R.layout.bottom_sheet_group, null);
+                TextView tvTitle = (TextView) viewList.findViewById(R.id.tv_title);
+                RecyclerView recyclerViewBottom = (RecyclerView) viewList.findViewById(R.id.recycler_bottom);
+                SkuAdapter skuAdapter = new SkuAdapter(testData.getAttributes().get(i).getAttributeMembers());
+                mUiData.getAdapters().add(skuAdapter);
+                int item = 3;//设置列数
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(this, item);
+                recyclerViewBottom.setLayoutManager(gridLayoutManager);
+                recyclerViewBottom.setAdapter(skuAdapter);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                        (RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+                llList.addView(viewList, params);
+
+                tvTitle.setText(testData.getAttributes().get(i).getName());
+            }
+            // SKU 计算
+            mUiData.setResult(Sku.skuCollection(testData.getProductStocks()));
+            L.d("lgh_sku", "mUiData.setResult  = " + mUiData.getResult().toString());
+            for (String key : mUiData.getResult().keySet()) {
+                L.d("lgh_sku", "key = " + key + " value = " + mUiData.getResult().get(key));
+            }
+            //设置点击监听器
+            for (SkuAdapter adapter : mUiData.getAdapters()) {
+                ItemClickListener listener = new ItemClickListener(mUiData, adapter, handler);
+                adapter.setOnClickListener(listener);
+            }
+            // 初始化按钮
+            for (int i = 0; i < mUiData.getAdapters().size(); i++) {
+                for (ProductModel.AttributesEntity.AttributeMembersEntity entity : mUiData.getAdapters().get(i).getAttributeMembersEntities()) {
+                    if (mUiData.getResult().get(entity.getAttributeMemberId() + "") == null
+                            || mUiData.getResult().get(entity.getAttributeMemberId() + "").getStock() <= 0
+                    ) {
+                        entity.setStatus(0);
+                    }
+                }
+            }
+            //设置价格
+            mUiData.setBottomSheetDialog(new BottomSheetDialog(this));
+            mUiData.getBottomSheetDialog().setContentView(view);
+            View parent = (View) view.getParent();//获取ParentView
+            BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+            view.measure(0, 0);
+            behavior.setPeekHeight(view.getMeasuredHeight());
+            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) parent.getLayoutParams();
+            params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+            parent.setLayoutParams(params);
+            mUiData.getBottomSheetDialog().show();
+        } else {
+            mUiData.getBottomSheetDialog().show();
+        }
+    }
+
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case 1:
+//                    tv_selected.setText("选择的sku组合："+msg.obj.toString());
+                    //原价
+                    tvGoodsOriginalPrice.setText("￥" + msg.obj.toString());
+                    break;
+                case 2:
+//                    tv_stock.setText("组合的库存："+msg.obj.toString());
+                    L.d("lgh_sku", "inventory  = " + msg.obj.toString());
+                    inventory = Integer.parseInt(msg.obj.toString());
+                    tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, msg.obj.toString() + ""));//库存
+                    break;
+                case 3:
+//                    tv_price.setText("按钮的价格："+msg.obj.toString());
+                    L.d("lgh_sku", "price  = " + msg.obj.toString());
+                    tvGoodsPrice.setText("￥" + msg.obj.toString());
+                    break;
+                case 4:
+                    sku_id = Integer.parseInt(msg.obj.toString());
+                    break;
+                case 5:
+                    L.d("lgh_sku", "tvGoodsSpec  = " + msg.obj.toString());
+                    tvGoodsSpec.setText(ResUtil.getFormatString(R.string.goods_detail_tab_26, msg.obj.toString()));
+                    break;
+                case 6:
+                    //todo 销量
+                    tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, msg.obj.toString() + ""));//销量
+                    break;
+                case 7:
+                    tvGoodsOriginalPrice.setText("￥" + dataBean.getOriginal_price());//原价
+                    tvGoodsPrice.setText("￥" + dataBean.getPrice());//价格
+                    inventory = -1;
+                    tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, dataBean.getNumber_sales() + ""));//销量
+                    tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, dataBean.getStock() + ""));//库存
+                    break;
+            }
+        }
+    };
+
+    /**
+     * 设置图片轮播
+     *
+     * @param banners
+     */
+    private void setBanner(List<GoodsDetailDto.DataBean.ImgBean> banners) {
+        //设置轮播图
+        if (banners.size() != 0) {
+            bannerMain.setVisibility(View.VISIBLE);
+            imgs = new ArrayList<>();
+            tips = new ArrayList<>();
+            url = new ArrayList<>();
+            for (int i = 0; i < banners.size(); i++) {
+                GoodsDetailDto.DataBean.ImgBean bannersBean = banners.get(i);
+                imgs.add(bannersBean.getPicture());
+                tips.add("");
+                url.add(bannersBean.getPicture());
+            }
+            bannerMain.setAutoPlayAble(true);
+            bannerMain.setData(imgs, tips);
+            bannerMain.startAutoPlay();
+        }
+    }
+
 
     private void setXRichText(String text) {
         try {
@@ -291,7 +744,8 @@ public class GoodsDetailActivity extends UserBaseActivity {
         }
     }
 
-    @OnClick({R.id.f_right_iv, R.id.tv_goods_service, R.id.tv_goods_cart, R.id.tv_goods_buy, R.id.iv_to_up_top})
+    @OnClick({R.id.f_right_iv, R.id.tv_goods_service, R.id.tv_goods_cart, R.id.tv_goods_buy, R.id.iv_to_up_top
+            , R.id.tv_goods_attention, R.id.tv_goods_spec,R.id.tv_goods_add_cart})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.f_right_iv:
@@ -301,8 +755,8 @@ public class GoodsDetailActivity extends UserBaseActivity {
                         .atView(fRightIv)
                         .hasStatusBarShadow(true) //启用状态栏阴影
                         .asAttachList(new String[]{"首页", "分类", "购物车", "我的"},
-                                new int[]{R.drawable.icon_home_y,R.drawable.icon_classify_y,
-                                        R.drawable.icon_shopping_cart_y,R.drawable.icon_my_y},
+                                new int[]{R.drawable.icon_home_y, R.drawable.icon_classify_y,
+                                        R.drawable.icon_shopping_cart_y, R.drawable.icon_my_y},
                                 new OnSelectListener() {
                                     @Override
                                     public void onSelect(int position, String text) {
@@ -318,14 +772,30 @@ public class GoodsDetailActivity extends UserBaseActivity {
                                 })
                         .show();
                 break;
+            case R.id.tv_goods_attention:
+                //todo 取消关注或关注
+                deleteOrAddCollection();
+                break;
             case R.id.tv_goods_service:
                 //todo 客服
+                break;
+            case R.id.tv_goods_spec:
+                //todo 商品规格
+                isBuy = false;
+                showBottomSheetDialog(testData, 2);
                 break;
             case R.id.tv_goods_cart:
                 //todo 购物车
                 break;
             case R.id.tv_goods_buy:
                 //todo 立即购买
+                isBuy = true;
+                showBottomSheetDialog(testData, 1);
+                break;
+            case R.id.tv_goods_add_cart:
+                //todo 加入购物车
+                isBuy = false;
+                showBottomSheetDialog(testData, 0);
                 break;
             case R.id.iv_to_up_top:
                 //todo 回到顶部
@@ -351,4 +821,6 @@ public class GoodsDetailActivity extends UserBaseActivity {
             nestedScrollView.scrollTo(0, (int) y);
         }
     }
+
+
 }

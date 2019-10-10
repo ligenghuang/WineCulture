@@ -1,8 +1,13 @@
 package com.zhifeng.wineculture.actions;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.GeneralDto;
+import com.zhifeng.wineculture.modules.HomeDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.HomeView;
 
@@ -59,7 +64,21 @@ public class HomeAction extends BaseAction<HomeView> {
                 switch (action.getIdentifying()) {
                     case WebUrlUtil.POST_INDEX_INDEX:
                         if (aBoolean){
+                            try{
+                                HomeDto homeDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<HomeDto>() {
+                                }.getType());
+                                if (homeDto.getStatus() == 200) {
+                                    view.getHomeDataSuccess(homeDto);
+                                    return;
+                                }
+                                view.onError(homeDto.getMsg(), homeDto.getStatus());
+                            }catch (JsonSyntaxException e){
+                                GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                                }.getType());
 
+                                view.onError(generalDto.getMsg(),generalDto.getStatus());
+                                return;
+                            }
                         }
                         view.onError(msg,action.getErrorType());
                         break;

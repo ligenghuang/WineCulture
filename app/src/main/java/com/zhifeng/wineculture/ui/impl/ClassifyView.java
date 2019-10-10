@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.wineculture.modules.ClassifyDto;
 
 /**
   *
@@ -17,5 +18,5 @@ public interface ClassifyView extends BaseView {
      * 获取分类数据
      */
     void getClassifyData();
-    void getClassifyDataSuccess();
+    void getClassifyDataSuccess(ClassifyDto classifyDto);
 }

@@ -7,6 +7,8 @@
     <string name="cart_tab_4">去逛逛首页</string>
     <string name="cart_tab_5">全选</string>
     <string name="cart_tab_6">结算</string>
+    <string name="cart_tab_7">商品数量不能小于0！</string>
+    <string name="cart_tab_8">商品数量不能超过库存！</string>
 
     <string name="cart_submit_orders_tab_1">合计金额：</string>
     <string name="cart_submit_orders_tab_2">提交订单</string>

@@ -7,14 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.ClassifyAction;
+import com.zhifeng.wineculture.adapters.CategoryAdapter;
+import com.zhifeng.wineculture.adapters.CategoryListAdapter;
+import com.zhifeng.wineculture.modules.ClassifyDto;
 import com.zhifeng.wineculture.ui.impl.ClassifyView;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +44,9 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
     RecyclerView rvLeft;
     @BindView(R.id.rv_right)
     RecyclerView rvRight;
+
+    CategoryListAdapter categoryListAdapter;
+    CategoryAdapter categoryAdapter;
 
     @Override
     protected ClassifyAction initAction() {
@@ -65,6 +75,44 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
         return view;
     }
 
+    @Override
+    protected void init() {
+        super.init();
+        categoryListAdapter = new CategoryListAdapter();
+        rvLeft.setLayoutManager(new LinearLayoutManager(mContext));
+        rvLeft.setAdapter(categoryListAdapter);
+
+        categoryAdapter = new CategoryAdapter(mContext);
+        rvRight.setLayoutManager(new LinearLayoutManager(mContext));
+        rvRight.setAdapter(categoryAdapter);
+    }
+
+    @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+        super.onFragmentVisibleChange(isVisible);
+        if (isVisible){
+            getClassifyData();
+        }
+    }
+
+    @Override
+    protected void loadView() {
+        super.loadView();
+        categoryListAdapter.setOnClickListener(new CategoryListAdapter.OnClickListener() {
+            @Override
+            public void OnListClick(int id, ClassifyDto.DataBean goodsBean) {
+                List<ClassifyDto.DataBean> list = categoryListAdapter.getAllData();
+                for (int i = 0; i < list.size(); i++) {
+                    list.get(i).setClick(list.get(i).getCat_id() == id);
+                }
+                categoryListAdapter.notifyDataSetChanged();
+                List<ClassifyDto.DataBean> dataBeanList = new ArrayList<>();
+                dataBeanList.add(goodsBean);
+                categoryAdapter.refresh(dataBeanList);
+            }
+        });
+    }
+
     /**
      * 获取分类数据
      */
@@ -79,8 +127,18 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
      * 获取分类数据 成功
      */
     @Override
-    public void getClassifyDataSuccess() {
+    public void getClassifyDataSuccess(ClassifyDto classifyDto) {
         loadDiss();
+        List<ClassifyDto.DataBean> list =classifyDto.getData();
+        if (list.size() != 0){
+            list.get(0).setClick(true);
+            categoryListAdapter.refresh(list);
+            List<ClassifyDto.DataBean> dataBeanList = new ArrayList<>();
+            dataBeanList.add(list.get(0));
+            categoryAdapter.refresh(dataBeanList);
+        }else {
+            //todo 暂无数据
+        }
     }
 
     /**

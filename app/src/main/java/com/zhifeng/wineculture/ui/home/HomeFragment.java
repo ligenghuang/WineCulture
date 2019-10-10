@@ -1,16 +1,22 @@
 package com.zhifeng.wineculture.ui.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.superluo.textbannerlibrary.ITextBannerItemClickListener;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.HomeAction;
@@ -117,6 +123,32 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
         beSelfnav = new BannerHome();
         bannerAdvertising.setAdapter(beSelfnav);
 
+        loadDialog();
+        getHomeData();
+    }
+
+
+    @Override
+    protected void loadView() {
+        super.loadView();
+        //todo 公告列表点击事件
+        tvBanner.setItemOnClickListener(new ITextBannerItemClickListener() {
+            @Override
+            public void onItemClick(String data, int position) {
+                L.e("lgh_item","position   = "+position);
+//                Intent intent = new Intent(mContext, NoticeDetailActivity.class);
+//                intent.putExtra("id",announceBeans.get(position).getId()+"");
+//                startActivity(intent);
+                tvBanner.stopViewAnimator();
+            }
+        });
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getHomeData();
+            }
+        });
     }
 
     /**
@@ -136,6 +168,9 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
     public void getHomeDataSuccess(HomeDto homeDto) {
         loadDiss();
         refreshLayout.finishRefresh();
+        HomeDto.DataBean dataBean = homeDto.getData();
+        setBanner(dataBean.getBanners());//轮播图
+        setAnnounceList(dataBean.getAnnounce());//公告
 
     }
 
@@ -162,5 +197,41 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
     public void onPause() {
         super.onPause();
         baseAction.toUnregister();
+    }
+
+    private void setBanner(List<HomeDto.DataBean.BannersBean> banners) {
+        //设置轮播图
+        if (banners.size() != 0) {
+            bannerHome.setVisibility(View.VISIBLE);
+            imgs = new ArrayList<>();
+            tips = new ArrayList<>();
+            url = new ArrayList<>();
+            titles = new ArrayList<>();
+            for (int i = 0; i < banners.size(); i++) {
+                HomeDto.DataBean.BannersBean bannersBean = banners.get(i);
+                imgs.add(bannersBean.getPicture());
+                tips.add("");
+                url.add(bannersBean.getUrl());
+                titles.add(bannersBean.getTitle());
+            }
+            bannerHome.setAutoPlayAble(true);
+            bannerHome.setData(imgs, tips);
+            bannerHome.startAutoPlay();
+        }
+    }
+
+    /**
+     * 获取公告列表
+     */
+    private void setAnnounceList(List<HomeDto.DataBean.AnnounceBean> list) {
+        if (list.size() != 0) {
+            List<String> strings = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                strings.add(list.get(i).getTitle());
+            }
+            tvBanner.setDatas(strings);
+            tvBanner.startViewAnimator();
+        }
+
     }
 }

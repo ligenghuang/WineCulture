@@ -32,4 +32,11 @@
     <string name="goods_detail_tab_24">购买数量</string>
     <string name="goods_detail_tab_25">确定</string>
     <string name="goods_detail_tab_26">已选\" %0$s \"</string>
+    <string name="goods_detail_tab_27">库存不足</string>
+    <string name="goods_detail_tab_28">请先选择规格</string>
+    <string name="goods_detail_tab_29">支付成功</string>
+    <string name="goods_detail_tab_30">未设置支付密码，请先设置支付密码</string>
+    <string name="goods_detail_tab_31">请选择规格</string>
+    <string name="goods_detail_tab_32">加入购物车</string>
+    <string name="goods_detail_tab_33">已加入购物车</string>
 </resources>

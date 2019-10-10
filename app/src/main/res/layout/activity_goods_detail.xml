@@ -426,23 +426,23 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-<!--            &lt;!&ndash;加入购物车&ndash;&gt;-->
-<!--            <TextView-->
-<!--                android:id="@+id/tv_goods_add_cart"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@color/color_fd69a5"-->
-<!--                android:gravity="center"-->
-<!--                android:text="@string/goods_detail_tab_32"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="@dimen/text_size15"-->
-<!--                android:textStyle="bold" />-->
+            <!--加入购物车-->
+            <TextView
+                android:id="@+id/tv_goods_add_cart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/color_c99e5e"
+                android:gravity="center"
+                android:text="@string/goods_detail_tab_32"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size15"
+                android:textStyle="bold" />
 
 
-<!--            <View android:layout_height="match_parent"-->
-<!--                android:layout_width="1dp"-->
-<!--                android:background="@color/color_e6"/>-->
+            <View android:layout_height="match_parent"
+                android:layout_width="1dp"
+                android:background="@color/color_e6"/>
 
             <!--立即购买-->
             <TextView
