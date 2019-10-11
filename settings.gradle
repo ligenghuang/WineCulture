@@ -1,2 +1,2 @@
-include ':app', ':HuangLib'
+include ':app', ':HuangLib', ':imagepickerLib'
 rootProject.name='WineCulture'

@@ -1,0 +1,13 @@
+<resources>
+    <string name="ip_all_images">All Image</string>
+    <string name="ip_folder_image_count">have %1$d</string>
+    <string name="ip_preview_image_count">%1$d/%2$d</string>
+    <string name="ip_select_limit">Most options%1$d</string>
+    <string name="ip_complete">Finish</string>
+    <string name="ip_select_complete">Finish(%1$d/%2$d)</string>
+    <string name="ip_preview">Preview</string>
+    <string name="ip_preview_count">preview(%1$d)</string>
+    <string name="ip_photo_crop">Cropping</string>
+    <string name="ip_origin">Original drawing</string>
+    <string name="ip_origin_size">Original drawing(%1$s)</string>
+</resources>

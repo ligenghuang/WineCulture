@@ -39,4 +39,26 @@
     <string name="goods_detail_tab_31">请选择规格</string>
     <string name="goods_detail_tab_32">加入购物车</string>
     <string name="goods_detail_tab_33">已加入购物车</string>
+
+
+    <string name="temporary_tab_1">请选择收货地址</string>
+    <string name="temporary_tab_2">本店自营商品</string>
+    <string name="temporary_tab_3">配送方式</string>
+    <string name="temporary_tab_4">普通配送</string>
+    <string name="temporary_tab_5">快递 免费</string>
+    <string name="temporary_tab_6">订单备注</string>
+    <string name="temporary_tab_7">选填 请先和商家协商一致</string>
+    <string name="temporary_tab_8">共%0$s件</string>
+    <string name="temporary_tab_9">共计：</string>
+    <string name="temporary_tab_10">立即支付</string>
+    <string name="temporary_tab_11">服务</string>
+    <string name="temporary_tab_12">不支持7天无理由</string>
+    <string name="temporary_tab_13">购买数量</string>
+    <string name="temporary_tab_14">￥%0$s</string>
+    <string name="temporary_tab_15">x%0$s</string>
+    <string name="temporary_tab_16">共%0$s件合计：</string>
+
+    <string name="bug_pwd_dialog_1">确认支付</string>
+    <string name="bug_pwd_dialog_2">支付方式</string>
+
 </resources>

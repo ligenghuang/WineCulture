@@ -77,6 +77,17 @@
                 android:text="广东省广州市白云区嘉禾望岗嘉禾望家属及沙发上司国嘉禾望岗"
                 />
 
+            <TextView
+                android:id="@+id/tv_address_detele"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@string/address_list_tab_2"
+                android:textSize="@dimen/text_size12"
+                android:textColor="@color/color_9"
+                android:layout_marginRight="20dp"
+                />
+
 
         </LinearLayout>
 

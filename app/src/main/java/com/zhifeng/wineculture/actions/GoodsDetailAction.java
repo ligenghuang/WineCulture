@@ -65,7 +65,7 @@ public class GoodsDetailAction extends BaseAction<GoodsDetailView> {
      * @param cart_number
      */
     public void buyNow(int sku_id, int cart_number) {
-        post(WebUrlUtil.POST_ADDCART+1,false,service -> manager.runHttp(
+        post(WebUrlUtil.POST_ADDCART,false,service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),"sku_id",sku_id,"cart_number",cart_number,"session_id",1),
                         WebUrlUtil.POST_ADDCART)
         ));
@@ -144,15 +144,15 @@ public class GoodsDetailAction extends BaseAction<GoodsDetailView> {
                         }
                         view.onError(msg, action.getErrorType());
                         break;
-                    case WebUrlUtil.POST_ADDCART+1:
-                        //todo 立即购买
+                    case WebUrlUtil.POST_ADDCART:
+                        //todo 立即购买 或 加入购物车
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
                             try{
                                 AddCartDto addCartDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<AddCartDto>() {
                                 }.getType());
-                                if (addCartDto.getStatus() == 1) {
-                                    //todo 立即购买成功
+                                if (addCartDto.getStatus() == 200) {
+                                    //todo 立即购买 或 加入购物车 成功
                                     view.buyNowSuccess(Integer.parseInt(addCartDto.getData().getCart_id()+""));
                                     return;
                                 }
@@ -164,22 +164,6 @@ public class GoodsDetailAction extends BaseAction<GoodsDetailView> {
                                 view.onError(generalDto.getMsg(), action.getErrorType());
                                 return;
                             }
-                        }
-                        view.onError(msg, action.getErrorType());
-                        break;
-                    case WebUrlUtil.POST_ADDCART:
-                        //todo 加入购物车
-                        if (aBoolean) {
-                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            AddCartDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<AddCartDto>() {
-                            }.getType());
-                            if (generalDto.getStatus() == 1||generalDto.getStatus() == 200) {
-                                //todo 加入购物车成功
-                                view.addCartSuccess(generalDto.getMsg());
-                                return;
-                            }
-                            view.onError(generalDto.getMsg(), action.getErrorType());
-                            return;
                         }
                         view.onError(msg, action.getErrorType());
                         break;

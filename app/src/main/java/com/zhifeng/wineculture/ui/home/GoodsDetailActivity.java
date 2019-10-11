@@ -320,20 +320,6 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         }
     }
 
-    /**
-     * 加入购物车成功
-     *
-     * @param msg
-     */
-    @Override
-    public void addCartSuccess(String msg) {
-        loadDiss();
-        if (mUiData.getBottomSheetDialog() != null) {
-            mUiData.getBottomSheetDialog().dismiss();
-        }
-        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_33));
-
-    }
 
     /**
      * 立即购买
@@ -360,12 +346,14 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             mUiData.getBottomSheetDialog().dismiss();
         }
         loadDiss();
-//        if (inventory < 1) {
-//            showNormalToast(R.string.cart_tab_35);
-//            return;
-//        }
-        //todo 2019 10 10 订单页面
-//        startActivity(TemporaryActivity.class, "cartId", String.valueOf(cartId));
+        L.e("lgh_goods","isBuy  = "+isBuy);
+        if (isBuy){
+            //todo 2019 10 10 订单页面
+            startActivity(TemporaryActivity.class, "cartId", String.valueOf(cartId));
+        }else {
+            showNormalToast(ResUtil.getString(R.string.goods_detail_tab_33));
+        }
+
     }
 
     /**
@@ -786,6 +774,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 break;
             case R.id.tv_goods_cart:
                 //todo 购物车
+                jumpActivityNotFinish(mContext,CartActivity.class);
                 break;
             case R.id.tv_goods_buy:
                 //todo 立即购买

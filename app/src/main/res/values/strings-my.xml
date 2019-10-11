@@ -21,6 +21,9 @@
 
 
     <string name="address_list_tab_1">新增收货地址</string>
+    <string name="address_list_tab_2">删除</string>
+    <string name="address_list_tab_3">删除地址成功</string>
+    <string name="address_list_tab_4">设置默认地址成功</string>
 
     <string name="add_address_tab_1">收货人</string>
     <string name="add_address_tab_2">收货人姓名</string>

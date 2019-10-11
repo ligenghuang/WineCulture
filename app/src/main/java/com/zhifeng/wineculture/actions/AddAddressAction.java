@@ -1,9 +1,13 @@
 package com.zhifeng.wineculture.actions;
 
 import com.lgh.huanglib.actions.Action;
+import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.AddAddressView;
+import com.zhifeng.wineculture.utils.config.MyApp;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -32,7 +36,9 @@ public class AddAddressAction extends BaseAction<AddAddressView> {
      * @param id
      */
     public void getAddress(int id){
-
+        post(WebUrlUtil.POST_ADDRESS_DETAIL,false, service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"address_id",id),WebUrlUtil.POST_ADDRESS_DETAIL)
+        ));
     }
 
     /**

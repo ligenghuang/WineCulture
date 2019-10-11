@@ -9,6 +9,11 @@
     <string name="cart_tab_6">结算</string>
     <string name="cart_tab_7">商品数量不能小于0！</string>
     <string name="cart_tab_8">商品数量不能超过库存！</string>
+    <string name="cart_tab_9">操作频繁，请稍等</string>
+    <string name="cart_tab_10">请选择商品</string>
+    <string name="cart_tab_11">删除成功！</string>
+    <string name="cart_tab_12">总计： ￥%0$s</string>
+    <string name="cart_tab_13">购物车(%0$s)</string>
 
     <string name="cart_submit_orders_tab_1">合计金额：</string>
     <string name="cart_submit_orders_tab_2">提交订单</string>

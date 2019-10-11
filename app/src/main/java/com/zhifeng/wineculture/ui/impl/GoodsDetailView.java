@@ -29,7 +29,6 @@ public interface GoodsDetailView extends BaseView {
      * @param cart_number
      */
     void addCart(int sku_id,int cart_number);
-    void addCartSuccess(String msg);
 
     /**
      * 立即购买

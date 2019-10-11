@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.wineculture.modules.CartListDto;
 
 /**
   *
@@ -17,6 +18,17 @@ public interface CartView extends BaseView {
      * 获取购物商品列表
      */
     void getCartList();
-    void getCartListSuccess();
+    void getCartListSuccess(CartListDto cartListDto);
 
+
+    /***
+     * 删除购物车商品
+     * @param id
+     */
+    void delCart(String id);
+    void delCartSuccess();
+
+    void editCart(String id,String num);
+    void editCartSuccess();
+    void editCartError(String msg);
 }

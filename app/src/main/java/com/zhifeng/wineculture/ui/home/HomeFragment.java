@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
@@ -21,6 +23,9 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.HomeAction;
 import com.zhifeng.wineculture.adapters.BannerHome;
+import com.zhifeng.wineculture.adapters.HotGoodsAdapter;
+import com.zhifeng.wineculture.adapters.LikeGoodsAdapter;
+import com.zhifeng.wineculture.adapters.RecommendedAdapter;
 import com.zhifeng.wineculture.modules.HomeDto;
 import com.zhifeng.wineculture.ui.impl.HomeView;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
@@ -61,7 +66,10 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
     RecyclerView rvLikeGoods;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-
+    @BindView(R.id.ll_hot)
+    LinearLayout llHot;
+    @BindView(R.id.ll_like)
+    LinearLayout llLike;
 
     /**
      * 轮播图所需参数
@@ -78,10 +86,10 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
     List<String> tipsSelfnav = new ArrayList<>();
     List<String> urlSelfnav = new ArrayList<>();
     List<String> titleSelfnav = new ArrayList<>();
-    @BindView(R.id.ll_hot)
-    LinearLayout llHot;
-    @BindView(R.id.ll_like)
-    LinearLayout llLike;
+
+    RecommendedAdapter recommendedAdapter;
+    HotGoodsAdapter hotGoodsAdapter;
+    LikeGoodsAdapter likeGoodsAdapter;
 
 
     @Override
@@ -122,6 +130,20 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
 
         beSelfnav = new BannerHome();
         bannerAdvertising.setAdapter(beSelfnav);
+
+        recommendedAdapter = new RecommendedAdapter(mContext);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        rvAdvertising.setLayoutManager(linearLayoutManager);
+        rvAdvertising.setAdapter(recommendedAdapter);
+
+        hotGoodsAdapter = new HotGoodsAdapter(mContext);
+        rvHotGoods.setLayoutManager(new LinearLayoutManager(mContext));
+        rvHotGoods.setAdapter(hotGoodsAdapter);
+
+        likeGoodsAdapter = new LikeGoodsAdapter(mContext);
+        rvLikeGoods.setLayoutManager(new GridLayoutManager(mContext,2));
+        rvLikeGoods.setAdapter(likeGoodsAdapter);
 
         loadDialog();
         getHomeData();
@@ -171,6 +193,11 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
         HomeDto.DataBean dataBean = homeDto.getData();
         setBanner(dataBean.getBanners());//轮播图
         setAnnounceList(dataBean.getAnnounce());//公告
+        recommendedAdapter.refresh(dataBean.getTuijian());//推荐
+        llHot.setVisibility(dataBean.getHot_goods().size() == 0?View.GONE:View.VISIBLE);
+        hotGoodsAdapter.refresh(dataBean.getHot_goods());//热销商品
+        llLike.setVisibility(dataBean.getLike().size() == 0?View.GONE:View.VISIBLE);
+        likeGoodsAdapter.refresh(dataBean.getLike());//猜你喜欢
 
     }
 

@@ -2,22 +2,23 @@ package com.zhifeng.wineculture.modules;
 
 public class AddCartDto {
 
+
     /**
-     * data : {"cart_id":3889,"inventory":65520}
-     * msg : 成功！
      * status : 200
+     * msg : 成功！
+     * data : {"cart_id":1221,"inventory":985}
      */
 
-    private DataBean data;
-    private String msg;
     private int status;
+    private String msg;
+    private DataBean data;
 
-    public DataBean getData() {
-        return data;
+    public int getStatus() {
+        return status;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getMsg() {
@@ -28,45 +29,36 @@ public class AddCartDto {
         this.msg = msg;
     }
 
-    public int getStatus() {
-        return status;
+    public DataBean getData() {
+        return data;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
     public static class DataBean {
         /**
-         * cart_id : 3889.0
-         * inventory : 65520.0
+         * cart_id : 1221
+         * inventory : 985
          */
 
-        private double cart_id;
-        private double inventory;
-        private double single_number;
+        private int cart_id;
+        private int inventory;
 
-        public double getSingle_number() {
-            return single_number;
-        }
-
-        public void setSingle_number(double single_number) {
-            this.single_number = single_number;
-        }
-
-        public double getCart_id() {
+        public int getCart_id() {
             return cart_id;
         }
 
-        public void setCart_id(double cart_id) {
+        public void setCart_id(int cart_id) {
             this.cart_id = cart_id;
         }
 
-        public double getInventory() {
+        public int getInventory() {
             return inventory;
         }
 
-        public void setInventory(double inventory) {
+        public void setInventory(int inventory) {
             this.inventory = inventory;
         }
     }

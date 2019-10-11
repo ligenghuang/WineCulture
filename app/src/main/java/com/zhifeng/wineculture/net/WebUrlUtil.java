@@ -61,4 +61,44 @@ public class WebUrlUtil {
      * 我的
      */
     public static final String POST_USER_INFO = "user/user_info";
+
+    /**
+     * 购物车
+     */
+    public static final String POST_CART_LIST = "cart/cartlist";
+
+    /**
+     * 删除购物车商品
+     */
+    public static final String POST_DELETE_CART_LIST = "cart/delCart";
+
+    /**
+     * 地址管理
+     */
+    public static final String POST_ADDRESS_LIST ="Address/addressList";
+
+    /**
+     * 删除地址
+     */
+    public static final String POST_DEL_ADDRESS ="Address/delAddress";
+
+    /**
+     * 获取收货地址详情
+     */
+    public static final String POST_ADDRESS_DETAIL = "Address/my_address";
+
+    /**
+     * 购物车提交订单接口
+     */
+    public static final String POST_TEMPORARY = "Order/temporary";
+
+    /**
+     * 提交订单
+     */
+    public static final String POST_SUBMITORDER = "Order/submitOrder";
+
+    /**
+     * 订单支付
+     */
+    public static final String POST_PAY_ORDER = "pay/payment";
 }

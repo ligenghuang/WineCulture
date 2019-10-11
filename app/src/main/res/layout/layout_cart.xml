@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
         android:background="@color/color_f2">
 
 
@@ -27,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
                 tools:itemCount="2"
                 tools:listitem="@layout/layout_item_cart"/>
 
@@ -89,6 +89,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/color_f2"
+        android:visibility="gone"
         android:gravity="center">
 
 
