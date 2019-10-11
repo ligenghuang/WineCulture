@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
@@ -148,7 +149,7 @@ public class CartFragment extends UserBaseFragment<CartAction> implements CartVi
         view = inflater.inflate(R.layout.fragment_cart, container, false);
         ButterKnife.bind(this, view);
         binding();
-        mImmersionBar.setStatusBarView(getActivity(), topView);
+        ImmersionBar.setStatusBarView(getActivity(), topView);
         return view;
     }
 

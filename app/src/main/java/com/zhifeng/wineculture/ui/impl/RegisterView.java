@@ -14,4 +14,6 @@ public interface RegisterView extends BaseView {
     void register();
 
     void registerSuccess(RegisterDto registerDto);
+
+    void hadRegister(String message);
 }

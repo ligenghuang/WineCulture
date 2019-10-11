@@ -7,6 +7,6 @@
     <string name="login_pwd">密码</string>
     <string name="login_pwdHint">请输入密码</string>
     <string name="login_login">登录</string>
-    <string name="login_register"><u>注册</u></string>
-    <string name="login_forgetPwd"><u>忘记密码</u></string>
+    <string name="login_register">注册</string>
+    <string name="login_forgetPwd">忘记密码</string>
 </resources>

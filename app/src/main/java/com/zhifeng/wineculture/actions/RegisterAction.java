@@ -3,11 +3,13 @@ package com.zhifeng.wineculture.actions;
 import android.annotation.SuppressLint;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.RegisterDto;
 import com.zhifeng.wineculture.modules.SendVerifyCodeDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
@@ -59,10 +61,17 @@ public class RegisterAction extends BaseAction<RegisterView> {
                     break;
                 case WebUrlUtil.POST_REGISTER:
                     if (aBoolean) {
-                        RegisterDto registerDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<RegisterDto>() {
-                        }.getType());
-                        if (registerDto.getStatus() == 200) {
-                            view.registerSuccess(registerDto);
+                        try {
+                            RegisterDto registerDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<RegisterDto>() {
+                            }.getType());
+                            if (registerDto.getStatus() == 200) {
+                                view.registerSuccess(registerDto);
+                                return;
+                            }
+                        } catch (JsonSyntaxException e) {
+                            GeneralDto generalDto=new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            }.getType());
+                            view.hadRegister(generalDto.getMsg());
                             return;
                         }
                     }

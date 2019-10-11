@@ -18,9 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
-        <activity android:name=".ui.home.TemporaryActivity"></activity>
+        <activity android:name=".ui.home.TemporaryActivity" />
         <activity android:name=".ui.cart.CartActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".ui.cart.CartActivity" />
         <activity android:name=".ui.my.BookingGoodsActivity" />
         <activity android:name=".ui.cart.CartSubmitOrdersActivity" />
         <activity android:name=".ui.home.GoodsDetailActivity"

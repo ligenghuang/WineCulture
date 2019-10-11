@@ -7,14 +7,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.config.GlideUtil;
 import com.zhifeng.wineculture.R;
-import com.zhifeng.wineculture.actions.BaseAction;
+import com.zhifeng.wineculture.actions.ShareUrlAction;
+import com.zhifeng.wineculture.modules.ShareUrlDto;
+import com.zhifeng.wineculture.ui.impl.ShareUrlView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @ClassName:
@@ -22,7 +27,7 @@ import butterknife.BindView;
  * @Author: Administrator
  * @Date: 2019/9/28 18:07
  */
-public class PopularizeActivity extends UserBaseActivity {
+public class PopularizeActivity extends UserBaseActivity<ShareUrlAction> implements ShareUrlView {
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
@@ -41,6 +46,7 @@ public class PopularizeActivity extends UserBaseActivity {
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         binding();
+        getShareUrl();
     }
 
     @Override
@@ -51,8 +57,8 @@ public class PopularizeActivity extends UserBaseActivity {
     @Override
     protected void init() {
         super.init();
-        mActicity=this;
-        mContext=this;
+        mActicity = this;
+        mContext = this;
     }
 
     /**
@@ -72,7 +78,44 @@ public class PopularizeActivity extends UserBaseActivity {
     }
 
     @Override
-    protected BaseAction initAction() {
-        return null;
+    protected ShareUrlAction initAction() {
+        return new ShareUrlAction(this, this);
+    }
+
+    @Override
+    public void getShareUrl() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.getShareUrl();
+        }
+    }
+
+    @Override
+    public void getShareUrlSuccess(ShareUrlDto shareUrlDto) {
+        ShareUrlDto.DataBean dataBean = shareUrlDto.getData();
+        GlideUtil.setImageCircle(mContext, dataBean.getAvatar(), ivAvatar, R.drawable.icon_avatar);
+        tvUserName.setText(dataBean.getRealname());
+        tvUserId.setText(String.valueOf(dataBean.getId()));
+    }
+
+    @Override
+    public void onError(String message, int code) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        baseAction.toUnRegister();
+    }
+
+    @OnClick(R.id.f_right_iv)
+    public void OnClick(View view) {
+
     }
 }

@@ -63,6 +63,11 @@ public class WebUrlUtil {
     public static final String POST_USER_INFO = "user/user_info";
 
     /**
+     * 我要推广
+     */
+    public static final String POST_SHARE_URL = "user/shareUrl";
+
+    /**
      * 购物车
      */
     public static final String POST_CART_LIST = "cart/cartlist";

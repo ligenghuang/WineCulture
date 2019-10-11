@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.config.GlideUtil;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.MyAction;
@@ -61,14 +63,14 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
-        if (isVisible){
+        if (isVisible) {
             getUserInfo();
         }
     }
 
     @Override
     protected MyAction initAction() {
-        return new MyAction((RxAppCompatActivity) mActivity,this);
+        return new MyAction((RxAppCompatActivity) mActivity, this);
     }
 
     @Override
@@ -90,19 +92,26 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
 
     @Override
     public void getUserInfo() {
-        baseAction.getUserInfo();
+        if (CheckNetwork.checkNetwork2(mContext)){
+            baseAction.getUserInfo();
+        }
     }
 
     @Override
     public void getUserInfoSuccess(UserInfoDto userInfoDto) {
-        tvName.setText(userInfoDto.getData().getRealname());
-        tvId.setText(String.valueOf(userInfoDto.getData().getId()));
+        UserInfoDto.DataBean dataBean = userInfoDto.getData();
+        GlideUtil.setImageCircle(mContext, dataBean.getAvatar(), iv, R.drawable.icon_avatar);
+        tvName.setText(dataBean.getRealname());
+        tvId.setText(String.valueOf(dataBean.getId()));
+        String mobile = dataBean.getMobile();
+        mobile = mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        tvMobile.setText(mobile);
     }
 
     @Override
     public void noLogin() {
         loadDiss();
-        showToast("登录过期，请重新登录！");
+        showToast(R.string.my_nologin);
         MainActivity.Position = 0;
         MySp.clearAllSP(mContext);
         jumpActivityNotFinish(mContext, LoginActivity.class);
@@ -116,7 +125,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     @OnClick({R.id.tvMyOrder, R.id.tv_obligation, R.id.tv_toBeShipped, R.id.tv_toBeReceived,
             R.id.tv_toBeComment, R.id.tv_service, R.id.tv_memberCenter, R.id.tv_myteam,
             R.id.tv_popularize, R.id.tv_proxy, R.id.tv_myCollect, R.id.tv_myFootprint,
-            R.id.tv_myComments, R.id.tv_myAddress, R.id.tv_aboutWineCulture,R.id.iv_booking_goods})
+            R.id.tv_myComments, R.id.tv_myAddress, R.id.tv_aboutWineCulture, R.id.iv_booking_goods})
     public void onViewClicked(View view) {
         int position = -1;
         switch (view.getId()) {
@@ -183,7 +192,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
                 break;
             case R.id.iv_booking_goods:
                 //todo 我要预约商品
-                jumpActivityNotFinish(mContext,BookingGoodsActivity.class);
+                jumpActivityNotFinish(mContext, BookingGoodsActivity.class);
                 break;
         }
         if (position != -1) {

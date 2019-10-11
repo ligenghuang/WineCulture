@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="my_nologin">登录过期，请重新登录！</string>
     <string name="my_id">ID：</string>
     <string name="my_myorder">我的订单</string>
     <string name="my_allOrder">全部</string>

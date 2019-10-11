@@ -13,5 +13,6 @@
     <string name="register_code">验证码</string>
     <string name="register_codeHint">请输入验证码</string>
     <string name="register_getcode">获取验证码</string>
+    <string name="register_remainderSecond">%0$s秒</string>
     <string name="register_success">注册成功</string>
 </resources>

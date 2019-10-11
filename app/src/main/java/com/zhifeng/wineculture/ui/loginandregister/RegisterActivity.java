@@ -9,19 +9,24 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.lgh.huanglib.util.data.ValidateUtils;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.RegisterAction;
 import com.zhifeng.wineculture.modules.RegisterDto;
 import com.zhifeng.wineculture.modules.SendVerifyCodeDto;
+import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.RegisterView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 /**
  * @ClassName:
  * @Description: 注册页
@@ -98,7 +103,9 @@ public class RegisterActivity extends UserBaseActivity<RegisterAction> implement
             showNormalToast(R.string.register_rightMobileHint);
             return;
         }
-        baseAction.sendVerifyCode(phone);
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.sendVerifyCode(phone);
+        }
     }
 
     @Override
@@ -139,18 +146,28 @@ public class RegisterActivity extends UserBaseActivity<RegisterAction> implement
             showNormalToast(R.string.register_codeHint);
             return;
         }
-        baseAction.register(mobile, code, pwd, confirmPwd);
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.register(mobile, code, pwd, confirmPwd);
+        }
     }
 
     @Override
     public void registerSuccess(RegisterDto registerDto) {
         showNormalToast(R.string.register_success);
-        finish();
+        MySp.setAccessToken(mContext, registerDto.getData().getToken());
+        ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class);
+        jumpActivity(mContext, MainActivity.class);
     }
 
     @Override
     public void onError(String message, int code) {
         showNormalToast(message);
+    }
+
+    @Override
+    public void hadRegister(String message) {
+        showNormalToast(message);
+        finish();
     }
 
     @Override
@@ -198,7 +215,7 @@ public class RegisterActivity extends UserBaseActivity<RegisterAction> implement
         @Override
         public void onTick(long millisUntilFinished) {
             int second = (int) (millisUntilFinished / 1000);
-            String text = second + "秒";
+            String text = ResUtil.getFormatString(R.string.register_remainderSecond, second);
             tvGetCode.setText(text);
         }
 

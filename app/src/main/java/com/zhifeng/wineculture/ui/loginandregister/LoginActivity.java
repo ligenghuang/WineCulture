@@ -82,6 +82,12 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         super.init();
         mActicity = this;
         mContext = this;
+        loadView();
+    }
+
+    @Override
+    protected void loadView() {
+        etPwd.setKeyListener(DigitsKeyListener.getInstance("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
     }
 
     /**
@@ -155,7 +161,7 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         switch (view.getId()) {
             case R.id.ivShowPwd:
                 //todo 显示 隐藏密码
-                etPwd.setKeyListener(DigitsKeyListener.getInstance("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+                isShow = !isShow;
                 if (isShow) {
                     etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
@@ -163,7 +169,6 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
                 }
                 String text = etPwd.getText().toString();
                 etPwd.setSelection(text.length());
-                isShow = !isShow;
                 ivShowPwd.setSelected(isShow);
                 break;
             case R.id.btnLogin:
