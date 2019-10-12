@@ -47,7 +47,7 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataB
                 }
             }
         });
-        holder.itemView.findViewById(R.id.tv_address_detele).setOnClickListener(new View.OnClickListener() {
+        holder.itemView.findViewById(R.id.iv_detele).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickListener.Detele(model.getAddress_id());

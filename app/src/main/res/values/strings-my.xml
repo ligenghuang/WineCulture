@@ -25,6 +25,8 @@
     <string name="address_list_tab_2">删除</string>
     <string name="address_list_tab_3">删除地址成功</string>
     <string name="address_list_tab_4">设置默认地址成功</string>
+    <string name="address_list_tab_5">默认</string>
+    <string name="address_list_tab_6">未添加</string>
 
     <string name="add_address_tab_1">收货人</string>
     <string name="add_address_tab_2">收货人姓名</string>
@@ -41,6 +43,8 @@
     <string name="add_address_tab_13">请输入有效的手机号码</string>
     <string name="add_address_tab_14">请选择收货地址</string>
     <string name="add_address_tab_15">请输入详细的收货地址</string>
+    <string name="add_address_tab_16">选择地址</string>
+    <string name="add_address_tab_17">请输入有效的手机号码</string>
 
     <string name="member_center_tab_1">余额</string>
     <string name="member_center_tab_2">可使用</string>
@@ -149,4 +153,12 @@
     <string name="popularize_invitationCode">我的邀请码</string>
     <string name="popularize_id">ID：</string>
     <string name="popularize_scan">用手机扫一扫二维码获得优质商品</string>
+
+
+    <string name="my_foot_print_tab_1">清空</string>
+    <string name="my_foot_print_tab_2">删除</string>
+
+    <string name="my_collect_tab_1">取消收藏</string>
+    <string name="my_collect_tab_2">取消</string>
+
 </resources>

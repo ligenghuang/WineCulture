@@ -48,7 +48,7 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
         post(WebUrlUtil.POST_SUBMITORDER,false,service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
                         "cart_id",submitOrderPost.getCart_id(),"address_id",submitOrderPost.getAddress_id(),"pay_type",submitOrderPost.getPay_type()
-                ,"user_note",submitOrderPost.getUser_note(),"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_SUBMITORDER)
+                ,"user_note",submitOrderPost.getUser_note()),WebUrlUtil.POST_SUBMITORDER)
         ));
     }
 

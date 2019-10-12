@@ -106,4 +106,25 @@ public class WebUrlUtil {
      * 订单支付
      */
     public static final String POST_PAY_ORDER = "pay/payment";
+
+    /**
+     * 获取下级地址
+     */
+    public static final String POST_ADDRESS_GET_REGION = "Address/get_region";
+
+    /**
+     * 编辑添加地址
+     */
+    public static final String POST_ADD_ADDRESS = "Address/addAddress";
+
+    /**
+     * 关注列表
+     */
+    public static final String POST_COLLECTION_LIST = "Collection/collection_list";
+
+    /**
+     * 会员中心
+     */
+    public static final String POST_USER_PERSONAL = "user/personal";
+
 }

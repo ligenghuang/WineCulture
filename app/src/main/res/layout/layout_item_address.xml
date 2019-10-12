@@ -43,6 +43,7 @@
                 android:paddingRight="8dp"
                 android:paddingBottom="2dp"
                 android:visibility="gone"
+                android:text="@string/address_list_tab_5"
                 android:background="@drawable/shape_address_default"
                 />
 
@@ -53,8 +54,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="21dp">
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical">
 
 
             <TextView
@@ -77,20 +79,16 @@
                 android:text="广东省广州市白云区嘉禾望岗嘉禾望家属及沙发上司国嘉禾望岗"
                 />
 
-            <TextView
-                android:id="@+id/tv_address_detele"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="@string/address_list_tab_2"
-                android:textSize="@dimen/text_size12"
-                android:textColor="@color/color_9"
-                android:layout_marginRight="20dp"
-                />
-
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/iv_detele"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/icon_detele"
+            android:padding="@dimen/dp_10"/>
 
     </LinearLayout>
 

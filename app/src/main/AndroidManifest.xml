@@ -18,16 +18,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
+        <activity android:name=".ui.home.AnnounceActivity"></activity>
         <activity android:name=".ui.home.TemporaryActivity" />
-        <activity android:name=".ui.cart.CartActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.cart.CartActivity" />
+        <activity
+            android:name=".ui.cart.CartActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.my.BookingGoodsActivity" />
         <activity android:name=".ui.cart.CartSubmitOrdersActivity" />
-        <activity android:name=".ui.home.GoodsDetailActivity"
+        <activity
+            android:name=".ui.home.GoodsDetailActivity"
             android:label=""
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.my.WithdrawalRecordActivity" />
         <activity android:name=".ui.my.TransferRecordActivity" />
         <activity android:name=".ui.my.WithdrawalActivity" />

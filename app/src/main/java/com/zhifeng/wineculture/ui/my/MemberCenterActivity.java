@@ -9,9 +9,11 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.MemberCenterAction;
+import com.zhifeng.wineculture.modules.MemberCenterDto;
 import com.zhifeng.wineculture.ui.impl.MemberCenterView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
@@ -65,6 +67,7 @@ public class MemberCenterActivity extends UserBaseActivity<MemberCenterAction> i
         super.init();
         mActicity = this;
         mContext = this;
+
     }
 
     /**
@@ -103,8 +106,15 @@ public class MemberCenterActivity extends UserBaseActivity<MemberCenterAction> i
      * 获取会员中心数据 成功
      */
     @Override
-    public void getMemberCenterDataSuccess() {
+    public void getMemberCenterDataSuccess(MemberCenterDto memberCenterDto) {
         loadDiss();
+        MemberCenterDto.DataBean dataBean = memberCenterDto.getData();
+        tvMemberCenterName.setText(dataBean.getRealname());
+        tvMemberCenterLever.setText(dataBean.getLevelname());
+        String mobile = dataBean.getMobile();
+        mobile = mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        tvMemberCenterPhone.setText(mobile);
+        GlideUtil.setImageCircle(mContext,dataBean.getAvatar(),ivAvatar,R.drawable.icon_avatar);
     }
 
     /**
@@ -122,6 +132,7 @@ public class MemberCenterActivity extends UserBaseActivity<MemberCenterAction> i
     protected void onResume() {
         super.onResume();
         baseAction.toRegister();
+        getMemberCenterData();
     }
 
     @Override

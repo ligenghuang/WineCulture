@@ -1,6 +1,10 @@
 package com.zhifeng.wineculture.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.wineculture.modules.AddressDetailDto;
+import com.zhifeng.wineculture.modules.GeneralDto;
+import com.zhifeng.wineculture.modules.RegionDto;
+import com.zhifeng.wineculture.modules.post.AddOrEditAddressPost;
 
 /**
   *
@@ -14,20 +18,20 @@ import com.lgh.huanglib.util.base.BaseView;
 public interface AddAddressView extends BaseView {
 
     /**
-     * 获取收货地址信息
+     * 获取收货地址详情
+     * @param id
      */
-    void getAddress();
-    void getAddressSuccess();
+    void getAddress(int id);
+    void getAddressSuccess(AddressDetailDto addressDetailDto);
 
     /**
-     * 编辑收货地址
+     * 编辑添加地址
+     * @param post
      */
-    void editAddress();
-    void editAddressSuccess();
+    void addOrEditAddress(AddOrEditAddressPost post);
+    void addOrEditAddressSuccess(GeneralDto generalDto);
 
-    /**
-     * 新增收货地址
-     */
-    void addAddress();
-    void addAddressSuccess();
+    void getRegion(String code);
+    void getRegionSuccess(RegionDto regionDto);
+    void getRegionError();
 }

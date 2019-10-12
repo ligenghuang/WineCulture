@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
-import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -58,6 +57,8 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
     AddressListAdapter addressListAdapter;
 
     boolean isGoods = false;
+    @BindView(R.id.tv_null_data)
+    TextView tvNullData;
 
     @Override
     public int intiLayout() {
@@ -73,7 +74,7 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
 
     @Override
     protected AddressListAction initAction() {
-        return new AddressListAction(this,this);
+        return new AddressListAction(this, this);
     }
 
     /**
@@ -99,7 +100,7 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
         mActicity = this;
         mContext = this;
 
-        isGoods = getIntent().getBooleanExtra("isGoods",false);
+        isGoods = getIntent().getBooleanExtra("isGoods", false);
 
         refreshLayout.setEnableLoadMore(false);
         addressListAdapter = new AddressListAdapter(isGoods);
@@ -124,12 +125,12 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
         addressListAdapter.setOnClickListener(new AddressListAdapter.OnClickListener() {
             @Override
             public void itemView(AddressListDto.DataBean model) {
-                if (isGoods){
+                if (isGoods) {
                     jumpActivity(model);
-                }else {
+                } else {
                     //编辑
-                    Intent intent = new Intent(mContext,AddAddressActivity.class);
-                    intent.putExtra("address_id",model.getAddress_id());
+                    Intent intent = new Intent(mContext, AddAddressActivity.class);
+                    intent.putExtra("address_id", model.getAddress_id());
                     startActivity(intent);
                 }
 
@@ -147,24 +148,25 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
     /**
      * 跳转页面
      */
-    private void jumpActivity(AddressListDto.DataBean model){
+    private void jumpActivity(AddressListDto.DataBean model) {
         Intent intent = new Intent();
-        intent.putExtra("address",model.getP_cn()+model.getC_cn()+model.getD_cn());
-        intent.putExtra("phone",model.getMobile());
-        intent.putExtra("address_id",model.getAddress_id());
-        intent.putExtra("consignee",model.getConsignee());
-        intent.putExtra("address2",model.getAddress());
-        setResult(200,intent);
+        intent.putExtra("address", model.getP_cn() + model.getC_cn() + model.getD_cn());
+        intent.putExtra("phone", model.getMobile());
+        intent.putExtra("address_id", model.getAddress_id());
+        intent.putExtra("consignee", model.getConsignee());
+        intent.putExtra("address2", model.getAddress());
+        setResult(200, intent);
         finish();
     }
+
     /**
      * 获取地址列表
      */
     @Override
     public void getAddressList() {
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             baseAction.getAddressList();
-        }else {
+        } else {
             loadDiss();
             refreshLayout.finishRefresh();
         }
@@ -172,36 +174,41 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
 
     /**
      * 获取地址列表成功
+     *
      * @param addressListDto
      */
     @Override
     public void getAddressListSuccess(AddressListDto addressListDto) {
         loadDiss();
         refreshLayout.finishRefresh();
-        if (addressListDto.getData().size() != 0){
+        if (addressListDto.getData().size() != 0) {
             rvAddressList.setVisibility(View.VISIBLE);
+            tvNullData.setVisibility(View.GONE);
             addressListAdapter.refresh(addressListDto.getData());
-        }else {
+        } else {
             //todo 2019/09/12 添加空布局
             rvAddressList.setVisibility(View.GONE);
+            tvNullData.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    public void getAddressListNull(){
+    public void getAddressListNull() {
         loadDiss();
         refreshLayout.finishRefresh();
         //todo 2019/09/12 添加空布局
         rvAddressList.setVisibility(View.GONE);
+        tvNullData.setVisibility(View.VISIBLE);
     }
 
     /**
      * 删除地址
+     *
      * @param id
      */
     @Override
     public void deteleAddress(int id) {
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             loadDialog();
             baseAction.deteleAddress(id);
         }
@@ -209,6 +216,7 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
 
     /**
      * 删除地址成功
+     *
      * @param generalDto
      */
     @Override
@@ -246,7 +254,7 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
         switch (view.getId()) {
             case R.id.ll_add_address:
                 //todo 新增收货地址
-                jumpActivityNotFinish(mContext,AddAddressActivity.class);
+                jumpActivityNotFinish(mContext, AddAddressActivity.class);
                 break;
         }
     }

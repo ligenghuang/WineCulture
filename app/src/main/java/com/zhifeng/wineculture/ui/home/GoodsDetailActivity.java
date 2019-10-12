@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
@@ -42,6 +43,7 @@ import com.zhifeng.wineculture.modules.GoodsDetailDto;
 import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.cart.CartActivity;
 import com.zhifeng.wineculture.ui.impl.GoodsDetailView;
+import com.zhifeng.wineculture.ui.my.AddressListActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.listener.AppBarStateChangeListener;
 import com.zhifeng.wineculture.utils.sku.BaseSkuModel;
@@ -733,9 +735,15 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     }
 
     @OnClick({R.id.f_right_iv, R.id.tv_goods_service, R.id.tv_goods_cart, R.id.tv_goods_buy, R.id.iv_to_up_top
-            , R.id.tv_goods_attention, R.id.tv_goods_spec,R.id.tv_goods_add_cart})
+            , R.id.tv_goods_attention, R.id.tv_goods_spec,R.id.tv_goods_add_cart,R.id.tv_goods_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv_goods_address:
+                //todo 配送地址
+                Intent intent = new Intent(mContext, AddressListActivity.class);
+                intent.putExtra("isGoods", true);
+                startActivityForResult(intent, 200);
+                break;
             case R.id.f_right_iv:
                 //todo 导航栏右边菜单
                 new XPopup.Builder(mActicity)

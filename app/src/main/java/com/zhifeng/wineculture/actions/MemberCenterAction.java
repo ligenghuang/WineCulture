@@ -1,9 +1,16 @@
 package com.zhifeng.wineculture.actions;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
+import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.MemberCenterDto;
+import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.MemberCenterView;
+import com.zhifeng.wineculture.utils.config.MyApp;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -27,7 +34,13 @@ public class MemberCenterAction extends BaseAction<MemberCenterView> {
         attachView(view);
     }
 
+    /**\
+     * 获取会员中心信息
+     */
     public void getMemberCenterData(){
+        post(WebUrlUtil.POST_USER_PERSONAL,false, service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())),WebUrlUtil.POST_USER_PERSONAL)
+        ));
 
     }
 
@@ -54,6 +67,20 @@ public class MemberCenterAction extends BaseAction<MemberCenterView> {
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
+                    case WebUrlUtil.POST_USER_PERSONAL:
+                        if (aBoolean){
+                            MemberCenterDto memberCenterDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<MemberCenterDto>() {
+                            }.getType());
+                            if (memberCenterDto.getStatus() == 200){
+                                //todo 获取会员中心信息
+                                view.getMemberCenterDataSuccess(memberCenterDto);
+                                return;
+                            }
+                            view.onError(memberCenterDto.getMsg(),action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg,action.getErrorType());
+                        break;
                 }
 
             }

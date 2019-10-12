@@ -232,11 +232,11 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                     bugPwdDialog.show();
                 } else {
                     showNormalToast(ResUtil.getString(R.string.goods_detail_tab_30));
+                    //todo 2019 10 12 跳转至密码设置页
+                    finish();
                 }
                 break;
-            case 2:
-                break;
-            case 3:
+            default:
                 break;
         }
 
@@ -357,7 +357,9 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         if (!TextUtils.isEmpty(etOrderNote.getText().toString())) {
             post.setUser_note(etOrderNote.getText().toString());
         }
+
         submitOrder(post);
+
 
     }
 
