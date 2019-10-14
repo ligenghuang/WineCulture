@@ -180,7 +180,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
                 break;
             case R.id.tv_myComments:
                 //todo 我的评论
-                jumpActivityNotFinish(mContext, MyCommentsActivity.class);
+                jumpActivityNotFinish(mContext, MyCommentsListActivity.class);
                 break;
             case R.id.tv_myAddress:
                 //todo 收货地址

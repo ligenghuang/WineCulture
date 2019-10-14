@@ -7,10 +7,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.base.MyFragmentPagerAdapter;
+import com.lgh.huanglib.util.cusview.CustomViewPager;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.BaseAction;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.OnClick;
+import butterknife.OnTouch;
 
 /**
  * @ClassName:
@@ -45,13 +45,13 @@ public class MyOrderActivity extends UserBaseActivity {
     @BindView(R.id.tvToBeComment)
     TextView tvToBeComment;
     @BindView(R.id.vp)
-    ViewPager vp;
+    CustomViewPager vp;
     private final int position0 = 0;
     private final int position1 = 1;
     private final int position2 = 2;
     private final int position3 = 3;
     private final int position4 = 4;
-    private int currentPosition;
+    public int currentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,6 @@ public class MyOrderActivity extends UserBaseActivity {
         mActicity = this;
         mContext = this;
         currentPosition = getIntent().getIntExtra("position", 0);
-        loadView();
     }
 
     @Override
@@ -103,6 +102,7 @@ public class MyOrderActivity extends UserBaseActivity {
         new Handler().postDelayed(() -> {
             vp.setCurrentItem(currentPosition);
             setSelect(currentPosition);
+            vp.setOffscreenPageLimit(fragments.size());
         }, 200);
     }
 
@@ -123,26 +123,6 @@ public class MyOrderActivity extends UserBaseActivity {
     }
 
     @Override
-    protected void loadView() {
-        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                setSelect(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
-    @Override
     protected BaseAction initAction() {
         return null;
     }
@@ -155,8 +135,8 @@ public class MyOrderActivity extends UserBaseActivity {
         tvToBeComment.setSelected(position == position4);
     }
 
-    @OnClick({R.id.tvAllOrders, R.id.tvObligation, R.id.tvToBeShipped, R.id.tvToBeReceived, R.id.tvToBeComment})
-    public void onViewClicked(View view) {
+    @OnTouch({R.id.tvAllOrders, R.id.tvObligation, R.id.tvToBeShipped, R.id.tvToBeReceived, R.id.tvToBeComment})
+    public boolean onViewClicked(View view) {
         int position = position0;
         switch (view.getId()) {
             case R.id.tvObligation:
@@ -172,6 +152,9 @@ public class MyOrderActivity extends UserBaseActivity {
                 position = position4;
                 break;
         }
+        currentPosition=position;
         vp.setCurrentItem(position);
+        setSelect(position);
+        return  false;
     }
 }

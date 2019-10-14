@@ -8,7 +8,7 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-import com.zhifeng.wineculture.modules.ShareUrlDto;
+import com.zhifeng.wineculture.modules.SharePosterDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.ShareUrlView;
 import com.zhifeng.wineculture.utils.config.MyApp;
@@ -26,7 +26,7 @@ public class ShareUrlAction extends BaseAction<ShareUrlView> {
     }
 
     public void getShareUrl() {
-        post(WebUrlUtil.POST_SHARE_URL, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())), WebUrlUtil.POST_SHARE_URL)));
+        post(WebUrlUtil.POST_SHARE_POSTER, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())), WebUrlUtil.POST_SHARE_POSTER)));
     }
 
     /**
@@ -42,12 +42,12 @@ public class ShareUrlAction extends BaseAction<ShareUrlView> {
                 .all(integer -> (integer == 200)).subscribe(aBoolean -> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
-            if (WebUrlUtil.POST_SHARE_URL.equals(action.getIdentifying())) {
+            if (WebUrlUtil.POST_SHARE_POSTER.equals(action.getIdentifying())) {
                 if (aBoolean) {
-                    ShareUrlDto shareUrlDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<ShareUrlDto>() {
+                    SharePosterDto sharePosterDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<SharePosterDto>() {
                     }.getType());
-                    if (shareUrlDto.getStatus() == 200) {
-                        view.getShareUrlSuccess(shareUrlDto);
+                    if (sharePosterDto.getStatus() == 200) {
+                        view.getShareUrlSuccess(sharePosterDto);
                         return;
                     }
                 }

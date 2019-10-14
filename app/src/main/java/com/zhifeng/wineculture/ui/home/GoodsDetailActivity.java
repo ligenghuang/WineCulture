@@ -19,7 +19,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
@@ -36,7 +35,6 @@ import com.lgh.huanglib.util.data.ResUtil;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.zhifeng.wineculture.R;
-import com.zhifeng.wineculture.actions.BaseAction;
 import com.zhifeng.wineculture.actions.GoodsDetailAction;
 import com.zhifeng.wineculture.adapters.BannerGoods;
 import com.zhifeng.wineculture.modules.GoodsDetailDto;
@@ -743,7 +741,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     }
 
     @OnClick({R.id.f_right_iv, R.id.tv_goods_service, R.id.tv_goods_cart, R.id.tv_goods_buy, R.id.iv_to_up_top
-            , R.id.tv_goods_attention, R.id.tv_goods_spec,R.id.tv_goods_add_cart,R.id.tv_goods_address})
+            , R.id.tv_goods_attention, R.id.tv_goods_spec, R.id.tv_goods_comment_all, R.id.tv_goods_add_cart,R.id.tv_goods_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_goods_address:
@@ -787,6 +785,12 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 //todo 商品规格
                 isBuy = false;
                 showBottomSheetDialog(testData, 2);
+                break;
+            case R.id.tv_goods_comment_all:
+                Intent i=new Intent(mContext,GoodsCommentsActivity.class);
+                i.putExtra("goodsId", goodsId);
+                i.putExtra("comment_count",String.valueOf(comment_count));
+                startActivity(i);
                 break;
             case R.id.tv_goods_cart:
                 //todo 购物车

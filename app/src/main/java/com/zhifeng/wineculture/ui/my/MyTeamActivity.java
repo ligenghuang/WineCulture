@@ -7,13 +7,18 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhifeng.wineculture.R;
-import com.zhifeng.wineculture.actions.BaseAction;
+import com.zhifeng.wineculture.actions.MyTeamAction;
+import com.zhifeng.wineculture.adapters.TeamAdapter;
+import com.zhifeng.wineculture.modules.MyTeamDto;
+import com.zhifeng.wineculture.ui.impl.MyTeamView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -23,7 +28,7 @@ import butterknife.BindView;
  * @Author: Administrator
  * @Date: 2019/9/28 18:06
  */
-public class MyTeamActivity extends UserBaseActivity {
+public class MyTeamActivity extends UserBaseActivity<MyTeamAction> implements MyTeamView {
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
@@ -44,6 +49,7 @@ public class MyTeamActivity extends UserBaseActivity {
     RecyclerView rv;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    private TeamAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +66,20 @@ public class MyTeamActivity extends UserBaseActivity {
     @Override
     protected void init() {
         super.init();
-        mActicity=this;
-        mContext=this;
+        mActicity = this;
+        mContext = this;
+        adapter=new TeamAdapter();
+        rv.setAdapter(adapter);
+        refreshLayout.setEnableLoadMore(false);
+        refreshLayout.autoRefresh();
+        loadView();
+    }
+
+    @Override
+    protected void loadView() {
+        refreshLayout.setOnRefreshListener(refreshLayout -> {
+            getMyTeam();
+        });
     }
 
     /**
@@ -81,7 +99,41 @@ public class MyTeamActivity extends UserBaseActivity {
     }
 
     @Override
-    protected BaseAction initAction() {
-        return null;
+    protected MyTeamAction initAction() {
+        return new MyTeamAction(this, this);
+    }
+
+    @Override
+    public void getMyTeam() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.getMyTeam(1);
+        }
+    }
+
+    @Override
+    public void getMyTeamSuccess(MyTeamDto myTeamDto) {
+        refreshLayout.finishRefresh();
+        int teamCount = myTeamDto.getData().getTeam_count();
+        tvMemberNum.setText(String.valueOf(teamCount));
+        List<MyTeamDto.DataBean.ListBean> beans = myTeamDto.getData().getList();
+        adapter.refresh(beans);
+    }
+
+    @Override
+    public void onError(String message, int code) {
+        refreshLayout.finishRefresh();
+        showNormalToast(message);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
     }
 }

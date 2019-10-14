@@ -39,6 +39,7 @@
     <string name="goods_detail_tab_31">请选择规格</string>
     <string name="goods_detail_tab_32">加入购物车</string>
     <string name="goods_detail_tab_33">已加入购物车</string>
+    <string name="goods_detail_tab_34">(%0$s)</string>
 
 
     <string name="temporary_tab_1">请选择收货地址</string>

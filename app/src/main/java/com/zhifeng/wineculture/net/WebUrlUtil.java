@@ -33,6 +33,11 @@ public class WebUrlUtil {
     public static final String POST_REGISTER = "user/register";
 
     /**
+     * 修改、忘记密码
+     */
+    public static final String POST_RESET_PASSWORD = "user/resetPassword";
+
+    /**
      * 首页
      */
     public static final String POST_INDEX_INDEX = "index/index";
@@ -65,7 +70,7 @@ public class WebUrlUtil {
     /**
      * 我要推广
      */
-    public static final String POST_SHARE_URL = "user/shareUrl";
+    public static final String POST_SHARE_POSTER = "user/sharePoster";
 
     /**
      * 购物车
@@ -80,12 +85,12 @@ public class WebUrlUtil {
     /**
      * 地址管理
      */
-    public static final String POST_ADDRESS_LIST ="Address/addressList";
+    public static final String POST_ADDRESS_LIST = "Address/addressList";
 
     /**
      * 删除地址
      */
-    public static final String POST_DEL_ADDRESS ="Address/delAddress";
+    public static final String POST_DEL_ADDRESS = "Address/delAddress";
 
     /**
      * 获取收货地址详情
@@ -108,6 +113,31 @@ public class WebUrlUtil {
     public static final String POST_PAY_ORDER = "pay/payment";
 
     /**
+     * 订单列表
+     */
+    public static final String POST_ORDER_LIST = "order/order_list";
+
+    /**
+     * 订单详情
+     */
+    public static final String POST_ORDER_DETAIL = "Order/order_detail";
+
+    /**
+     * 我的团队
+     */
+    public static final String POST_TEAM_LIST = "user/team_list";
+
+    /**
+     * 我的评价
+     */
+    public static final String POST_MY_COMMENT = "user/my_comment";
+
+    /**
+     * 商品评价
+     */
+    public static final String POST_ORDER_COMMENT = "order/order_comment";
+
+    /**
      * 获取下级地址
      */
     public static final String POST_ADDRESS_GET_REGION = "Address/get_region";
@@ -127,6 +157,10 @@ public class WebUrlUtil {
      */
     public static final String POST_USER_PERSONAL = "user/personal";
 
+    /**
+     * 评价列表
+     */
+    public static final String POST_COMMENT_LIST = "Goods/comment_list";
     /**
      * 我的收支
      */

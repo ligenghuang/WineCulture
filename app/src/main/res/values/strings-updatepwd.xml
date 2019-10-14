@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="updatepwd_updatepwd">修改密码</string>
+    <string name="updatepwd_num">+86</string>
+    <string name="updatepwd_numHint">输入手机号</string>
+    <string name="updatepwd_inputNumHint">请输入手机号</string>
+    <string name="updatepwd_inputRightNumHint">请输入正确的手机号</string>
+    <string name="updatepwd_newPwd">新密码</string>
+    <string name="updatepwd_newPwdHint">输入密码</string>
+    <string name="updatepwd_inputNewPwdHint">请输入密码</string>
+    <string name="updatepwd_comfirmPwd">确认密码</string>
+    <string name="updatepwd_comfirmPwdHint">再次输入密码</string>
+    <string name="updatepwd_inputComfirmPwdHint">请输入确认密码</string>
+    <string name="updatepwd_differentPwdHint">密码和确认密码不一致</string>
+    <string name="updatepwd_code">验证码</string>
+    <string name="updatepwd_codeHint">输入验证码</string>
+    <string name="updatepwd_inputCodeHint">请输入验证码</string>
+    <string name="updatepwd_getCode">获取验证码</string>
+    <string name="updatepwd_remainderSecond">%0$s秒</string>
+    <string name="updatepwd_confirm">确认</string>
+    <string name="updatepwd_success">修改成功</string>
+</resources>

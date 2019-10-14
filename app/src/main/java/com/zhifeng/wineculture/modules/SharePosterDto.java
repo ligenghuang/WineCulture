@@ -1,11 +1,11 @@
 package com.zhifeng.wineculture.modules;
 
-public class ShareUrlDto {
+public class SharePosterDto {
 
     /**
      * status : 200
      * msg : success
-     * data : {"realname":"测试账号","avatar":"http://api.myxls.com/uploads/tou/20190709/6f583aad0933dec9c04c78f86e126f17.jpg","mobile":"15181111111","id":76,"url":"?uid=76"}
+     * data : {"realname":"Flask","avatar":"http://orepool.zhifengwangluo.com/upload/images/tou/20190903156750168061690.png","mobile":"13625897412","id":27882,"qrcode":"http://laundry.com/public/shareposter/27882-poster.png","reg_url":"http://laundry.com/register?uid=27882"}
      */
 
     private int status;
@@ -38,18 +38,20 @@ public class ShareUrlDto {
 
     public static class DataBean {
         /**
-         * realname : 测试账号
-         * avatar : http://api.myxls.com/uploads/tou/20190709/6f583aad0933dec9c04c78f86e126f17.jpg
-         * mobile : 15181111111
-         * id : 76
-         * url : ?uid=76
+         * realname : Flask
+         * avatar : http://orepool.zhifengwangluo.com/upload/images/tou/20190903156750168061690.png
+         * mobile : 13625897412
+         * id : 27882
+         * qrcode : http://laundry.com/public/shareposter/27882-poster.png
+         * reg_url : http://laundry.com/register?uid=27882
          */
 
         private String realname;
         private String avatar;
         private String mobile;
         private int id;
-        private String url;
+        private String qrcode;
+        private String reg_url;
 
         public String getRealname() {
             return realname == null ? "" : realname;
@@ -83,12 +85,20 @@ public class ShareUrlDto {
             this.id = id;
         }
 
-        public String getUrl() {
-            return url == null ? "" : url;
+        public String getQrcode() {
+            return qrcode == null ? "" : qrcode;
         }
 
-        public void setUrl(String url) {
-            this.url = url == null ? "" : url;
+        public void setQrcode(String qrcode) {
+            this.qrcode = qrcode == null ? "" : qrcode;
+        }
+
+        public String getReg_url() {
+            return reg_url == null ? "" : reg_url;
+        }
+
+        public void setReg_url(String reg_url) {
+            this.reg_url = reg_url == null ? "" : reg_url;
         }
     }
 }

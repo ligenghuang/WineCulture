@@ -178,6 +178,7 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
                 jumpActivityNotFinish(mContext, RegisterActivity.class);
                 break;
             case R.id.tvForgetPwd:
+                jumpActivityNotFinish(mContext,UpdatePwdActivity.class);
                 break;
         }
     }

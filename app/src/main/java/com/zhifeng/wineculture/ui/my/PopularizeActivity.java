@@ -12,7 +12,7 @@ import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.ShareUrlAction;
-import com.zhifeng.wineculture.modules.ShareUrlDto;
+import com.zhifeng.wineculture.modules.SharePosterDto;
 import com.zhifeng.wineculture.ui.impl.ShareUrlView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
@@ -28,10 +28,14 @@ import butterknife.OnClick;
  * @Date: 2019/9/28 18:07
  */
 public class PopularizeActivity extends UserBaseActivity<ShareUrlAction> implements ShareUrlView {
+
+
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
+    @BindView(R.id.f_right_iv)
+    ImageView fRightIv;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.ivAvatar)
@@ -40,6 +44,8 @@ public class PopularizeActivity extends UserBaseActivity<ShareUrlAction> impleme
     TextView tvUserName;
     @BindView(R.id.tvUserId)
     TextView tvUserId;
+    @BindView(R.id.iv)
+    ImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,16 +96,17 @@ public class PopularizeActivity extends UserBaseActivity<ShareUrlAction> impleme
     }
 
     @Override
-    public void getShareUrlSuccess(ShareUrlDto shareUrlDto) {
-        ShareUrlDto.DataBean dataBean = shareUrlDto.getData();
+    public void getShareUrlSuccess(SharePosterDto sharePosterDto) {
+        SharePosterDto.DataBean dataBean = sharePosterDto.getData();
         GlideUtil.setImageCircle(mContext, dataBean.getAvatar(), ivAvatar, R.drawable.icon_avatar);
         tvUserName.setText(dataBean.getRealname());
         tvUserId.setText(String.valueOf(dataBean.getId()));
+        GlideUtil.setImage(mContext, sharePosterDto.getData().getQrcode(), iv);
     }
 
     @Override
     public void onError(String message, int code) {
-
+        showNormalToast(message);
     }
 
     @Override

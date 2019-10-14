@@ -69,9 +69,9 @@ public class StartPageActivity extends BaseActivity {
                 @Override
                 public void run() {
                     //todo 判断是否登录跳转不同页面
-//                    Intent intent = new Intent(mContext, MySp.iSLoginLive(mContext)?MainActivity.class: LoginActivity.class);
-//                    startActivity(intent);
-                    jumpActivity(mContext,MainActivity.class);
+                    Intent intent = new Intent(mContext, MySp.iSLoginLive(mContext)?MainActivity.class: LoginActivity.class);
+                    startActivity(intent);
+//                    jumpActivity(mContext,MainActivity.class);
                     isNeedAnim = false;
                     finish();
                 }
