@@ -1,18 +1,25 @@
 package com.zhifeng.wineculture.ui.my;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.WithdrawalRecordAction;
+import com.zhifeng.wineculture.adapters.WithdrawalRecordAdapter;
+import com.zhifeng.wineculture.modules.WithdrawalRecordDto;
 import com.zhifeng.wineculture.ui.impl.WithdrawalRecordView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
@@ -42,6 +49,7 @@ public class WithdrawalRecordActivity extends UserBaseActivity<WithdrawalRecordA
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
 
+    WithdrawalRecordAdapter withdrawalRecordAdapter;
 
     @Override
     public int intiLayout() {
@@ -65,6 +73,15 @@ public class WithdrawalRecordActivity extends UserBaseActivity<WithdrawalRecordA
         super.init();
         mActicity = this;
         mContext = this;
+
+        refreshLayout.setEnableLoadMore(false);
+
+        withdrawalRecordAdapter = new WithdrawalRecordAdapter(mContext);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        recyclerview.setAdapter(withdrawalRecordAdapter);
+
+        loadView();
+        refreshLayout.autoRefresh();
     }
 
     /**
@@ -83,15 +100,31 @@ public class WithdrawalRecordActivity extends UserBaseActivity<WithdrawalRecordA
         fTitleTv.setText(ResUtil.getString(R.string.member_center_tab_6));
     }
 
+    @Override
+    protected void loadView() {
+        super.loadView();
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getWithdrawalRecord();
+            }
+        });
+    }
 
+    /**
+     * 获取提现记录
+     */
     @Override
     public void getWithdrawalRecord() {
-
+        if (CheckNetwork.checkNetwork2(mContext)){
+            baseAction.getWithdrawalRecord();
+        }
     }
 
     @Override
-    public void getWithdrawalRecordSuccess() {
-
+    public void getWithdrawalRecordSuccess(WithdrawalRecordDto withdrawalRecordDto) {
+        refreshLayout.finishRefresh();
+        withdrawalRecordAdapter.refresh(withdrawalRecordDto.getData().getList());
     }
 
     /**
@@ -102,6 +135,7 @@ public class WithdrawalRecordActivity extends UserBaseActivity<WithdrawalRecordA
     @Override
     public void onError(String message, int code) {
         loadDiss();
+        refreshLayout.finishRefresh();
         showNormalToast(message);
     }
 

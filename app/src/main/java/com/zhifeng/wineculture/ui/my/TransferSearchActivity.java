@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
@@ -20,6 +21,8 @@ import com.lgh.huanglib.util.data.ResUtil;
 import com.lgh.huanglib.util.data.ValidateUtils;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.TransferSearchAction;
+import com.zhifeng.wineculture.adapters.TransferSearchAdapter;
+import com.zhifeng.wineculture.modules.SearchPhoneDto;
 import com.zhifeng.wineculture.ui.impl.TransferSearchView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
@@ -53,6 +56,8 @@ public class TransferSearchActivity extends UserBaseActivity<TransferSearchActio
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
 
+    TransferSearchAdapter transferSearchAdapter;
+
     @Override
     public int intiLayout() {
         return R.layout.activity_transfer_search;
@@ -75,6 +80,10 @@ public class TransferSearchActivity extends UserBaseActivity<TransferSearchActio
         super.init();
         mActicity = this;
         mContext = this;
+
+        transferSearchAdapter = new TransferSearchAdapter(this);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        recyclerview.setAdapter(transferSearchAdapter);
 
         showEt();
         loadView();
@@ -123,7 +132,7 @@ public class TransferSearchActivity extends UserBaseActivity<TransferSearchActio
                     return false;
                 }
                 //todo 判断手机号码格式是否正确
-                if (ValidateUtils.isPhone2(etTransferSearch.getText().toString())){
+                if (!ValidateUtils.isPhone2(etTransferSearch.getText().toString())){
                     showNormalToast(ResUtil.getString(R.string.balance_transfer_tab_3));
                     return false;
                 }
@@ -131,6 +140,13 @@ public class TransferSearchActivity extends UserBaseActivity<TransferSearchActio
                 search(etTransferSearch.getText().toString());
             }
             return false;
+        });
+
+        transferSearchAdapter.setOnClickListener(new TransferSearchAdapter.OnClickListener() {
+            @Override
+            public void onClick(int id) {
+                //todo 转账
+            }
         });
     }
 
@@ -147,8 +163,9 @@ public class TransferSearchActivity extends UserBaseActivity<TransferSearchActio
     }
 
     @Override
-    public void searchSuccess() {
-
+    public void searchSuccess(SearchPhoneDto searchPhoneDto) {
+        loadDiss();
+        transferSearchAdapter.refresh(searchPhoneDto.getData());
     }
 
     /**

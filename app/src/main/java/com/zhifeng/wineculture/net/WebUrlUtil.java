@@ -127,4 +127,68 @@ public class WebUrlUtil {
      */
     public static final String POST_USER_PERSONAL = "user/personal";
 
+    /**
+     * 我的收支
+     */
+    public static final String POST_USER_REMAINDER_LIST = "user/remainder_list";
+
+    /**
+     * 转账记录
+     */
+    public static final String POST_USER_TRANSFER_LIST = "user/transfer";
+
+    /**
+     * 提现记录
+     */
+    public static final String POST_WITHDRAWAL_LIST = "user/withdrawal_list";
+
+    /**
+     * 钱包接口
+     */
+    public static final String POST_USER_REMAINDER ="user/user_remainder";
+
+    /**
+     * 手机号搜索转账
+     */
+    public static final String POST_USER_SEARCH_PHONE = "user/search_phone";
+
+    /**
+     * 我的足迹
+     */
+    public static final String POST_COLLECTION_FOOT_LIST = "Collection/foot_list";
+
+    /**
+     * 删除足迹
+     */
+    public static final String POST_COLLECTION_FOOT = "Collection/foot";
+
+    /**
+     * 修改手机号码  验证手机号
+     */
+    public static final String POST_SAFE_CHECK_NEW_PHONE = "user/verifyphone";
+
+    /**
+     * 换绑手机
+     */
+    public static final String POST_SAFE_CHANGE_PHONE = "user/resetphone";
+
+    /**
+     * 修改支付密码
+     */
+    public static final  String POST_EDIT_PAY_PWD = "user/edit_pay_password";
+
+    /**
+     * 忘记支付密码
+     */
+    public static final  String POST_RESET_PAY_PWD = "user/resetPassword";
+
+    /**
+     * 设置支付密码
+     */
+    public static final  String POST_SET_PAY_PWD = "user/set_pay_password";
+
+    /**
+     * 安全中心信息
+     */
+    public static final String POST_SAFE_INDEX = "user/safe";
 }

@@ -42,7 +42,7 @@
 
 
         <TextView
-            android:id="@+id/tv_ittem_money"
+            android:id="@+id/tv_item_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_15"

@@ -1,9 +1,16 @@
 package com.zhifeng.wineculture.actions;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
+import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.SearchPhoneDto;
+import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.TransferSearchView;
+import com.zhifeng.wineculture.utils.config.MyApp;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -32,7 +39,9 @@ public class TransferSearchAction extends BaseAction<TransferSearchView>{
      * @param text
      */
     public void search(String text){
-
+        post(WebUrlUtil.POST_USER_SEARCH_PHONE,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"mobile",text),WebUrlUtil.POST_USER_SEARCH_PHONE)
+        ));
     }
 
     /**
@@ -58,6 +67,21 @@ public class TransferSearchAction extends BaseAction<TransferSearchView>{
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
+                    case WebUrlUtil.POST_USER_SEARCH_PHONE:
+                        if (aBoolean) {
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            SearchPhoneDto searchPhoneDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<SearchPhoneDto>() {
+                            }.getType());
+                            if (searchPhoneDto.getStatus() == 200) {
+                                //todo 搜索 成功
+                                view.searchSuccess(searchPhoneDto);
+                                return;
+                            }
+                            view.onError(searchPhoneDto.getMsg(), action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg, action.getErrorType());
+                        break;
                 }
 
             }

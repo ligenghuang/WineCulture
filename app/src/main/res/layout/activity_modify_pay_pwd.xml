@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.my.ModifyPayPwdActivity">
+
+    <include layout="@layout/layout_title_black_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/color_f2"
+        >
+
+
+        <!--原密码-->
+        <EditText
+            android:id="@+id/et_old_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/icon_more"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:hint="@string/pay_pwd_tab_4"
+            android:textSize="@dimen/text_size15"
+            android:textColor="@color/color_15"
+            android:textStyle="bold"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:textColorHint="@color/color_15"
+            android:background="@color/white"/>
+
+        <View style="@style/line_4"/>
+
+        <!--新密码-->
+        <EditText
+            android:id="@+id/et_new_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/icon_more"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:hint="@string/pay_pwd_tab_5"
+            android:textSize="@dimen/text_size15"
+            android:textColor="@color/color_15"
+            android:textStyle="bold"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:textColorHint="@color/color_15"
+            android:background="@color/white"/>
+
+        <!--提交-->
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/item_height50"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="@string/pay_pwd_tab_6"
+            android:gravity="center"
+            android:padding="15dp"
+            android:background="@drawable/shape_btn_save_bg"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size15"/>
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

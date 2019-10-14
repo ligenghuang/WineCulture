@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.wineculture.modules.TransferRecordDto;
 
 /**
   *
@@ -14,5 +15,6 @@ import com.lgh.huanglib.util.base.BaseView;
 public interface TransferRecordView extends BaseView {
 
     void getTransferRecord();
-    void getTransferRecordSuccess();
+    void loadMoreTransferRecord();
+    void getTransferRecordSuccess(TransferRecordDto transferRecordDto);
 }

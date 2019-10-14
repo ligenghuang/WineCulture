@@ -85,6 +85,8 @@
     <string name="transfer_record_tab_2">名称</string>
     <string name="transfer_record_tab_3">金额</string>
     <string name="transfer_record_tab_4">备注</string>
+    <string name="transfer_record_tab_5">转入</string>
+    <string name="transfer_record_tab_6">转出</string>
 
     <string name="withdrawal_record_tab_1">申请时间</string>
     <string name="withdrawal_record_tab_2">金额</string>
@@ -157,8 +159,55 @@
 
     <string name="my_foot_print_tab_1">清空</string>
     <string name="my_foot_print_tab_2">删除</string>
+    <string name="my_foot_print_tab_3">完成</string>
+    <string name="my_foot_print_tab_4">管理</string>
 
     <string name="my_collect_tab_1">取消收藏</string>
     <string name="my_collect_tab_2">取消</string>
+
+    <string name="security_tab_1">会员名</string>
+    <string name="security_tab_2">修改手机号码</string>
+    <string name="security_tab_3">支付密码</string>
+    <string name="security_tab_4">切换用户</string>
+    <string name="security_tab_5">退出</string>
+    <string name="security_tab_6">安全中心</string>
+
+    <string name="modify_mobile_tab_1">换绑手机</string>
+    <string name="modify_mobile_tab_2">请输入你需要绑定的新手机号码</string>
+    <string name="modify_mobile_tab_3">国家和地区</string>
+    <string name="modify_mobile_tab_4">新手机号</string>
+    <string name="modify_mobile_tab_5">下一步</string>
+    <string name="modify_mobile_tab_6">中国大陆86</string>
+    <string name="modify_mobile_tab_7">请输入手机号</string>
+    <string name="modify_mobile_tab_8">请输入%0$s收到的短信验证码</string>
+    <string name="modify_mobile_tab_9">验证码</string>
+    <string name="modify_mobile_tab_10">短信验证码</string>
+    <string name="modify_mobile_tab_11">发送验证码</string>
+    <string name="modify_mobile_tab_12">重发验证码</string>
+    <string name="modify_mobile_tab_13">%0$s秒</string>
+    <string name="modify_mobile_tab_14">提交</string>
+    <string name="modify_mobile_tab_15">修改手机号码成功</string>
+    <string name="modify_mobile_tab_16">请输入短信验证码</string>
+    <string name="modify_mobile_tab_17">请输入有效的手机号码</string>
+
+    <string name="pay_pwd_tab_1">修改支付密码</string>
+    <string name="pay_pwd_tab_2">忘记支付密码</string>
+    <string name="pay_pwd_tab_3">设置支付密码</string>
+    <string name="pay_pwd_tab_4">输入原密码</string>
+    <string name="pay_pwd_tab_5">输入新密码</string>
+    <string name="pay_pwd_tab_6">提交</string>
+    <string name="pay_pwd_tab_7">请输入原密码</string>
+    <string name="pay_pwd_tab_8">请输入新密码</string>
+    <string name="pay_pwd_tab_9">绑定手机号   %0$s</string>
+    <string name="pay_pwd_tab_10">请输入验证码</string>
+    <string name="pay_pwd_tab_11">输入密码</string>
+    <string name="pay_pwd_tab_12">确认密码</string>
+    <string name="pay_pwd_tab_13">请输入密码</string>
+    <string name="pay_pwd_tab_14">请输入确认密码</string>
+    <string name="pay_pwd_tab_15">两次密码不一致</string>
+    <string name="pay_pwd_tab_16">原密码不能少于6位</string>
+    <string name="pay_pwd_tab_17">新密码不能少于6位</string>
+    <string name="pay_pwd_tab_18">密码不能少于6位</string>
+    <string name="pay_pwd_tab_19">确认密码不能少于6位</string>
 
 </resources>

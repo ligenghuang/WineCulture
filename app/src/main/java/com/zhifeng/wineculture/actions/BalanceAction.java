@@ -1,9 +1,16 @@
 package com.zhifeng.wineculture.actions;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
+import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.BalanceDto;
+import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.BalanceView;
+import com.zhifeng.wineculture.utils.config.MyApp;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -27,8 +34,13 @@ public class BalanceAction extends BaseAction<BalanceView> {
         attachView(view);
     }
 
+    /**
+     * 余额
+     */
     public void getBalanceData(){
-
+        post(WebUrlUtil.POST_USER_REMAINDER,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())),WebUrlUtil.POST_USER_REMAINDER)
+        ));
     }
 
     /**
@@ -54,6 +66,22 @@ public class BalanceAction extends BaseAction<BalanceView> {
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
+                    case WebUrlUtil.POST_USER_REMAINDER:
+                        //todo 获取我的余额
+                        if (aBoolean) {
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            BalanceDto balanceDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BalanceDto>() {
+                            }.getType());
+                            if (balanceDto.getStatus() == 200) {
+                                //todo 获取我的余额 成功
+                                view.getBalanceDataSuccess(balanceDto);
+                                return;
+                            }
+                            view.onError(balanceDto.getMsg(), action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg, action.getErrorType());
+                        break;
                 }
 
             }

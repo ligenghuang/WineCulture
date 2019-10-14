@@ -83,6 +83,15 @@ public class GoodsDetailAction extends BaseAction<GoodsDetailView> {
         ));
     }
 
+    /**
+     * 添加足迹
+     * @param id
+     */
+    public void addFootPrint(String id){
+        post(WebUrlUtil.POST_COLLECTION_FOOT,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),"goods_id",id),WebUrlUtil.POST_COLLECTION_FOOT)
+        ));
+    }
 
     /**
      * sticky:表明优先接收最高级  threadMode = ThreadMode.MAIN：表明在主线程

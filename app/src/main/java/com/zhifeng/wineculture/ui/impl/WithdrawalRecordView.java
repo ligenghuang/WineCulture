@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.wineculture.modules.WithdrawalRecordDto;
 
 /**
   *
@@ -13,5 +14,5 @@ import com.lgh.huanglib.util.base.BaseView;
 
 public interface WithdrawalRecordView extends BaseView {
     void getWithdrawalRecord();
-    void getWithdrawalRecordSuccess();
+    void getWithdrawalRecordSuccess(WithdrawalRecordDto withdrawalRecordDto);
 }

@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.wineculture.modules.SearchPhoneDto;
 
 /**
   *
@@ -14,5 +15,5 @@ import com.lgh.huanglib.util.base.BaseView;
 public interface TransferSearchView extends BaseView {
 
     void search(String text);
-    void searchSuccess();
+    void searchSuccess(SearchPhoneDto searchPhoneDto);
 }

@@ -125,7 +125,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     @OnClick({R.id.tvMyOrder, R.id.tv_obligation, R.id.tv_toBeShipped, R.id.tv_toBeReceived,
             R.id.tv_toBeComment, R.id.tv_service, R.id.tv_memberCenter, R.id.tv_myteam,
             R.id.tv_popularize, R.id.tv_proxy, R.id.tv_myCollect, R.id.tv_myFootprint,
-            R.id.tv_myComments, R.id.tv_myAddress, R.id.tv_aboutWineCulture, R.id.iv_booking_goods})
+            R.id.tv_myComments, R.id.tv_myAddress, R.id.tv_aboutWineCulture, R.id.iv_booking_goods,R.id.iv})
     public void onViewClicked(View view) {
         int position = -1;
         switch (view.getId()) {
@@ -193,6 +193,10 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
             case R.id.iv_booking_goods:
                 //todo 我要预约商品
                 jumpActivityNotFinish(mContext, BookingGoodsActivity.class);
+                break;
+            case R.id.iv:
+                //todo 安全中心
+                jumpActivityNotFinish(mContext, SecurityActivity.class);
                 break;
         }
         if (position != -1) {

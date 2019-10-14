@@ -42,9 +42,7 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataB
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isGoods){
-                    onClickListener.itemView(model);
-                }
+                onClickListener.itemView(model);
             }
         });
         holder.itemView.findViewById(R.id.iv_detele).setOnClickListener(new View.OnClickListener() {

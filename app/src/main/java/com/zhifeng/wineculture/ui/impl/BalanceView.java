@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.wineculture.modules.BalanceDto;
 
 /**
   *
@@ -14,5 +15,5 @@ import com.lgh.huanglib.util.base.BaseView;
 public interface BalanceView extends BaseView {
 
     void getBalanceData();
-    void getBalanceDataSuccess();
+    void getBalanceDataSuccess(BalanceDto balanceDto);
 }

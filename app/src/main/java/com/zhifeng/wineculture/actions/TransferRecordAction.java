@@ -1,9 +1,16 @@
 package com.zhifeng.wineculture.actions;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
+import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.TransferRecordDto;
+import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.TransferRecordView;
+import com.zhifeng.wineculture.utils.config.MyApp;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -13,16 +20,15 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Predicate;
 
 /**
-  *
-  * @ClassName:     转账记录
-  * @Description:
-  * @Author:         lgh
-  * @CreateDate:     2019/9/29 15:23
-  * @Version:        1.0
+ * @ClassName: 转账记录
+ * @Description:
+ * @Author: lgh
+ * @CreateDate: 2019/9/29 15:23
+ * @Version: 1.0
  */
 
 public class TransferRecordAction extends BaseAction<TransferRecordView> {
-    public TransferRecordAction(RxAppCompatActivity _rxAppCompatActivity,TransferRecordView view) {
+    public TransferRecordAction(RxAppCompatActivity _rxAppCompatActivity, TransferRecordView view) {
         super(_rxAppCompatActivity);
         attachView(view);
     }
@@ -30,8 +36,10 @@ public class TransferRecordAction extends BaseAction<TransferRecordView> {
     /**
      * 获取转账记录
      */
-    public void getTransferRecord(){
-
+    public void getTransferRecord(int page) {
+        post(WebUrlUtil.POST_USER_TRANSFER_LIST, false, service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "page", page), WebUrlUtil.POST_USER_TRANSFER_LIST)
+        ));
     }
 
     /**
@@ -57,6 +65,21 @@ public class TransferRecordAction extends BaseAction<TransferRecordView> {
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
+                    case WebUrlUtil.POST_USER_TRANSFER_LIST:
+                        if (aBoolean) {
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            TransferRecordDto transferRecordDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<TransferRecordDto>() {
+                            }.getType());
+                            if (transferRecordDto.getStatus() == 200) {
+                                //todo 获取转账记录 成功
+                                view.getTransferRecordSuccess(transferRecordDto);
+                                return;
+                            }
+                            view.onError(transferRecordDto.getMsg(), action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg, action.getErrorType());
+                        break;
                 }
 
             }

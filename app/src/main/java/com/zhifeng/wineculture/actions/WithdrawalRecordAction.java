@@ -1,9 +1,17 @@
 package com.zhifeng.wineculture.actions;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
+import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.BalanceOfPaymentDto;
+import com.zhifeng.wineculture.modules.WithdrawalRecordDto;
+import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.WithdrawalRecordView;
+import com.zhifeng.wineculture.utils.config.MyApp;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -31,7 +39,9 @@ public class WithdrawalRecordAction extends BaseAction<WithdrawalRecordView> {
      * 获取提现记录
      */
     public void getWithdrawalRecord(){
-
+        post(WebUrlUtil.POST_WITHDRAWAL_LIST,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())),WebUrlUtil.POST_WITHDRAWAL_LIST)
+        ));
     }
 
     /**
@@ -57,6 +67,22 @@ public class WithdrawalRecordAction extends BaseAction<WithdrawalRecordView> {
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
+                    case WebUrlUtil.POST_WITHDRAWAL_LIST:
+                        //todo 获取提现记录
+                        if (aBoolean) {
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            WithdrawalRecordDto withdrawalRecordDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<WithdrawalRecordDto>() {
+                            }.getType());
+                            if (withdrawalRecordDto.getStatus() == 200) {
+                                //todo 获取提现记录 成功
+                                view.getWithdrawalRecordSuccess(withdrawalRecordDto);
+                                return;
+                            }
+                            view.onError(withdrawalRecordDto.getMsg(), action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg, action.getErrorType());
+                        break;
                 }
 
             }

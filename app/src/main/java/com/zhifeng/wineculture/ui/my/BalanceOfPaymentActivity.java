@@ -106,7 +106,7 @@ public class BalanceOfPaymentActivity extends UserBaseActivity {
         for (int i = 0; i < fragmentSize; i++) {
             switch (i) {
                 case POIONTONE://
-                    balanceOfPaymentFragment1 = new BalanceOfPaymentFragment();
+                    balanceOfPaymentFragment1 = new BalanceOfPaymentFragment(POIONTONE);
                     if (Position != POIONTONE) {
                         balanceOfPaymentFragment1.setUserVisibleHint(false);//
                     }
@@ -114,7 +114,7 @@ public class BalanceOfPaymentActivity extends UserBaseActivity {
                     fragments.add(balanceOfPaymentFragment1);
                     break;
                 case POIONTTWO://
-                    balanceOfPaymentFragment2 = new BalanceOfPaymentFragment();
+                    balanceOfPaymentFragment2 = new BalanceOfPaymentFragment(POIONTTWO);
                     if (Position != POIONTTWO) {
                         balanceOfPaymentFragment2.setUserVisibleHint(false);//
                     }

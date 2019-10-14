@@ -11,10 +11,12 @@ import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.BalanceAction;
+import com.zhifeng.wineculture.modules.BalanceDto;
 import com.zhifeng.wineculture.ui.impl.BalanceView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
+import java.text.DecimalFormat;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -60,6 +62,8 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
         super.init();
         mActicity = this;
         mContext = this;
+
+        getBalanceData();
     }
 
     /**
@@ -93,8 +97,11 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
      * 获取账户余额 成功
      */
     @Override
-    public void getBalanceDataSuccess() {
+    public void getBalanceDataSuccess(BalanceDto balanceDto) {
         loadDiss();
+        BalanceDto.DataBean dataBean = balanceDto.getData();
+//        DecimalFormat df = new DecimalFormat("#0.00");
+        tvBalance.setText("￥"+dataBean.getRemainder_money());
     }
 
     /**

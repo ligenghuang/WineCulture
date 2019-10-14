@@ -17,7 +17,9 @@ public interface GoodsDetailView extends BaseView {
     void getGoodsDetail();
     void getGoodsDetailSucces(GoodsDetailDto goodsDetailDto);
 
-    /**
+    void addFootPrint();
+
+   /**
      * 取消关注或关注
      */
     void deleteOrAddCollection();

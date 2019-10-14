@@ -260,6 +260,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     @Override
     public void getGoodsDetailSucces(GoodsDetailDto goodsDetailDto) {
         loadDiss();
+        addFootPrint();
         dataBean = goodsDetailDto.getData();
         tvGoodsOriginalPrice.setText("￥" + dataBean.getOriginal_price());//原价
         tvGoodsOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
@@ -284,6 +285,13 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         //todo 初始化规格
         initUiData(dataBean);
 //        service = dataBean.getService();
+    }
+
+    @Override
+    public void addFootPrint() {
+        if(CheckNetwork.checkNetwork2(mContext)){
+            baseAction.addFootPrint(goodsId);
+        }
     }
 
     /**
