@@ -89,7 +89,7 @@ public class GoodsDetailAction extends BaseAction<GoodsDetailView> {
      */
     public void addFootPrint(String id){
         post(WebUrlUtil.POST_COLLECTION_FOOT,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),"goods_id",id),WebUrlUtil.POST_COLLECTION_FOOT)
+                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),"goods_id",id,"del",0),WebUrlUtil.POST_COLLECTION_FOOT)
         ));
     }
 

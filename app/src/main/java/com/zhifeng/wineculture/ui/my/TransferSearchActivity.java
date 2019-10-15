@@ -1,7 +1,9 @@
 package com.zhifeng.wineculture.ui.my;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,8 +25,11 @@ import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.TransferSearchAction;
 import com.zhifeng.wineculture.adapters.TransferSearchAdapter;
 import com.zhifeng.wineculture.modules.SearchPhoneDto;
+import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.TransferSearchView;
+import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
 
@@ -85,8 +90,15 @@ public class TransferSearchActivity extends UserBaseActivity<TransferSearchActio
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(transferSearchAdapter);
 
-        showEt();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showEt();
+            }
+        }, 100);
+
         loadView();
+
     }
 
     /**
@@ -103,6 +115,7 @@ public class TransferSearchActivity extends UserBaseActivity<TransferSearchActio
                 .init();
         toolbar.setNavigationOnClickListener(view -> finish());
         fTitleTv.setText(ResUtil.getString(R.string.balance_tab_4));
+
     }
 
     private void showEt(){
@@ -146,6 +159,7 @@ public class TransferSearchActivity extends UserBaseActivity<TransferSearchActio
             @Override
             public void onClick(int id) {
                 //todo 转账
+
             }
         });
     }

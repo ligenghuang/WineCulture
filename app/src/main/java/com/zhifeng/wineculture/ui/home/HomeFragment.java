@@ -1,7 +1,6 @@
 package com.zhifeng.wineculture.ui.home;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +21,7 @@ import com.superluo.textbannerlibrary.ITextBannerItemClickListener;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.HomeAction;
+import com.zhifeng.wineculture.adapters.AnnounceAdapter;
 import com.zhifeng.wineculture.adapters.BannerHome;
 import com.zhifeng.wineculture.adapters.HotGoodsAdapter;
 import com.zhifeng.wineculture.adapters.LikeGoodsAdapter;
@@ -36,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 /**
@@ -142,7 +143,7 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
         rvHotGoods.setAdapter(hotGoodsAdapter);
 
         likeGoodsAdapter = new LikeGoodsAdapter(mContext);
-        rvLikeGoods.setLayoutManager(new GridLayoutManager(mContext,2));
+        rvLikeGoods.setLayoutManager(new GridLayoutManager(mContext, 2));
         rvLikeGoods.setAdapter(likeGoodsAdapter);
 
         loadDialog();
@@ -157,7 +158,8 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
         tvBanner.setItemOnClickListener(new ITextBannerItemClickListener() {
             @Override
             public void onItemClick(String data, int position) {
-                L.e("lgh_item","position   = "+position);
+                L.e("lgh_item", "position   = " + position);
+                jumpActivityNotFinish(mContext, AnnounceActivity.class);
 //                Intent intent = new Intent(mContext, NoticeDetailActivity.class);
 //                intent.putExtra("id",announceBeans.get(position).getId()+"");
 //                startActivity(intent);
@@ -194,9 +196,9 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
         setBanner(dataBean.getBanners());//轮播图
         setAnnounceList(dataBean.getAnnounce());//公告
         recommendedAdapter.refresh(dataBean.getTuijian());//推荐
-        llHot.setVisibility(dataBean.getHot_goods().size() == 0?View.GONE:View.VISIBLE);
+        llHot.setVisibility(dataBean.getHot_goods().size() == 0 ? View.GONE : View.VISIBLE);
         hotGoodsAdapter.refresh(dataBean.getHot_goods());//热销商品
-        llLike.setVisibility(dataBean.getLike().size() == 0?View.GONE:View.VISIBLE);
+        llLike.setVisibility(dataBean.getLike().size() == 0 ? View.GONE : View.VISIBLE);
         likeGoodsAdapter.refresh(dataBean.getLike());//猜你喜欢
 
     }
@@ -260,5 +262,15 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
             tvBanner.startViewAnimator();
         }
 
+    }
+
+    @OnClick(R.id.ll_search)
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.ll_search:
+                //todo 搜索
+                jumpActivityNotFinish(mContext,SearchGoodsActivity.class);
+                break;
+        }
     }
 }

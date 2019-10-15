@@ -225,4 +225,14 @@ public class WebUrlUtil {
      * 安全中心信息
      */
     public static final String POST_SAFE_INDEX = "user/safe";
+
+    /**
+     * 搜索历史
+     */
+    public static final String POST_SEARCH_HISTORY = "user/search_history";
+
+    /**
+     * 公告列表
+     */
+    public static final String POST_USER_ANNOUNCE_LIST = "user/announce_list";
 }

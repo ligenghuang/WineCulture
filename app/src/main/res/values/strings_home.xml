@@ -62,4 +62,14 @@
     <string name="bug_pwd_dialog_1">确认支付</string>
     <string name="bug_pwd_dialog_2">支付方式</string>
 
+    <string name="search_tab_1">搜索</string>
+    <string name="search_tab_2">请输入相关商品名称</string>
+    <string name="search_tab_3">搜索历史</string>
+    <string name="search_tab_4">综合</string>
+    <string name="search_tab_5">销量</string>
+    <string name="search_tab_6">价格</string>
+    <string name="search_tab_7">筛选</string>
+
+    <string name="announce_tab_1">公告列表</string>
+
 </resources>

@@ -5,7 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/color_f2"
     tools:context=".ui.home.AnnounceActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:src="@drawable/icon_announce_bg"
+            android:scaleType="fitXY"
+            />
+
+        <include layout="@layout/layout_title_white_bar"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_rv_announce_bg"
+        android:padding="@dimen/dp_10"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="-25dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="@dimen/dp_10"/>
 
 </LinearLayout>

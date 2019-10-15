@@ -18,6 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
+        <activity android:name=".ui.home.SearchGoodsActivity"></activity>
+        <activity android:name=".ui.home.AnnounceActivity"/>
         <activity android:name=".ui.my.ModifyPayPwdActivity" />
         <activity android:name=".ui.my.ModifyMobileCodeActivity" />
         <activity android:name=".ui.my.ModifyUserNameActivity" />
@@ -26,11 +28,9 @@
         <activity android:name=".ui.my.PayPwdActivity" />
         <activity android:name=".ui.my.ModifyMobileActivity" />
         <activity android:name=".ui.my.SecurityActivity" />
-        <activity android:name=".ui.home.AnnounceActivity" />
         <activity android:name=".ui.home.GoodsCommentsActivity" />
         <activity android:name=".ui.my.CommentActivity" />
         <activity android:name=".ui.loginandregister.UpdatePwdActivity" />
-        <activity android:name=".ui.home.AnnounceActivity" />
         <activity android:name=".ui.home.TemporaryActivity" />
         <activity
             android:name=".ui.cart.CartActivity"

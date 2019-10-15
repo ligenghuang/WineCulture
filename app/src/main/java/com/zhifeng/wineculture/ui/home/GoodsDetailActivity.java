@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
@@ -273,7 +274,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         tvGoodsFreight.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "￥" + dataBean.getShipping_price());//运费
         isCollection = dataBean.getCollection() == 1;
         tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
-
+        tvGoodsAddress.setText(dataBean.getAddress());
         comment_count = dataBean.getComment_count();
         tvGoodsCommentCount.setText(ResUtil.getFormatString(R.string.goods_detail_tab_12, comment_count + ""));//评价数量
 //        goodsDetailCommentListAdapter.refresh(dataBean.getCommentlist());//评价列表
@@ -812,6 +813,19 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 200) {
+            if (data != null) {
+                //配送地址
+                String address = data.getStringExtra("address");
+                tvGoodsAddress.setText(address);
+            }
+        }
+    }
+
 
     /**
      * 滚动到顶部

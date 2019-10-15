@@ -17,6 +17,7 @@ import com.zhifeng.wineculture.actions.ClassifyAction;
 import com.zhifeng.wineculture.adapters.CategoryAdapter;
 import com.zhifeng.wineculture.adapters.CategoryListAdapter;
 import com.zhifeng.wineculture.modules.ClassifyDto;
+import com.zhifeng.wineculture.ui.home.SearchGoodsActivity;
 import com.zhifeng.wineculture.ui.impl.ClassifyView;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
 
@@ -25,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @ClassName: 分类fragment
@@ -163,5 +165,15 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
     public void onPause() {
         super.onPause();
         baseAction.toUnregister();
+    }
+
+    @OnClick(R.id.ll_search)
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.ll_search:
+                //todo 搜索
+                jumpActivityNotFinish(mContext, SearchGoodsActivity.class);
+                break;
+        }
     }
 }

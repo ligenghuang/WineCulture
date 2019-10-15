@@ -49,7 +49,7 @@ public class MyFootPrintAction extends BaseAction<MyFootPrintView> {
      */
     public void deleteFootPrint(String id){
         post(WebUrlUtil.POST_COLLECTION_FOOT,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),"goods_id",id),WebUrlUtil.POST_COLLECTION_FOOT)
+                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),"goods_id",id,"del",1),WebUrlUtil.POST_COLLECTION_FOOT)
         ));
     }
 
