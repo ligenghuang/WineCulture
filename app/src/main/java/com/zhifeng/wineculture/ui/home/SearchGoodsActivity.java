@@ -1,20 +1,33 @@
 package com.zhifeng.wineculture.ui.home;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.SearchGoodsAction;
+import com.zhifeng.wineculture.adapters.BannerHome;
+import com.zhifeng.wineculture.adapters.SearchGoodsAdapter;
 import com.zhifeng.wineculture.adapters.SearchGoodsHistoryAdapter;
+import com.zhifeng.wineculture.modules.GeneralDto;
+import com.zhifeng.wineculture.modules.SearchGoodsDto;
 import com.zhifeng.wineculture.modules.SearchGoodsHistoryDto;
 import com.zhifeng.wineculture.ui.impl.SearchGoodsView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
@@ -27,6 +40,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bingoogolapple.bgabanner.BGABanner;
 
 import static com.lgh.huanglib.util.data.DensityUtil.dp2px;
 
@@ -50,14 +64,33 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
     RecyclerView rvSearchHistory;
     @BindView(R.id.ll_search_history)
     LinearLayout llSearchHistory;
-    @BindView(R.id.iv_search_top)
-    ImageView ivSearchTop;
+    @BindView(R.id.banner_advertising)
+    BGABanner bannerAdvertising;
     @BindView(R.id.rv_search)
     RecyclerView rvSearch;
     @BindView(R.id.ll_search)
     LinearLayout llSearch;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     SearchGoodsHistoryAdapter searchGoodsHistoryAdapter;
+
+    BannerHome beSelfnav;
+    List<String> imgsSelfnav = new ArrayList<>();
+    List<String> tipsSelfnav = new ArrayList<>();
+    List<String> urlSelfnav = new ArrayList<>();
+    List<String> titleSelfnav = new ArrayList<>();
+
+    String Keyword;
+    int page = 1;
+    int number_sales = 0;
+    int price = 0;
+    //升序 asc 降序desc
+    String sort = "";
+    boolean isRefresh = true;
+    boolean isMore = true;
+
+    SearchGoodsAdapter searchGoodsAdapter;
 
     @Override
     public int intiLayout() {
@@ -99,6 +132,9 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
         mContext = this;
         mActicity = this;
 
+        beSelfnav = new BannerHome();
+        bannerAdvertising.setAdapter(beSelfnav);
+
         searchGoodsHistoryAdapter = new SearchGoodsHistoryAdapter();
         FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
         //设置每一个item间距
@@ -106,8 +142,34 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
         rvSearchHistory.setLayoutManager(flowLayoutManager);
         rvSearchHistory.setAdapter(searchGoodsHistoryAdapter);
 
+        searchGoodsAdapter = new SearchGoodsAdapter(this);
+        rvSearch.setLayoutManager(new LinearLayoutManager(this));
+        rvSearch.setAdapter(searchGoodsAdapter);
+
         searchGoodsHistory();
         loadView();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showEt();
+            }
+        }, 200);
+
+    }
+
+    private void showEt() {
+        etSearch.setFocusable(true);
+        etSearch.setFocusableInTouchMode(true);
+        etSearch.requestFocus();
+
+        new Thread(new Runnable() {
+
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) mActicity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(etSearch, InputMethodManager.RESULT_SHOWN);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            }
+        }).start();
     }
 
     @Override
@@ -118,6 +180,20 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
             public void onClick(String keyword) {
                 //todo 搜索商品
                 etSearch.setText(keyword);
+                Keyword = keyword;
+                loadDialog();
+                searchGoods();
+            }
+        });
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                loadMoreGoods();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                searchGoods();
             }
         });
     }
@@ -127,7 +203,7 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
      */
     @Override
     public void searchGoodsHistory() {
-        if(CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             loadDialog();
             baseAction.searchGoodsHistory();
         }
@@ -135,40 +211,133 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
 
     /**
      * 获取搜索历史 成功
+     *
      * @param goodsHistoryDto
      */
     @Override
     public void searchGoodsHistorySuccess(SearchGoodsHistoryDto goodsHistoryDto) {
         loadDiss();
-        List<SearchGoodsHistoryDto.DataBean> list = new ArrayList<>();
-        list.addAll(goodsHistoryDto.getData());
-        list.addAll(goodsHistoryDto.getData());
-        list.addAll(goodsHistoryDto.getData());
-        list.addAll(goodsHistoryDto.getData());
-        searchGoodsHistoryAdapter.refresh(list);
+        searchGoodsHistoryAdapter.refresh(goodsHistoryDto.getData());
 
         llSearch.setVisibility(View.GONE);
         llSearchHistory.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void searchGoods() {
-
-    }
-
-    @Override
-    public void searchGoodsSuccess() {
 
     }
 
     /**
+     * 删除搜索历史
+     */
+    @Override
+    public void deleteHistory() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.delHistory();
+        }
+    }
+
+    /**
+     * 删除搜索历史
+     *
+     * @param generalDto
+     */
+    @Override
+    public void deleteHistorySuccess(GeneralDto generalDto) {
+        loadDiss();
+        showNormalToast(generalDto.getMsg());
+        searchGoodsHistoryAdapter.refresh(new ArrayList<>());
+    }
+
+    /**
+     * 搜索商品
+     */
+    @Override
+    public void searchGoods() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+
+            page = 1;
+            isRefresh = true;
+            baseAction.searchGoods(Keyword, page, number_sales, price, sort);
+        }
+    }
+
+    /**
+     * 获取更多商品
+     */
+    @Override
+    public void loadMoreGoods() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            page++;
+            isRefresh = false;
+            baseAction.searchGoods(Keyword, page, number_sales, price, sort);
+        }
+    }
+
+    /**
+     * 搜索成功
+     *
+     * @param searchGoodsDto
+     */
+    @Override
+    public void searchGoodsSuccess(SearchGoodsDto searchGoodsDto) {
+        loadDiss();
+        hideInput();
+        refreshLayout.finishRefresh();
+        refreshLayout.finishLoadMore();
+        llSearch.setVisibility(View.VISIBLE);
+        llSearchHistory.setVisibility(View.GONE);
+        SearchGoodsDto.DataBeanX dataBean = searchGoodsDto.getData();
+        if (isRefresh) {
+            setAdBanner(dataBean.getBanners());
+        }
+        SearchGoodsDto.DataBeanX.ListBean listBeans = dataBean.getList();
+        List<SearchGoodsDto.DataBeanX.ListBean.DataBean> beans = listBeans.getData();
+        if (beans.size() > 0) {
+            isMore = page < listBeans.getLast_page();
+            loadSwapTab();
+            if (isRefresh) {
+                searchGoodsAdapter.refresh(beans);
+            } else {
+                searchGoodsAdapter.loadMore(beans);
+            }
+        } else {
+            isMore = false;
+            loadSwapTab();
+        }
+
+    }
+
+    private void setAdBanner(List<SearchGoodsDto.DataBeanX.BannersBean> banners) {
+        //设置轮播图
+        if (banners.size() != 0) {
+            bannerAdvertising.setVisibility(View.VISIBLE);
+            imgsSelfnav = new ArrayList<>();
+            tipsSelfnav = new ArrayList<>();
+            urlSelfnav = new ArrayList<>();
+            titleSelfnav = new ArrayList<>();
+            for (int i = 0; i < banners.size(); i++) {
+                SearchGoodsDto.DataBeanX.BannersBean bannersBean = banners.get(i);
+                imgsSelfnav.add(bannersBean.getPicture());
+                tipsSelfnav.add("");
+                urlSelfnav.add(bannersBean.getUrl());
+                titleSelfnav.add(bannersBean.getTitle());
+            }
+            bannerAdvertising.setAutoPlayAble(true);
+            bannerAdvertising.setData(imgsSelfnav, tipsSelfnav);
+            bannerAdvertising.startAutoPlay();
+        }
+    }
+
+    /**
      * 失败
+     *
      * @param message
      * @param code
      */
     @Override
     public void onError(String message, int code) {
         loadDiss();
+        refreshLayout.finishRefresh();
+        refreshLayout.finishLoadMore();
         showNormalToast(message);
     }
 
@@ -189,22 +358,73 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
         switch (view.getId()) {
             case R.id.tv_search:
                 //todo 搜索
+                search();
                 break;
             case R.id.iv_search_delete:
                 //todo 删除搜索历史
+                deleteHistory();
                 break;
             case R.id.tv_search_synthesize:
                 //todo 综合排序
+                number_sales = 0;
+                price = 0;
+                sort = "";
+                refreshLayout.autoRefresh();
                 break;
             case R.id.tv_search_sales:
                 //todo 销量排序
+                number_sales = 1;
+                price = 0;
+                sort = "";
+
+                refreshLayout.autoRefresh();
                 break;
             case R.id.ll_search_sort:
                 //todo 价格排序
+                number_sales = 0;
+                price = 1;
+                if (TextUtils.isEmpty(sort) || sort.equals("desc")) {
+                    sort = "asc";
+                } else {
+                    sort = "desc";
+                }
+                refreshLayout.autoRefresh();
                 break;
             case R.id.ll_search_screen:
                 //todo 筛选
                 break;
+        }
+    }
+
+    /**
+     * 搜索
+     */
+    private void search() {
+        if (TextUtils.isEmpty(etSearch.getText().toString())) {
+            showNormalToast(ResUtil.getString(R.string.search_tab_2));
+            return;
+        }
+        number_sales = 0;
+        price = 0;
+        sort = "";
+        Keyword = etSearch.getText().toString();
+        loadDialog();
+        searchGoods();
+
+        hideInput();
+    }
+
+    /**
+     * tab变换 加载更多的显示方式
+     */
+    private void loadSwapTab() {
+        if (!isMore) {
+            L.e("xx", "设置为没有加载更多....");
+            refreshLayout.finishLoadMoreWithNoMoreData();
+            refreshLayout.setNoMoreData(true);
+        } else {
+            L.e("xx", "设置为可以加载更多....");
+            refreshLayout.setNoMoreData(false);
         }
     }
 }

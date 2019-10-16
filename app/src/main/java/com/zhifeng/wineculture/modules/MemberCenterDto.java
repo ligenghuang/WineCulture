@@ -98,11 +98,11 @@ public class MemberCenterDto {
         }
 
         public String getRemainder_money() {
-            return remainder_money == null ? "" : remainder_money;
+            return remainder_money == null ? "0" : remainder_money;
         }
 
         public void setRemainder_money(String remainder_money) {
-            this.remainder_money = remainder_money == null ? "" : remainder_money;
+            this.remainder_money = remainder_money == null ? "0" : remainder_money;
         }
 
         public int getDistribut_money() {

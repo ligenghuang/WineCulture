@@ -49,9 +49,21 @@ public class HomeDto {
     public static class DataBean {
         private List<BannersBean> banners;
         private List<AnnounceBean> announce;
+        private List<AdBean> ad;
         private List<TuijianBean> tuijian;
         private List<HotGoodsBean> hot_goods;
         private List<LikeBean> like;
+
+        public List<AdBean> getAd() {
+            if (ad == null) {
+                return new ArrayList<>();
+            }
+            return ad;
+        }
+
+        public void setAd(List<AdBean> ad) {
+            this.ad = ad;
+        }
 
         public List<BannersBean> getBanners() {
             if (banners == null) {
@@ -335,6 +347,36 @@ public class HomeDto {
 
             public void setOriginal_price(String original_price) {
                 this.original_price = original_price == null ? "" : original_price;
+            }
+        }
+
+        public static class AdBean{
+            private String picture;
+            private String title;
+            private String url;
+
+            public String getPicture() {
+                return picture == null ? "" : picture;
+            }
+
+            public void setPicture(String picture) {
+                this.picture = picture == null ? "" : picture;
+            }
+
+            public String getTitle() {
+                return title == null ? "" : title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title == null ? "" : title;
+            }
+
+            public String getUrl() {
+                return url == null ? "" : url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url == null ? "" : url;
             }
         }
     }

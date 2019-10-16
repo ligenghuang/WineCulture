@@ -15,6 +15,7 @@
     <string name="cart_tab_12">总计： ￥%0$s</string>
     <string name="cart_tab_13">购物车(%0$s)</string>
 
+
     <string name="cart_submit_orders_tab_1">合计金额：</string>
     <string name="cart_submit_orders_tab_2">提交订单</string>
     <string name="cart_submit_orders_tab_3">暂无收货地址，请点击添加</string>
@@ -23,5 +24,7 @@
     <string name="cart_submit_orders_tab_6">买家留言</string>
     <string name="cart_submit_orders_tab_7">选填：给商家留言（45字以内）</string>
     <string name="cart_submit_orders_tab_8">订单详情</string>
+    <string name="cart_submit_orders_tab_9">共%0$s件商品</string>
+
 
 </resources>

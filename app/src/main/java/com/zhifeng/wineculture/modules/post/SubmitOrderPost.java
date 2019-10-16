@@ -1,4 +1,8 @@
 package com.zhifeng.wineculture.modules.post;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
   *
   * @ClassName:     提交订单实体类
@@ -13,7 +17,7 @@ public class SubmitOrderPost {
     private String cart_id;
     private String address_id;
     private String pay_type;
-    private String user_note;
+    private List<String> user_note;
     private String pwd;
 
     public String getCart_id() {
@@ -40,12 +44,15 @@ public class SubmitOrderPost {
         this.pay_type = pay_type == null ? "" : pay_type;
     }
 
-    public String getUser_note() {
-        return user_note == null ? "" : user_note;
+    public List<String> getUser_note() {
+        if (user_note == null) {
+            return new ArrayList<>();
+        }
+        return user_note;
     }
 
-    public void setUser_note(String user_note) {
-        this.user_note = user_note == null ? "" : user_note;
+    public void setUser_note(List<String> user_note) {
+        this.user_note = user_note;
     }
 
     public String getPwd() {

@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.cart;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -358,6 +359,7 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
                 break;
             case R.id.tv_cart_settlement:
                 //todo 结算
+                settlement();
                 break;
             case R.id.tv_to_home:
                 //todo 返回首页
@@ -367,5 +369,33 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
                 finish();
                 break;
         }
+    }
+
+    /**
+     * 结算
+     */
+    private void settlement() {
+        List<CartListDto.DataBean> listDtos = cartListAdapter.getAllData();
+        String id = "";
+        int num = 0;
+        for (int i = 0; i <listDtos.size() ; i++) {
+            if (listDtos.get(i).getSelected() == 1){
+                num++;
+                if (i ==0){
+                    id = listDtos.get(i).getCart_id()+"";
+                }else {
+                    id = id+","+listDtos.get(i).getCart_id();
+                }
+            }
+        }
+
+        if (num == 0){
+            showNormalToast(ResUtil.getString(R.string.cart_tab_10));
+            return;
+        }
+
+        Intent intent = new Intent(mContext, CartSubmitOrdersActivity.class);
+        intent.putExtra("cartId",id);
+        startActivity(intent);
     }
 }

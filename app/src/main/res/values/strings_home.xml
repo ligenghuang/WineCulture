@@ -69,6 +69,7 @@
     <string name="search_tab_5">销量</string>
     <string name="search_tab_6">价格</string>
     <string name="search_tab_7">筛选</string>
+    <string name="search_tab_8">销量:%0$s笔</string>
 
     <string name="announce_tab_1">公告列表</string>
 

@@ -8,6 +8,7 @@ import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.modules.FootPrintDto;
 import com.zhifeng.wineculture.modules.GeneralDto;
+import com.zhifeng.wineculture.modules.SearchGoodsDto;
 import com.zhifeng.wineculture.modules.SearchGoodsHistoryDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.SearchGoodsView;
@@ -46,6 +47,26 @@ public class SearchGoodsAction extends BaseAction<SearchGoodsView> {
     }
 
     /**
+     * 搜索商品
+     */
+    public void searchGoods(String keyword,int page,int number_sales,int price,String sort){
+        post(WebUrlUtil.POST_SEARCH_GOODS,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"keyword",keyword,"page",page,
+                        "number_sales",number_sales,"price",price,"sort",sort
+                ),WebUrlUtil.POST_SEARCH_GOODS)
+        ));
+    }
+
+    /**
+     * 删除搜索历史
+     */
+    public void delHistory(){
+        post(WebUrlUtil.POST_DEL_SEARCH_HISTORY,false,service -> manager.runHttp(service.PostData(
+                CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),"del","all"),WebUrlUtil.POST_DEL_SEARCH_HISTORY
+        )));
+    }
+
+    /**
      * sticky:表明优先接收最高级  threadMode = ThreadMode.MAIN：表明在主线程
      *
      * @param action
@@ -80,6 +101,38 @@ public class SearchGoodsAction extends BaseAction<SearchGoodsView> {
                                 return;
                             }
                             view.onError(searchGoodsHistoryDto.getMsg(), action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg,action.getErrorType());
+                        break;
+                    case WebUrlUtil.POST_SEARCH_GOODS:
+                        //todo 搜索商品
+                        if (aBoolean){
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            SearchGoodsDto searchGoodsDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<SearchGoodsDto>() {
+                            }.getType());
+                            if (searchGoodsDto.getStatus() == 200) {
+                                //todo 搜索商品 成功
+                                view.searchGoodsSuccess(searchGoodsDto);
+                                return;
+                            }
+                            view.onError(searchGoodsDto.getMsg(), action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg,action.getErrorType());
+                        break;
+                    case WebUrlUtil.POST_DEL_SEARCH_HISTORY:
+                        //todo 删除搜索历史
+                        if (aBoolean){
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            }.getType());
+                            if (generalDto.getStatus() == 200) {
+                                //todo 删除搜索历史 成功
+                                view.deleteHistorySuccess(generalDto);
+                                return;
+                            }
+                            view.onError(generalDto.getMsg(), action.getErrorType());
                             return;
                         }
                         view.onError(msg,action.getErrorType());

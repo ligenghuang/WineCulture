@@ -44,15 +44,20 @@ public class BalanceOfPaymentFragment extends UserBaseFragment<BalanceOfPaymentA
 
     int type;
 
-    public BalanceOfPaymentFragment(int type) {
-        this.type = type;
-    }
 
     @Override
     protected BalanceOfPaymentAction initAction() {
         return new BalanceOfPaymentAction((RxAppCompatActivity) getActivity(), this);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            type = bundle.getInt("type");
+        }
+    }
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -83,7 +88,16 @@ public class BalanceOfPaymentFragment extends UserBaseFragment<BalanceOfPaymentA
         recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerview.setAdapter(balanceOfPaymentAdapter);
 
-        refreshLayout.autoRefresh();
+
+    }
+
+    @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+        super.onFragmentVisibleChange(isVisible);
+        recyclerview.setVisibility(View.GONE);
+        if (isVisible &&((BalanceOfPaymentActivity) mActivity).Position == type){
+            refreshLayout.autoRefresh();
+        }
     }
 
     @Override
@@ -115,6 +129,7 @@ public class BalanceOfPaymentFragment extends UserBaseFragment<BalanceOfPaymentA
     public void getBalanceOfPaymentSuccess(BalanceOfPaymentDto balanceOfPaymentDto) {
         refreshLayout.finishRefresh();
         balanceOfPaymentAdapter.refresh(balanceOfPaymentDto.getData().getList());
+        recyclerview.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -133,5 +148,13 @@ public class BalanceOfPaymentFragment extends UserBaseFragment<BalanceOfPaymentA
     public void onResume() {
         super.onResume();
         baseAction.toRegister();
+    }
+
+    public static BalanceOfPaymentFragment newInstance(int state) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", state);
+        BalanceOfPaymentFragment testFm = new BalanceOfPaymentFragment();
+        testFm.setArguments(bundle);
+        return testFm;
     }
 }

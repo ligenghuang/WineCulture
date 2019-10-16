@@ -5,10 +5,11 @@ import java.util.List;
 
 public class TransferRecordDto {
 
+
     /**
      * status : 200
      * msg : 获取成功
-     * data : {"total":4,"per_page":20,"current_page":1,"last_page":1,"data":[{"id":4,"user_id":28664,"out_user_id":28774,"in_user_id":28776,"exchange_money":"1.00","description":"来看看","create_time":1568273066,"type":2,"detail":"+1","nickname":null,"rate_desc":"1000:1"}]}
+     * data : {"total":1,"per_page":20,"current_page":1,"last_page":1,"data":[{"id":9,"user_id":28665,"out_user_id":28665,"in_user_id":28675,"exchange_money":"500.00","description":"","create_time":"2019-10-16 17:15:02","type":2,"detail":"+500.0","nickname":"默认昵称","rate_desc":null}]}
      */
 
     private int status;
@@ -41,11 +42,11 @@ public class TransferRecordDto {
 
     public static class DataBeanX {
         /**
-         * total : 4
+         * total : 1
          * per_page : 20
          * current_page : 1
          * last_page : 1
-         * data : [{"id":4,"user_id":28664,"out_user_id":28774,"in_user_id":28776,"exchange_money":"1.00","description":"来看看","create_time":1568273066,"type":2,"detail":"+1","nickname":null,"rate_desc":"1000:1"}]
+         * data : [{"id":9,"user_id":28665,"out_user_id":28665,"in_user_id":28675,"exchange_money":"500.00","description":"","create_time":"2019-10-16 17:15:02","type":2,"detail":"+500.0","nickname":"默认昵称","rate_desc":null}]
          */
 
         private int total;
@@ -99,17 +100,17 @@ public class TransferRecordDto {
 
         public static class DataBean {
             /**
-             * id : 4
-             * user_id : 28664
-             * out_user_id : 28774
-             * in_user_id : 28776
-             * exchange_money : 1.00
-             * description : 来看看
-             * create_time : 1568273066
+             * id : 9
+             * user_id : 28665
+             * out_user_id : 28665
+             * in_user_id : 28675
+             * exchange_money : 500.00
+             * description :
+             * create_time : 2019-10-16 17:15:02
              * type : 2
-             * detail : +1
-             * nickname : null
-             * rate_desc : 1000:1
+             * detail : +500.0
+             * nickname : 默认昵称
+             * rate_desc : null
              */
 
             private int id;
@@ -118,7 +119,7 @@ public class TransferRecordDto {
             private int in_user_id;
             private String exchange_money;
             private String description;
-            private long create_time;
+            private String create_time;
             private int type;
             private String detail;
             private String nickname;
@@ -172,12 +173,12 @@ public class TransferRecordDto {
                 this.description = description == null ? "" : description;
             }
 
-            public long getCreate_time() {
-                return create_time;
+            public String getCreate_time() {
+                return create_time == null ? "" : create_time;
             }
 
-            public void setCreate_time(long create_time) {
-                this.create_time = create_time;
+            public void setCreate_time(String create_time) {
+                this.create_time = create_time == null ? "" : create_time;
             }
 
             public int getType() {
@@ -197,11 +198,11 @@ public class TransferRecordDto {
             }
 
             public String getNickname() {
-                return nickname;
+                return nickname == null ? "" : nickname;
             }
 
             public void setNickname(String nickname) {
-                this.nickname = nickname;
+                this.nickname = nickname == null ? "" : nickname;
             }
 
             public String getRate_desc() {

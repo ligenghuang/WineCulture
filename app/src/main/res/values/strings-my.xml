@@ -233,4 +233,14 @@
     <string name="pay_pwd_tab_18">密码不能少于6位</string>
     <string name="pay_pwd_tab_19">确认密码不能少于6位</string>
 
+    <string name="transfer_tab_1">转给</string>
+    <string name="transfer_tab_2">金额</string>
+    <string name="transfer_tab_3">请输入转账金额</string>
+    <string name="transfer_tab_4">备注：</string>
+    <string name="transfer_tab_5">备注</string>
+    <string name="transfer_tab_6">确认转账</string>
+    <string name="transfer_tab_7">余额转账</string>
+    <string name="transfer_tab_8">%1$s&#160;&#160;&#160;&#160;ID：%2$s</string>
+    <string name="transfer_tab_9">转账金额必须大于0</string>
+
 </resources>

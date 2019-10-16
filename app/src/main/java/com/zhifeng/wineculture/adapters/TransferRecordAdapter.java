@@ -28,7 +28,7 @@ public class TransferRecordAdapter extends BaseRecyclerAdapter<TransferRecordDto
     @Override
     protected void onBindViewHolder(SmartViewHolder holder, TransferRecordDto.DataBeanX.DataBean model, int position) {
         holder.setIsRecyclable(false);
-        holder.text(R.id.tv_item_time, DynamicTimeFormat.LongToString5(model.getCreate_time()));
+        holder.text(R.id.tv_item_time, model.getCreate_time());
         holder.text(R.id.tv_item_name,model.getNickname());
         DecimalFormat df = new DecimalFormat("#0.00");
         holder.text(R.id.tv_item_money,"￥"+model.getExchange_money());

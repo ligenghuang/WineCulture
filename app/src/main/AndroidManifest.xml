@@ -18,8 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
-        <activity android:name=".ui.home.SearchGoodsActivity"></activity>
-        <activity android:name=".ui.home.AnnounceActivity"/>
+        <activity android:name=".ui.my.TransferActivity"></activity>
+        <activity android:name=".ui.my.OpenMemberActivity" />
+        <activity android:name=".ui.home.SearchGoodsActivity" />
+        <activity android:name=".ui.home.AnnounceActivity" />
         <activity android:name=".ui.my.ModifyPayPwdActivity" />
         <activity android:name=".ui.my.ModifyMobileCodeActivity" />
         <activity android:name=".ui.my.ModifyUserNameActivity" />

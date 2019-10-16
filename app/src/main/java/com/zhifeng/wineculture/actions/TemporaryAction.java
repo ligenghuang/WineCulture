@@ -21,6 +21,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 /**
   *
   * @ClassName:     提交订单
@@ -45,10 +48,15 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
      * @param submitOrderPost
      */
     public void submitOrder(SubmitOrderPost submitOrderPost){
+        MultipartBody.Builder build = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("token", MySp.getAccessToken(MyApp.getContext()))
+                .addFormDataPart("cart_id",submitOrderPost.getCart_id())
+                .addFormDataPart("address_id",submitOrderPost.getAddress_id())
+                .addFormDataPart("pay_type",submitOrderPost.getPay_type())
+                .addFormDataPart("user_note[]",submitOrderPost.getUser_note().toString());
+        RequestBody body = build.build();
         post(WebUrlUtil.POST_SUBMITORDER,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
-                        "cart_id",submitOrderPost.getCart_id(),"address_id",submitOrderPost.getAddress_id(),"pay_type",submitOrderPost.getPay_type()
-                ,"user_note",submitOrderPost.getUser_note()),WebUrlUtil.POST_SUBMITORDER)
+                service.PostData(body,WebUrlUtil.POST_SUBMITORDER)
         ));
     }
 

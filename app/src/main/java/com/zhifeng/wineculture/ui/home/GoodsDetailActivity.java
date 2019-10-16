@@ -160,6 +160,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     UiData mUiData;
 
     boolean isBuy = false;
+    int IsBuy = 2;
 
     @Override
     public int intiLayout() {
@@ -473,7 +474,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
      * @param productModel
      * @param IsBuy        判断 0加入购物车、1立即购买 、2查看规格
      */
-    private void showBottomSheetDialog(ProductModel productModel, int IsBuy) {
+    private void showBottomSheetDialog(ProductModel productModel) {
+
         if (mUiData.getBottomSheetDialog() == null) {
             mUiData.getSelectedEntities().clear();
             mUiData.getAdapters().clear();
@@ -541,6 +543,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                     if (sku_id == -1) {
                         showNormalToast(ResUtil.getString(R.string.goods_detail_tab_31));
                     } else {
+                        L.e("lgh_buy","IsBuy   =   "+IsBuy);
                         switch (IsBuy) {
                             case 0:
                                 //加入购物车
@@ -785,7 +788,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             case R.id.tv_goods_spec:
                 //todo 商品规格
                 isBuy = false;
-                showBottomSheetDialog(testData, 2);
+                IsBuy = 2;
+                showBottomSheetDialog(testData);
                 break;
             case R.id.tv_goods_comment_all:
                 Intent i=new Intent(mContext,GoodsCommentsActivity.class);
@@ -800,12 +804,14 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             case R.id.tv_goods_buy:
                 //todo 立即购买
                 isBuy = true;
-                showBottomSheetDialog(testData, 1);
+                IsBuy = 1;
+                showBottomSheetDialog(testData);
                 break;
             case R.id.tv_goods_add_cart:
                 //todo 加入购物车
                 isBuy = false;
-                showBottomSheetDialog(testData, 0);
+                IsBuy = 0;
+                showBottomSheetDialog(testData);
                 break;
             case R.id.iv_to_up_top:
                 //todo 回到顶部

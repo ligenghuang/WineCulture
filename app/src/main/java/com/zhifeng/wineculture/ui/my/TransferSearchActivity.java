@@ -145,10 +145,10 @@ public class TransferSearchActivity extends UserBaseActivity<TransferSearchActio
                     return false;
                 }
                 //todo 判断手机号码格式是否正确
-                if (!ValidateUtils.isPhone2(etTransferSearch.getText().toString())){
-                    showNormalToast(ResUtil.getString(R.string.balance_transfer_tab_3));
-                    return false;
-                }
+//                if (!ValidateUtils.isPhone2(etTransferSearch.getText().toString())){
+//                    showNormalToast(ResUtil.getString(R.string.balance_transfer_tab_3));
+//                    return false;
+//                }
 
                 search(etTransferSearch.getText().toString());
             }
@@ -157,9 +157,13 @@ public class TransferSearchActivity extends UserBaseActivity<TransferSearchActio
 
         transferSearchAdapter.setOnClickListener(new TransferSearchAdapter.OnClickListener() {
             @Override
-            public void onClick(int id) {
+            public void onClick(SearchPhoneDto.DataBean model) {
                 //todo 转账
-
+                Intent intent = new Intent(mContext,TransferActivity.class);
+                intent.putExtra("avatar",model.getAvatar());
+                intent.putExtra("id",model.getId());
+                intent.putExtra("name",model.getRealname());
+                startActivity(intent);
             }
         });
     }

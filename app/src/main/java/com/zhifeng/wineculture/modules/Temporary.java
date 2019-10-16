@@ -53,10 +53,19 @@ public class Temporary {
         private AddrResBean addr_res;
         private String shipping_price;
         private String remainder_money;
+        private String order_amount;
         private int pwd;
         private List<GoodsResBean> goods_res;
         private List<PayTypeBean> pay_type;
         private List<?> coupon;
+
+        public String getOrder_amount() {
+            return order_amount == null ? "0" : order_amount;
+        }
+
+        public void setOrder_amount(String order_amount) {
+            this.order_amount = order_amount == null ? "0" : order_amount;
+        }
 
         public AddrResBean getAddr_res() {
             return addr_res;
@@ -67,19 +76,19 @@ public class Temporary {
         }
 
         public String getShipping_price() {
-            return shipping_price == null ? "" : shipping_price;
+            return shipping_price == null ? "0" : shipping_price;
         }
 
         public void setShipping_price(String shipping_price) {
-            this.shipping_price = shipping_price == null ? "" : shipping_price;
+            this.shipping_price = shipping_price == null ? "0" : shipping_price;
         }
 
         public String getRemainder_money() {
-            return remainder_money == null ? "" : remainder_money;
+            return remainder_money == null ? "0" : remainder_money;
         }
 
         public void setRemainder_money(String remainder_money) {
-            this.remainder_money = remainder_money == null ? "" : remainder_money;
+            this.remainder_money = remainder_money == null ? "0" : remainder_money;
         }
 
         public int getPwd() {
@@ -307,6 +316,24 @@ public class Temporary {
             private String spec_key_name;
             private String img;
             private int single_number;
+            private String good_shipping_price;
+            private String note;
+
+            public String getNote() {
+                return note == null ? "" : note;
+            }
+
+            public void setNote(String note) {
+                this.note = note == null ? "" : note;
+            }
+
+            public String getGood_shipping_price() {
+                return good_shipping_price == null ? "0" : good_shipping_price;
+            }
+
+            public void setGood_shipping_price(String good_shipping_price) {
+                this.good_shipping_price = good_shipping_price == null ? "0" : good_shipping_price;
+            }
 
             public int getCart_id() {
                 return cart_id;
@@ -373,35 +400,35 @@ public class Temporary {
             }
 
             public String getMarket_price() {
-                return market_price == null ? "" : market_price;
+                return market_price == null ? "0" : market_price;
             }
 
             public void setMarket_price(String market_price) {
-                this.market_price = market_price == null ? "" : market_price;
+                this.market_price = market_price == null ? "0" : market_price;
             }
 
             public String getGoods_price() {
-                return goods_price == null ? "" : goods_price;
+                return goods_price == null ? "0" : goods_price;
             }
 
             public void setGoods_price(String goods_price) {
-                this.goods_price = goods_price == null ? "" : goods_price;
+                this.goods_price = goods_price == null ? "0" : goods_price;
             }
 
             public String getMember_goods_price() {
-                return member_goods_price == null ? "" : member_goods_price;
+                return member_goods_price == null ? "0" : member_goods_price;
             }
 
             public void setMember_goods_price(String member_goods_price) {
-                this.member_goods_price = member_goods_price == null ? "" : member_goods_price;
+                this.member_goods_price = member_goods_price == null ? "0" : member_goods_price;
             }
 
             public String getSubtotal_price() {
-                return subtotal_price == null ? "" : subtotal_price;
+                return subtotal_price == null ? "0" : subtotal_price;
             }
 
             public void setSubtotal_price(String subtotal_price) {
-                this.subtotal_price = subtotal_price == null ? "" : subtotal_price;
+                this.subtotal_price = subtotal_price == null ? "0" : subtotal_price;
             }
 
             public int getSku_id() {

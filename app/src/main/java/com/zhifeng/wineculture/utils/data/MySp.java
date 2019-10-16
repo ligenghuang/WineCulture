@@ -22,6 +22,7 @@ public class MySp extends MySharedPreferencesUtil {
      */
     public static void clearAllSP(Context context) {
         setAccessToken(context,null);
+        setMobile(context,null);
     }
 
     /**
@@ -83,5 +84,27 @@ public class MySp extends MySharedPreferencesUtil {
     public static String getUserList(Context context){
         SharedPreferences sp = getProjectSP(context);
         return sp.getString("UserJson", null);
+    }
+
+    /**
+     * 保存手机号
+     * @param context
+     * @param mobile
+     * @return
+     */
+    public static boolean setMobile(Context context,String mobile){
+        SharedPreferences sp = getProjectSP(context);
+        SharedPreferences.Editor editor = sp.edit();
+        return editor.putString("UserMobile", mobile).commit();
+    }
+
+    /**
+     * 获取手机号
+     * @param context
+     * @return
+     */
+    public static String getMobile(Context context){
+        SharedPreferences sp = getProjectSP(context);
+        return sp.getString("UserMobile", null);
     }
 }

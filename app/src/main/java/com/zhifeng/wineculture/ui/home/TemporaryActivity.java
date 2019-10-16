@@ -31,11 +31,15 @@ import com.zhifeng.wineculture.modules.Temporary;
 import com.zhifeng.wineculture.modules.post.SubmitOrderPost;
 import com.zhifeng.wineculture.ui.impl.TemporaryView;
 import com.zhifeng.wineculture.ui.my.AddressListActivity;
+import com.zhifeng.wineculture.ui.my.ForgetPwdActivity;
+import com.zhifeng.wineculture.ui.my.MyOrderActivity;
 import com.zhifeng.wineculture.ui.my.OrderDetailActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
+import com.zhifeng.wineculture.utils.data.MySp;
 import com.zhifeng.wineculture.utils.dialog.BuyPwdDialog;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -222,9 +226,9 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
 
                         @Override
                         public void close() {
-                            //取消支付  跳转至订单详情页
-                            Intent intent = new Intent(mContext, OrderDetailActivity.class);
-                            intent.putExtra("order_id", Integer.parseInt(submitOrderDto.getData()));
+                            //取消支付  跳转至订单页
+                            Intent intent = new Intent(mContext, MyOrderActivity.class);
+                            intent.putExtra("position", 1);
                             startActivity(intent);
                             finish();
                         }
@@ -232,8 +236,6 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                     bugPwdDialog.show();
                 } else {
                     showNormalToast(ResUtil.getString(R.string.goods_detail_tab_30));
-                    //todo 2019 10 12 跳转至密码设置页
-                    finish();
                 }
                 break;
             default:
@@ -355,10 +357,26 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         post.setAddress_id(addressId + "");
         post.setPay_type(payType + "");
         if (!TextUtils.isEmpty(etOrderNote.getText().toString())) {
-            post.setUser_note(etOrderNote.getText().toString());
+            List<String> note = new ArrayList<>();
+            note.add(etOrderNote.getText().toString());
+            post.setUser_note(note);
+        }
+        if (payType == 1 && pwd == 0) {
+            showNormalToast(ResUtil.getString(R.string.goods_detail_tab_30));
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(mContext, ForgetPwdActivity.class);
+                    intent.putExtra("phone", MySp.getMobile(mContext));
+                    intent.putExtra("type", 1);
+                    intent.putExtra("isOrder", true);
+                    startActivityForResult(intent, 201);
+                }
+            }, 2000);
+        } else {
+            submitOrder(post);
         }
 
-        submitOrder(post);
 
 
     }
@@ -382,7 +400,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 200 && resultCode == 200) {
+        if ( resultCode == 200) {
             if (data != null) {
                 String address = data.getStringExtra("address2");
                 String address_info = data.getStringExtra("address");
@@ -394,6 +412,10 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                 tvMoblie.setText(phone);
                 llAddress.setVisibility(View.VISIBLE);
                 tvNoAddress.setVisibility(View.GONE);
+            }
+        }else if (resultCode == 201) {
+            if (data != null) {
+                pwd = data.getIntExtra("pwd", 0);
             }
         }
     }

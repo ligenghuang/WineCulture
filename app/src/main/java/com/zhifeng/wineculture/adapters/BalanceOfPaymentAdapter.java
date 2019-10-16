@@ -29,7 +29,7 @@ public class BalanceOfPaymentAdapter extends BaseRecyclerAdapter<BalanceOfPaymen
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_title,model.getNote());
         holder.text(R.id.tv_item_time,model.getCreate_time());
-        String type = model.getLog_type() == 1?"-":"+";
+        String type = model.getLog_type() == 0?"-":"+";
         DecimalFormat df = new DecimalFormat("#0.00");
         holder.text(R.id.tv_item_money, type+df.format(model.getBalance()));
     }

@@ -41,12 +41,12 @@ public class TransferSearchAdapter extends BaseRecyclerAdapter<SearchPhoneDto.Da
         holder.itemView.findViewById(R.id.tv_item_transfer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.onClick(model.getId());
+                onClickListener.onClick(model);
             }
         });
     }
 
     public interface OnClickListener {
-        void onClick(int id);
+        void onClick(SearchPhoneDto.DataBean model);
     }
 }

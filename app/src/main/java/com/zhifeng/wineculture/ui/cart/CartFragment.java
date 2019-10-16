@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.cart;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -195,10 +196,12 @@ public class CartFragment extends UserBaseFragment<CartAction> implements CartVi
             }
             tvCartTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_12,total+""));
             tvCartSelectorAll.setSelected(num == cartListDto.getData().size());
+            tvCartDetele.setVisibility(View.VISIBLE);
         }else {
             llCartData.setVisibility(View.GONE);
             llCartNull.setVisibility(View.VISIBLE);
             tvCartTitle.setText(ResUtil.getString(R.string.cart_tab_1));
+            tvCartDetele.setVisibility(View.GONE);
         }
     }
 
@@ -259,6 +262,7 @@ public class CartFragment extends UserBaseFragment<CartAction> implements CartVi
     public void onResume() {
         super.onResume();
         baseAction.toRegister();
+        getCartList();
     }
 
     @Override
@@ -335,7 +339,7 @@ public class CartFragment extends UserBaseFragment<CartAction> implements CartVi
                 break;
             case R.id.tv_cart_settlement:
                 //todo 结算
-
+                settlement();
                 break;
             case R.id.tv_to_home:
                 //todo 返回首页
@@ -364,5 +368,34 @@ public class CartFragment extends UserBaseFragment<CartAction> implements CartVi
                         .show();
                 break;
         }
+    }
+
+
+    /**
+     * 结算
+     */
+    private void settlement() {
+        List<CartListDto.DataBean> listDtos = cartListAdapter.getAllData();
+        String id = "";
+        int num = 0;
+        for (int i = 0; i <listDtos.size() ; i++) {
+            if (listDtos.get(i).getSelected() == 1){
+                num++;
+                if (i ==0){
+                    id = listDtos.get(i).getCart_id()+"";
+                }else {
+                    id = id+","+listDtos.get(i).getCart_id();
+                }
+            }
+        }
+
+        if (num == 0){
+            showToast(ResUtil.getString(R.string.cart_tab_10));
+            return;
+        }
+
+        Intent intent = new Intent(mContext, CartSubmitOrdersActivity.class);
+        intent.putExtra("cartId",id);
+        startActivity(intent);
     }
 }

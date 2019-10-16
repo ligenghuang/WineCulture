@@ -230,9 +230,28 @@ public class WebUrlUtil {
      * 搜索历史
      */
     public static final String POST_SEARCH_HISTORY = "user/search_history";
+    /**
+     * 搜索商品
+     */
+    public static final String POST_SEARCH_GOODS = "goods/search_goods";
+
+    /**
+     * 删除搜索历史
+     */
+    public static final String POST_DEL_SEARCH_HISTORY = "user/del_search_history";
 
     /**
      * 公告列表
      */
     public static final String POST_USER_ANNOUNCE_LIST = "user/announce_list";
+
+    /**
+     * 修改头像
+     */
+    public static final String POST_UPDATEAVATAR = "user/updateTou";
+
+    /**
+     * 转账
+     */
+    public static final String POST_TRANSFER = "user/exchange_money_handle";
 }

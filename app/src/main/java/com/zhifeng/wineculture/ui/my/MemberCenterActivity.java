@@ -115,6 +115,10 @@ public class MemberCenterActivity extends UserBaseActivity<MemberCenterAction> i
         mobile = mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
         tvMemberCenterPhone.setText(mobile);
         GlideUtil.setImageCircle(mContext,dataBean.getAvatar(),ivAvatar,R.drawable.icon_avatar);
+        tvMemberCenterBalance.setText("￥"+dataBean.getRemainder_money());
+        tvMemberCenterCanUse.setText("￥0.00");
+        tvMemberCenterToBeDetermined.setText("￥0.00");
+
     }
 
     /**

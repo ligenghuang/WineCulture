@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f2"
+    android:orientation="vertical"
+    tools:context=".ui.my.TransferActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_my_top_bg"
+        android:orientation="vertical"
+        android:paddingBottom="100dp">
+
+        <include layout="@layout/layout_title_white_bar" />
+
+    </LinearLayout>
+
+   <androidx.core.widget.NestedScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_marginTop="-90dp">
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical">
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="15dp"
+             android:layout_marginRight="15dp"
+             android:background="@drawable/icon_member_center_card_bg"
+             android:gravity="center"
+             android:orientation="vertical"
+             android:paddingBottom="15dp">
+
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="20dp"
+                 android:layout_marginBottom="15dp"
+                 android:text="@string/balance_tab_1"
+                 android:textColor="@color/color_15"
+                 android:textSize="@dimen/text_size12"
+                 android:textStyle="bold" />
+
+             <TextView
+                 android:id="@+id/tv_balance"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="30dp"
+                 android:text="￥100.00"
+                 android:textColor="@color/color_cc1b21"
+                 android:textSize="@dimen/text_size24"
+                 android:textStyle="bold" />
+
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="@dimen/item_height40"
+                 android:layout_marginBottom="@dimen/dp_10"
+                 android:gravity="center_vertical"
+                 android:orientation="horizontal">
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginRight="15dp"
+                     android:text="@string/transfer_tab_1"
+                     android:textColor="@color/color_15"
+                     android:textSize="@dimen/text_size15" />
+
+                 <ImageView
+                     android:id="@+id/iv_avatar"
+                     android:layout_width="40dp"
+                     android:layout_height="40dp"
+                     android:layout_marginRight="@dimen/dp_10"
+                     android:src="@drawable/icon_avatar" />
+
+                 <TextView
+                     android:id="@+id/tv_name_id"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="昵称 ID ：2012"
+                     android:textColor="@color/color_15"
+                     android:textSize="@dimen/text_size15" />
+
+             </LinearLayout>
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="@dimen/item_height40"
+                 android:gravity="center_vertical"
+                 android:orientation="horizontal">
+
+                 <TextView
+
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/transfer_tab_2"
+                     android:textColor="@color/color_15"
+                     android:textSize="@dimen/text_size15" />
+
+                 <EditText
+                     android:id="@+id/et_money"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginRight="100dp"
+                     android:layout_marginLeft="@dimen/dp_10"
+                     android:inputType="numberDecimal"
+                     android:maxLength="10"
+                     android:maxLines="1"
+                     android:textColor="@color/color_15"
+                     android:textSize="@dimen/text_size15"
+                     android:hint="@string/transfer_tab_3"/>
+
+             </LinearLayout>
+
+         </LinearLayout>
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="15dp"
+             android:layout_marginRight="15dp"
+             android:textColor="@color/color_15"
+             android:textSize="@dimen/text_size15"
+             android:layout_marginTop="20dp"
+             android:layout_marginBottom="@dimen/dp_10"
+             android:text="@string/transfer_tab_4"/>
+
+         <EditText
+             android:id="@+id/et_note"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="15dp"
+             android:layout_marginRight="15dp"
+             android:background="@drawable/icon_member_center_card_bg"
+             android:gravity="top"
+             android:orientation="vertical"
+             android:padding="10dp"
+             android:hint="@string/transfer_tab_5"/>
+
+         <TextView
+             android:id="@+id/tv_balance_transfer"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="12dp"
+             android:layout_marginTop="20dp"
+             android:layout_marginRight="12dp"
+             android:layout_marginBottom="@dimen/dp_10"
+             android:textStyle="bold"
+             android:textSize="@dimen/text_size15"
+             android:textColor="@color/white"
+             android:padding="15dp"
+             android:text="@string/transfer_tab_6"
+             android:gravity="center"
+             android:background="@drawable/shape_btn_save_bg"/>
+
+     </LinearLayout>
+
+
+   </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

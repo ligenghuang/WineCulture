@@ -8,5 +8,12 @@ public interface MyView extends BaseView {
 
     void getUserInfoSuccess(UserInfoDto userInfoDto);
 
+    /**
+     * 修改头像
+     * @param path
+     */
+    void updataAvatar(String path);
+    void updataAvatarSuccess(String url);
+
     void noLogin();
 }

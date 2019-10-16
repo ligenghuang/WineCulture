@@ -19,7 +19,9 @@ import com.zhifeng.wineculture.adapters.CategoryListAdapter;
 import com.zhifeng.wineculture.modules.ClassifyDto;
 import com.zhifeng.wineculture.ui.home.SearchGoodsActivity;
 import com.zhifeng.wineculture.ui.impl.ClassifyView;
+import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,6 +174,11 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
         switch (view.getId()){
             case R.id.ll_search:
                 //todo 搜索
+                if (!MySp.iSLoginLive(mContext)) {
+                    //todo 未登录
+                    jumpActivityNotFinish(mContext, LoginActivity.class);
+                    return;
+                }
                 jumpActivityNotFinish(mContext, SearchGoodsActivity.class);
                 break;
         }

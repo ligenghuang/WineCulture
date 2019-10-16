@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,9 @@ import com.zhifeng.wineculture.adapters.LikeGoodsAdapter;
 import com.zhifeng.wineculture.adapters.RecommendedAdapter;
 import com.zhifeng.wineculture.modules.HomeDto;
 import com.zhifeng.wineculture.ui.impl.HomeView;
+import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
+import com.zhifeng.wineculture.utils.data.MySp;
 import com.zhifeng.wineculture.utils.view.TextBannerView;
 
 import java.util.ArrayList;
@@ -194,6 +197,7 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
         refreshLayout.finishRefresh();
         HomeDto.DataBean dataBean = homeDto.getData();
         setBanner(dataBean.getBanners());//轮播图
+        setAdBanner(dataBean.getAd());
         setAnnounceList(dataBean.getAnnounce());//公告
         recommendedAdapter.refresh(dataBean.getTuijian());//推荐
         llHot.setVisibility(dataBean.getHot_goods().size() == 0 ? View.GONE : View.VISIBLE);
@@ -249,6 +253,27 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
         }
     }
 
+    private void setAdBanner(List<HomeDto.DataBean.AdBean> banners) {
+        //设置轮播图
+        if (banners.size() != 0) {
+            bannerAdvertising.setVisibility(View.VISIBLE);
+            imgsSelfnav = new ArrayList<>();
+            tipsSelfnav = new ArrayList<>();
+            urlSelfnav = new ArrayList<>();
+            titleSelfnav = new ArrayList<>();
+            for (int i = 0; i < banners.size(); i++) {
+                HomeDto.DataBean.AdBean bannersBean = banners.get(i);
+                imgsSelfnav.add(bannersBean.getPicture());
+                tipsSelfnav.add("");
+                urlSelfnav.add(bannersBean.getUrl());
+                titleSelfnav.add(bannersBean.getTitle());
+            }
+            bannerAdvertising.setAutoPlayAble(true);
+            bannerAdvertising.setData(imgsSelfnav, tipsSelfnav);
+            bannerAdvertising.startAutoPlay();
+        }
+    }
+
     /**
      * 获取公告列表
      */
@@ -269,6 +294,11 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
         switch (view.getId()){
             case R.id.ll_search:
                 //todo 搜索
+                if (!MySp.iSLoginLive(mContext)) {
+                    //todo 未登录
+                    jumpActivityNotFinish(mContext,LoginActivity.class);
+                    return;
+                }
                 jumpActivityNotFinish(mContext,SearchGoodsActivity.class);
                 break;
         }

@@ -292,7 +292,7 @@ public class BuyPwdDialog extends Dialog implements DialogInterface.OnDismissLis
 
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
-
+        onFinishInput.close();
     }
 
     public interface OnFinishInput {
