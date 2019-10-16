@@ -19,6 +19,12 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.Observable;
 
+/**
+ * @ClassName:
+ * @Description: 订单详情
+ * @Author: Administrator
+ * @Date: 2019/10/15 15:56
+ */
 public class OrderDetailAction extends BaseAction<OrderDetailView> {
     public OrderDetailAction(RxAppCompatActivity _rxAppCompatActivity, OrderDetailView orderDetailView) {
         super(_rxAppCompatActivity);
@@ -27,6 +33,14 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
 
     public void getOrderDetail(String order_id) {
         post(WebUrlUtil.POST_ORDER_DETAIL, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id), WebUrlUtil.POST_ORDER_DETAIL)));
+    }
+
+    public void cancel() {
+
+    }
+
+    public void pay() {
+
     }
 
     /**
@@ -42,16 +56,20 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
                 .all(integer -> (integer == 200)).subscribe(aBoolean -> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
-            if (WebUrlUtil.POST_ORDER_DETAIL.equals(action.getIdentifying())) {
-                if (aBoolean) {
-                    OrderDetailDto goodsDetailDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<OrderDetailDto>() {
-                    }.getType());
-                    if (goodsDetailDto.getStatus() == 200) {
-                        view.getOrderDetailSuccess(goodsDetailDto);
+            switch (action.getIdentifying()){
+                case WebUrlUtil.POST_ORDER_DETAIL:
+                    if (aBoolean) {
+                        OrderDetailDto orderDetailDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<OrderDetailDto>() {
+                        }.getType());
+                        if (orderDetailDto.getStatus() == 200) {
+                            view.getOrderDetailSuccess(orderDetailDto);
+                            return;
+                        }
+                        view.onError(orderDetailDto.getMsg(), orderDetailDto.getStatus());
                         return;
                     }
-                }
-                view.onError(msg, action.getErrorType());
+                    view.onError(msg, action.getErrorType());
+                    break;
             }
         });
     }

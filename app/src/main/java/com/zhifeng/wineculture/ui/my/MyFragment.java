@@ -2,14 +2,18 @@ package com.zhifeng.wineculture.ui.my;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -18,6 +22,7 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.MyAction;
+import com.zhifeng.wineculture.modules.AccountDto;
 import com.zhifeng.wineculture.modules.UserInfoDto;
 import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.MyView;
@@ -29,6 +34,9 @@ import com.zhifeng.wineculture.utils.imageloader.GlideImageLoader;
 import com.zhifeng.wineculture.utils.photo.PicUtils;
 
 import java.util.ArrayList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -154,6 +162,35 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
         String mobile = dataBean.getMobile();
         mobile = mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
         tvMobile.setText(mobile);
+        if (MySp.iSLoginLive(mContext)) {
+            String json = MySp.getUserList(mContext);
+            L.e("lgh_user", "userJson  = " + json);
+            List<AccountDto> list = new ArrayList<>();
+            if (!TextUtils.isEmpty(json)) {
+                list = new Gson().fromJson(json, new TypeToken<List<AccountDto>>() {
+                }.getType());
+            }
+            AccountDto userDto = new AccountDto();
+            userDto.setToken(MySp.getAccessToken(mContext));
+            userDto.setAvatar(dataBean.getAvatar());
+            userDto.setRealName(dataBean.getRealname());
+            userDto.setMobile(dataBean.getMobile());
+            L.e("lgh_user", "token  = " + MySp.getAccessToken(mContext));
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getMobile().equals(userDto.getMobile())) {
+                    list.set(i, userDto);
+                    L.e("lgh_user", "user  = " + userDto.getToken());
+                    MySp.setUserList(mContext, new Gson().toJson(list));
+                    return;
+                }
+            }
+            if (list.size() >= 3) {
+                list.set(0, userDto);
+            } else {
+                list.add(userDto);
+            }
+            MySp.setUserList(mContext, new Gson().toJson(list));
+        }
     }
 
     @Override

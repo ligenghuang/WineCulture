@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.my;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -8,14 +9,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.OrderDetailAction;
 import com.zhifeng.wineculture.adapters.GoodsDetailGoodResAdapter;
+import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderDetailDto;
 import com.zhifeng.wineculture.ui.impl.OrderDetailView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
@@ -26,6 +30,12 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * @ClassName:
+ * @Description: 订单详情
+ * @Author: Administrator
+ * @Date: 2019/10/15 15:56
+ */
 public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> implements OrderDetailView {
     @BindView(R.id.top_view)
     View topView;
@@ -45,8 +55,8 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     TextView tvAddress;
     @BindView(R.id.ivMore)
     ImageView ivMore;
-    @BindView(R.id.llDingwei)
-    LinearLayout llDingwei;
+    @BindView(R.id.cvDingwei)
+    CardView cvDingwei;
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.tvTotalGoodsPrice)
@@ -65,8 +75,8 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     TextView tvCreateTime;
     @BindView(R.id.btnCancel)
     Button btnCancel;
-    @BindView(R.id.btnPay)
-    Button btnPay;
+    @BindView(R.id.btnPayNow)
+    Button btnPayNow;
     private String order_id;
 
     @Override
@@ -74,6 +84,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         binding();
+        getOrderDetail();
     }
 
     @Override
@@ -89,8 +100,8 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     @Override
     protected void init() {
         super.init();
-        mActicity=this;
-        mContext=this;
+        mActicity = this;
+        mContext = this;
         order_id = getIntent().getStringExtra("order_id");
     }
 
@@ -119,7 +130,36 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
 
     @Override
     public void getOrderDetailSuccess(OrderDetailDto orderDetailDto) {
-        tvGoodsStatus.setText("已发货");
+        //1待付款 2待发货 3待收货 4待评价 5已取消 6待退款 7已退款 8拒绝退款
+        int status = orderDetailDto.getData().getStatus();
+        int drawableRes = 0;
+        int stringRes = 0;
+        switch (status) {
+            case 1:
+                drawableRes = R.drawable.icon_wait_pa_bg;
+                stringRes = R.string.orderdetail_waitToPay;
+                break;
+            case 2:
+                drawableRes = R.drawable.icon_wait_receive_bg;
+                stringRes = R.string.orderdetail_packaging;
+                break;
+            case 3:
+                drawableRes = R.drawable.icon_wait_receive_bg;
+                stringRes = R.string.orderdetail_transit;
+                break;
+            case 4:
+                //0 未评论 1已评论
+                int comment = orderDetailDto.getData().getComment();
+                drawableRes = comment == 0 ? R.drawable.icon_wait_evaluation_bg : R.drawable.icon_sign_in_bg;
+                stringRes = comment == 0 ? R.string.orderdetail_tobecomment : R.string.orderdetail_finish;
+                break;
+        }
+        if (drawableRes != 0) {
+            llGoodsStatus.setBackgroundResource(drawableRes);
+        }
+        if (stringRes != 0) {
+            tvGoodsStatus.setText(stringRes);
+        }
         tvReceiver.setText(orderDetailDto.getData().getConsignee());
         tvMobile.setText(orderDetailDto.getData().getMobile());
         tvAddress.setText(orderDetailDto.getData().getAddress());
@@ -128,26 +168,71 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         adapter.refresh(orderDetailDto.getData().getGoods_res());
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.setAdapter(adapter);
-        tvTotalGoodsPrice.setText(orderDetailDto.getData().getOrder_amount());
-        tvRemainder.setText(orderDetailDto.getData().getUser_money());
-        tvPostage.setText(orderDetailDto.getData().getShipping_price());
-        tvpayPrice.setText(orderDetailDto.getData().getTotal_amount());
-        tvRemark.setText(orderDetailDto.getData().getUser_note());
+        tvTotalGoodsPrice.setText(ResUtil.getFormatString(R.string.orderdetail_goodsPrice, orderDetailDto.getData().getOrder_amount()));
+        tvRemainder.setText(ResUtil.getFormatString(R.string.orderdetail_goodsPrice, orderDetailDto.getData().getUser_money()));
+        tvPostage.setText(ResUtil.getFormatString(R.string.orderdetail_goodsPrice, orderDetailDto.getData().getShipping_price()));
+        tvpayPrice.setText(ResUtil.getFormatString(R.string.orderdetail_goodsPrice, orderDetailDto.getData().getTotal_amount()));
+        String user_note = orderDetailDto.getData().getUser_note();
+        tvRemark.setText(TextUtils.isEmpty(user_note) ? ResUtil.getString(R.string.orderdetail_remark_no) : user_note);
         tvOrderNo.setText(orderDetailDto.getData().getOrder_sn());
-        tvCreateTime.setText( DynamicTimeFormat.LongToString2(orderDetailDto.getData().getAdd_time()));
+        tvCreateTime.setText(DynamicTimeFormat.LongToString2(orderDetailDto.getData().getAdd_time() * (long) 1000));
     }
 
     @Override
     public void onError(String message, int code) {
+        showNormalToast(message);
+    }
+
+    @Override
+    public void cancelOrder() {
 
     }
 
-    @OnClick({R.id.btnCancel, R.id.btnPay})
+    @Override
+    public void cancelOrderSuccess(GeneralDto generalDto) {
+
+    }
+
+    @Override
+    public void cancelOrderFail(int code, String msg) {
+
+    }
+
+    @Override
+    public void pay() {
+
+    }
+
+    @Override
+    public void paySuccess(GeneralDto generalDto) {
+
+    }
+
+    @Override
+    public void payFail(int code, String msg) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
+    }
+
+    @OnClick({R.id.btnCancel, R.id.btnPayNow})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnCancel:
+                cancelOrder();
                 break;
-            case R.id.btnPay:
+            case R.id.btnPayNow:
+                pay();
                 break;
         }
     }

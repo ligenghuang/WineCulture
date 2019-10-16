@@ -68,7 +68,7 @@ public class MyTeamActivity extends UserBaseActivity<MyTeamAction> implements My
         super.init();
         mActicity = this;
         mContext = this;
-        adapter=new TeamAdapter();
+        adapter = new TeamAdapter();
         rv.setAdapter(adapter);
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.autoRefresh();
@@ -79,6 +79,11 @@ public class MyTeamActivity extends UserBaseActivity<MyTeamAction> implements My
     protected void loadView() {
         refreshLayout.setOnRefreshListener(refreshLayout -> {
             getMyTeam();
+        });
+        adapter.setOnItemClickListener((parent, view, position, id) -> {
+            MyTeamDto.DataBean.ListBean listBean = (MyTeamDto.DataBean.ListBean) adapter.getItem(position);
+            int beanId = listBean.getId();
+            startActivity(FansOrderActivity.class, "id", String.valueOf(beanId));
         });
     }
 

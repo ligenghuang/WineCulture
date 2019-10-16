@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.adapters.KeyBoardAdapter;
 import com.zhifeng.wineculture.utils.view.OnPasswordInputFinish;
@@ -90,11 +89,11 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
     private boolean isCheck;
 
     Context mContext;
-    double money;
+    String money;
     String payTypeName;
     int paytype;
 
-    public PayPwdDialog(@NonNull Context context, int themeResId, double money, String payTypeName,int paytype) {
+    public PayPwdDialog(@NonNull Context context, int themeResId, String money, String payTypeName,int paytype) {
         super(context, themeResId);
         mContext = context;
         this.money = money;
@@ -260,7 +259,7 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
     void Onclick(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
-                onFinishInput.close();
+                dismiss();
                 break;
             case R.id.dialog_forget_pwd:
                 onFinishInput.forget();
@@ -299,7 +298,7 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
 
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
-
+        onFinishInput.close();
     }
 
     public interface OnFinishInput {

@@ -23,7 +23,7 @@ public class GoodsCommentsAdapter extends BaseRecyclerAdapter<CommentsListDto.Da
     protected void onBindViewHolder(SmartViewHolder holder, CommentsListDto.DataBean model, int position) {
         holder.setIsRecyclable(false);
         ImageView ivAvatar = holder.itemView.findViewById(R.id.ivAvatar);
-        GlideUtil.setImageCircle(context, model.getAvatar(), ivAvatar, R.drawable.icon_goods_img);
+        GlideUtil.setImageCircle(context, model.getAvatar(), ivAvatar, R.drawable.icon_avatar);
         holder.text(R.id.tv_Mobile, model.getMobile());
         long time = model.getAdd_time() * (long) 1000;
         holder.text(R.id.tv_AddTime, DynamicTimeFormat.LongToString5(time));

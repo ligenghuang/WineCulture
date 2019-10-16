@@ -50,6 +50,8 @@ public class ShareUrlAction extends BaseAction<ShareUrlView> {
                         view.getShareUrlSuccess(sharePosterDto);
                         return;
                     }
+                    view.onError(sharePosterDto.getMsg(), sharePosterDto.getStatus());
+                    return;
                 }
                 view.onError(msg, action.getErrorType());
             }

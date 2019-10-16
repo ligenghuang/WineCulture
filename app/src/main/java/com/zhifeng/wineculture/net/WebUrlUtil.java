@@ -128,6 +128,11 @@ public class WebUrlUtil {
     public static final String POST_TEAM_LIST = "user/team_list";
 
     /**
+     * 我的团队-查看
+     */
+    public static final String POST_FANS_ORDER = "user/fans_order";
+
+    /**
      * 我的评价
      */
     public static final String POST_MY_COMMENT = "user/my_comment";
@@ -244,6 +249,36 @@ public class WebUrlUtil {
      * 公告列表
      */
     public static final String POST_USER_ANNOUNCE_LIST = "user/announce_list";
+
+    /**
+     * 获取支付宝
+     */
+    public static final String POST_ZFB_INFO = "user/zfb_info";
+
+    /**
+     * 绑定支付宝
+     */
+    public static final String POST_ZFB_EDIT = "user/zfb_edit";
+
+    /**
+     * 获取银行卡
+     */
+    public static final String POST_GET_BANK_NUMBER = "user/get_bank_number";
+
+    /**
+     * 绑定银行卡
+     */
+    public static final String POST_BOUND_BANK = "user/bound_bank";
+
+    /**
+     * 提现
+     */
+    public static final String POST_WITHDRAWAL = "user/withdrawal";
+
+    /**
+     * 修改用户名
+     */
+    public static final String POST_EDIT_NAME = "user/edit_name";
 
     /**
      * 修改头像

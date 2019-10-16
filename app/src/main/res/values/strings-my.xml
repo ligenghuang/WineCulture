@@ -67,7 +67,7 @@
     <string name="balance_transfer_tab_3">请输入有效的手机号码</string>
 
     <string name="balance_withdrawal_tab_1">可提现总金额</string>
-    <string name="balance_withdrawal_tab_2">当日限额</string>
+    <string name="balance_withdrawal_tab_2">当日限额：%0$s</string>
     <string name="balance_withdrawal_tab_3">选择提现方式</string>
     <string name="balance_withdrawal_tab_4">支付宝</string>
     <string name="balance_withdrawal_tab_5">银行卡</string>
@@ -80,6 +80,8 @@
     <string name="balance_withdrawal_tab_12">支付方式</string>
     <string name="balance_withdrawal_tab_13">确认支付</string>
     <string name="balance_withdrawal_tab_14">忘记密码？</string>
+    <string name="balance_withdrawal_tab_15">余额不足，无法提现</string>
+    <string name="balance_withdrawal_tab_16">请先绑定一张银行卡</string>
 
     <string name="transfer_record_tab_1">日期</string>
     <string name="transfer_record_tab_2">名称</string>
@@ -127,8 +129,10 @@
     <string name="orderdetail_title">订单详情</string>
     <string name="orderdetail_waitToPay">等待买家付款</string>
     <string name="orderdetail_transit">你的货物正在往你家赶</string>
+    <string name="orderdetail_packaging">你的货物正在打包</string>
     <string name="orderdetail_reveived">你的货物已签收</string>
-    <string name="orderdetail_comment">请你评价</string>
+    <string name="orderdetail_tobecomment">请你评价</string>
+    <string name="orderdetail_finish">已完成</string>
     <string name="orderdetail_receiver">收货人：</string>
     <string name="orderdetail_goodsPrice">￥%0$s</string>
     <string name="orderdetail_goodsNum">x%0$s</string>
@@ -137,6 +141,7 @@
     <string name="orderdetail_postage">邮费</string>
     <string name="orderdetail_payPrice">实付费</string>
     <string name="orderdetail_remark">买家留言：</string>
+    <string name="orderdetail_remark_no">无</string>
     <string name="orderdetail_orderNo">订单编号：</string>
     <string name="orderdetail_createTime">下单时间：</string>
     <string name="orderdetail_cancel">取消订单</string>
@@ -163,6 +168,12 @@
     <string name="myteam_mobile">电话</string>
     <string name="myteam_order">订单</string>
     <string name="myteam_lookup">查看</string>
+
+    <string name="myteam_lookup_title">查看订单</string>
+    <string name="myteam_lookup_orderid">订单编号</string>
+    <string name="myteam_lookup_name">昵称id</string>
+    <string name="myteam_lookup_money">金额</string>
+    <string name="myteam_lookup_date">日期</string>
 
     <string name="popularize_invitationCode">我的邀请码</string>
     <string name="popularize_id">ID：</string>
@@ -233,6 +244,32 @@
     <string name="pay_pwd_tab_18">密码不能少于6位</string>
     <string name="pay_pwd_tab_19">确认密码不能少于6位</string>
 
+    <string name="bindalipayaccount_title">绑定支付宝</string>
+    <string name="bindalipayaccount_name">真实姓名</string>
+    <string name="bindalipayaccount_alipay">支付宝账号</string>
+    <string name="bindalipayaccount_namehint">请填写真实姓名</string>
+    <string name="bindalipayaccount_alipayhint">请填写账号</string>
+    <string name="bindalipayaccount_confirm">确认</string>
+
+    <string name="bindbankcard_title">绑定银行卡</string>
+    <string name="bindbankcard_username">真实姓名</string>
+    <string name="bindbankcard_card">卡号</string>
+    <string name="bindbankcard_bankname">银行</string>
+    <string name="bindbankcard_usernamehint">请输入真实姓名</string>
+    <string name="bindbankcard_cardhint">请输入卡号</string>
+    <string name="bindbankcard_rightcardhint">请输入正确的卡号</string>
+    <string name="bindbankcard_banknamehint">请输入银行名</string>
+    <string name="bindbankcard_confirm">确认</string>
+
+    <string name="changeaccount_changeaccount">切换账户登录</string>
+    <string name="changeaccount_touchtochange">轻触账户以登录</string>
+    <string name="changeaccount_currentaccount">当前登录</string>
+    <string name="changeaccount_change">换个账户登录</string>
+
+    <string name="modifyrealname_title">会员名</string>
+    <string name="modifyrealname_realname">会员名：</string>
+    <string name="modifyrealname_inputRealname">请输入会员名</string>
+    <string name="modifyrealname_submit">提交</string>
     <string name="transfer_tab_1">转给</string>
     <string name="transfer_tab_2">金额</string>
     <string name="transfer_tab_3">请输入转账金额</string>

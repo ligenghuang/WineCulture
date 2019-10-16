@@ -50,6 +50,8 @@ public class OrderListAction extends BaseAction<OrderListView> {
                         view.getOrderListSuccess(orderListDto);
                         return;
                     }
+                    view.onError(orderListDto.getMsg(), orderListDto.getStatus());
+                    return;
                 }
                 view.onError(msg, action.getErrorType());
             }

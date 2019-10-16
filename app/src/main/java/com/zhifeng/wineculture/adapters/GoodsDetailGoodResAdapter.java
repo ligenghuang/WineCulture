@@ -1,7 +1,9 @@
 package com.zhifeng.wineculture.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.ResUtil;
@@ -28,7 +30,9 @@ public class GoodsDetailGoodResAdapter extends BaseRecyclerAdapter<OrderDetailDt
         GlideUtil.setImage(context,model.getImg(),ivGoods,R.drawable.icon_goods_img);
         holder.text(R.id.tvGoodsName, model.getGoods_name());
         holder.text(R.id.tvGoodsPrice, ResUtil.getFormatString(R.string.temporary_tab_14, model.getGoods_price()));
-        holder.text(R.id.tvGoodsOriginPrice, ResUtil.getFormatString(R.string.temporary_tab_14, model.getOriginal_price()));
+        TextView tvGoodsOriginPrice=holder.itemView.findViewById(R.id.tvGoodsOriginPrice);
+        tvGoodsOriginPrice.setText(ResUtil.getFormatString(R.string.temporary_tab_14, model.getOriginal_price()));
+        tvGoodsOriginPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
         holder.text(R.id.tvGoodsNum, ResUtil.getFormatString(R.string.temporary_tab_15, model.getGoods_num()));
     }
 }

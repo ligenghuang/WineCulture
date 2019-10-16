@@ -56,6 +56,8 @@ public class RegisterAction extends BaseAction<RegisterView> {
                             view.sendVerifyCodeSuccess(sendVerifyCodeDto);
                             return;
                         }
+                        view.sendVerifyCodeFail(sendVerifyCodeDto.getMsg(), sendVerifyCodeDto.getStatus());
+                        return;
                     }
                     view.sendVerifyCodeFail(msg, action.getErrorType());
                     break;
@@ -68,6 +70,8 @@ public class RegisterAction extends BaseAction<RegisterView> {
                                 view.registerSuccess(registerDto);
                                 return;
                             }
+                            view.onError(msg, action.getErrorType());
+                            return;
                         } catch (JsonSyntaxException e) {
                             GeneralDto generalDto=new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                             }.getType());

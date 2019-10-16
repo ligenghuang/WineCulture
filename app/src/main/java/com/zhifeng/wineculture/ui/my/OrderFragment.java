@@ -1,5 +1,6 @@
 package com.zhifeng.wineculture.ui.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,7 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
-        if (isVisible &&position == ((MyOrderActivity) mActivity).currentPosition) {
+        if (isVisible && position == ((MyOrderActivity) mActivity).currentPosition) {
             rv.setVisibility(View.GONE);
             refreshLayout.autoRefresh();
         }
@@ -93,6 +94,49 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 isRefresh = false;
                 getOrderList();
+            }
+        });
+        adapter.setOnItemClickListener((parent, view, position, id) -> {
+            OrderListDto.DataBean dataBean = (OrderListDto.DataBean) adapter.getItem(position);
+            String order_id = String.valueOf(dataBean.getOrder_id());
+            Intent i = new Intent(mContext, OrderDetailActivity.class);
+            i.putExtra("order_id", order_id);
+            mContext.startActivity(i);
+        });
+
+        adapter.setOnButtonClickListener(new OrderAdapter.OnButtonClickListener() {
+            @Override
+            public void cancel(int order_id) {
+
+            }
+
+            @Override
+            public void confirmToReceive(int order_id) {
+
+            }
+
+            @Override
+            public void payNow(int order_id, int pay_type) {
+
+            }
+
+            @Override
+            public void refund(int order_id) {
+
+            }
+
+            @Override
+            public void lookUpLogistics(int order_id) {
+
+            }
+
+            @Override
+            public void comment(int order_id, int goods_id, int sku_id) {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("order_id", order_id);
+                intent.putExtra("goods_id", goods_id);
+                intent.putExtra("sku_id", sku_id);
+                startActivity(intent);
             }
         });
     }

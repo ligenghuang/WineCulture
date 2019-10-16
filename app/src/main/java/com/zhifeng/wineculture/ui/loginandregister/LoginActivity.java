@@ -82,6 +82,11 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         super.init();
         mActicity = this;
         mContext = this;
+        String phone = getIntent().getStringExtra("phone");
+        etMobile.setText(phone);
+        if (phone != null) {
+            etMobile.setSelection(phone.length());
+        }
         loadView();
     }
 

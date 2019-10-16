@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="￥100.00"
+                android:text="0"
                 android:textColor="@color/color_cc1b21"
                 android:textSize="@dimen/text_size18"
                 android:textStyle="bold" />
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                android:text="当日限额：2000"
+                android:text="当日限额：0"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size11"
                 android:textStyle="bold" />
@@ -92,6 +92,7 @@
 
 
                 <ImageView
+                    android:id="@+id/ivAliPay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -119,6 +120,7 @@
 
 
                 <ImageView
+                    android:id="@+id/ivBankCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -138,12 +140,12 @@
         </LinearLayout>
 
 
-        <EditText
-            android:id="@+id/et_withdrawal_account"
+        <TextView
+            android:id="@+id/tv_withdrawal_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:drawableRight="@drawable/icon_more"
+            android:drawableEnd="@drawable/icon_more"
             android:textColor="@color/color_15"
             android:textSize="@dimen/text_size11"
             android:textColorHint="@color/color_9"
@@ -226,7 +228,6 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size12"
             android:textColor="@color/color_15"
-            android:text="@string/balance_withdrawal_tab_10"
             android:layout_marginTop="5dp"/>
 
     </LinearLayout>

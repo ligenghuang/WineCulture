@@ -1,19 +1,17 @@
 package com.zhifeng.wineculture.ui.my;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
-import com.zhifeng.wineculture.actions.BaseAction;
 import com.zhifeng.wineculture.actions.SecurityAction;
 import com.zhifeng.wineculture.modules.SafeInfoDto;
 import com.zhifeng.wineculture.ui.MainActivity;
@@ -178,9 +176,9 @@ public class SecurityActivity extends UserBaseActivity<SecurityAction> implement
                 break;
             case R.id.tv_security_name:
                 //todo 修改用户名
-//                Intent intent1 = new Intent(mContext,ModifyUserNameActivity.class);
-//                intent1.putExtra("userName",tvSecurityName.getText().toString());
-//                startActivity(intent1);
+                Intent intent1 = new Intent(mContext,ModifyUserNameActivity.class);
+                intent1.putExtra("userName",tvSecurityName.getText().toString());
+                startActivity(intent1);
                 break;
         }
     }

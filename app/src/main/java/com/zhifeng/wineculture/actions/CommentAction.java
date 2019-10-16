@@ -50,6 +50,8 @@ public class CommentAction extends BaseAction<CommentView> {
                         view.postCommentSuccess(myCommentListDto);
                         return;
                     }
+                    view.onError(myCommentListDto.getMsg(), myCommentListDto.getStatus());
+                    return;
                 }
                 view.onError(msg, action.getErrorType());
             }

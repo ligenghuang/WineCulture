@@ -50,6 +50,8 @@ public class MyTeamAction extends BaseAction<MyTeamView> {
                         view.getMyTeamSuccess(orderListDto);
                         return;
                     }
+                    view.onError(orderListDto.getMsg(), orderListDto.getStatus());
+                    return;
                 }
                 view.onError(msg, action.getErrorType());
             }

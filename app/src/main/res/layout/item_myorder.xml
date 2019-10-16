@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -91,18 +92,20 @@
                 android:id="@+id/btnLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:background="@drawable/shape_btn_cancelorder"
+                android:background="@drawable/shape_item_myorder_btnleft"
                 android:textColor="@color/color_8"
-                android:textSize="@dimen/text_size13" />
+                android:textSize="@dimen/text_size13"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnRight"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginStart="@dimen/dp_10"
-                android:background="@drawable/shape_btn_cancelorder"
+                android:background="@drawable/shape_item_myorder_btnright"
                 android:textColor="@color/color_cc1b21"
-                android:textSize="@dimen/text_size13" />
+                android:textSize="@dimen/text_size13"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

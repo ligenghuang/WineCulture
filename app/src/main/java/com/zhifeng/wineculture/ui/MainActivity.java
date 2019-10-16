@@ -1,8 +1,5 @@
 package com.zhifeng.wineculture.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Process;
@@ -12,6 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import androidx.fragment.app.Fragment;
 
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.base.MyFragmentPagerAdapter;
@@ -69,7 +68,7 @@ public class MainActivity extends UserBaseActivity {
 
     // 上次按退出的时间
     private long downTime;
-
+    public static boolean isLogin;
 
     @Override
     public int intiLayout() {

@@ -46,10 +46,12 @@ public class CommentsListAction extends BaseAction<CommentsListView> {
                 if (aBoolean) {
                     CommentsListDto commentsListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<CommentsListDto>() {
                     }.getType());
-                    if (commentsListDto.getStatus() == 200) {
+                    if (commentsListDto.getStatus() == 1) {
                         view.getCommentListSuccess(commentsListDto);
                         return;
                     }
+                    view.onError(commentsListDto.getMsg(), commentsListDto.getStatus());
+                    return;
                 }
                 view.onError(msg, action.getErrorType());
             }

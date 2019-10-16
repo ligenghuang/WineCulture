@@ -792,9 +792,9 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 showBottomSheetDialog(testData);
                 break;
             case R.id.tv_goods_comment_all:
-                Intent i=new Intent(mContext,GoodsCommentsActivity.class);
+                Intent i = new Intent(mContext, GoodsCommentsActivity.class);
                 i.putExtra("goodsId", goodsId);
-                i.putExtra("comment_count",String.valueOf(comment_count));
+                i.putExtra("comment_count", String.valueOf(comment_count));
                 startActivity(i);
                 break;
             case R.id.tv_goods_cart:
