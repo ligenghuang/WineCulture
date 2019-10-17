@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +21,7 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.OrderListAction;
 import com.zhifeng.wineculture.adapters.OrderAdapter;
+import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderListDto;
 import com.zhifeng.wineculture.ui.impl.OrderListView;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
@@ -93,6 +96,7 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 isRefresh = false;
+                page++;
                 getOrderList();
             }
         });
@@ -106,32 +110,47 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
 
         adapter.setOnButtonClickListener(new OrderAdapter.OnButtonClickListener() {
             @Override
-            public void cancel(int order_id) {
-
+            public void cancelOrConfirmToReceive(int order_id, int status) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                View view = View.inflate(mContext, R.layout.layout_dialog_delete, null);
+                builder.setView(view);
+                AlertDialog alertDialog = builder.create();
+                TextView tvTitle = view.findViewById(R.id.tv_title);
+                tvTitle.setText(status == 1 ? R.string.orderdetail_cancel : R.string.myorder_confirmtakeover);
+                TextView tvCancel = view.findViewById(R.id.tv_cancel);
+                TextView tvConfirm = view.findViewById(R.id.tv_confirm);
+                tvCancel.setOnClickListener(v -> {
+                    alertDialog.dismiss();
+                });
+                tvConfirm.setOnClickListener(v -> {
+                    //todo 取消订单/确认收货
+                    alertDialog.dismiss();
+                    baseAction.cancelOrderOrConfirmToReceive(order_id, status);
+                });
+                alertDialog.show();
             }
 
             @Override
-            public void confirmToReceive(int order_id) {
-
-            }
-
-            @Override
-            public void payNow(int order_id, int pay_type) {
-
+            public void payNow(int order_id, int pay_type, double totalPrice) {
+                //todo 立即付款
             }
 
             @Override
             public void refund(int order_id) {
-
+                //todo 退货
+                Intent intent = new Intent(mContext, RefundActivity.class);
+                intent.putExtra("order_id", String.valueOf(order_id));
+                startActivity(intent);
             }
 
             @Override
             public void lookUpLogistics(int order_id) {
-
+                //todo 查看物流
             }
 
             @Override
             public void comment(int order_id, int goods_id, int sku_id) {
+                //todo 评价
                 Intent intent = new Intent(mContext, CommentActivity.class);
                 intent.putExtra("order_id", order_id);
                 intent.putExtra("goods_id", goods_id);
@@ -151,7 +170,7 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
         } else if (position == 3) {
             type = "dsh";
         } else if (position == 4) {
-            type = "tk";
+            type = "dpj";
         }
         baseAction.getOrderList(page, type);
     }
@@ -160,12 +179,9 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
     public void getOrderListSuccess(OrderListDto orderList) {
         refreshLayout.finishRefresh();
         refreshLayout.finishLoadMore();
-        page++;
         List<OrderListDto.DataBean> dataBeans = orderList.getData();
         if (dataBeans.size() != 0) {
             rv.setVisibility(View.VISIBLE);
-//            isMore = page > orderList.getData().;
-            loadSwapTab();
             if (isRefresh) {
                 adapter.refresh(dataBeans);
             } else {
@@ -175,6 +191,12 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             isMore = false;
             loadSwapTab();
         }
+    }
+
+    @Override
+    public void cancelOrderOrConfirmToReceiveSuccess(GeneralDto generalDto) {
+        showToast(generalDto.getMsg());
+        getOrderList();
     }
 
     /**

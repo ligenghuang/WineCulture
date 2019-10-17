@@ -8,6 +8,7 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderListDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.OrderListView;
@@ -29,6 +30,10 @@ public class OrderListAction extends BaseAction<OrderListView> {
         post(WebUrlUtil.POST_ORDER_LIST, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "page", page, "type", type), WebUrlUtil.POST_ORDER_LIST)));
     }
 
+    public void cancelOrderOrConfirmToReceive(int order_id, int status) {
+        post(WebUrlUtil.POST_EDIT_STATUS, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id, "status", status), WebUrlUtil.POST_EDIT_STATUS)));
+    }
+
     /**
      * sticky:表明优先接收最高级  threadMode = ThreadMode.MAIN：表明在主线程
      */
@@ -42,18 +47,33 @@ public class OrderListAction extends BaseAction<OrderListView> {
                 .all(integer -> (integer == 200)).subscribe(aBoolean -> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
-            if (WebUrlUtil.POST_ORDER_LIST.equals(action.getIdentifying())) {
-                if (aBoolean) {
-                    OrderListDto orderListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<OrderListDto>() {
-                    }.getType());
-                    if (orderListDto.getStatus() == 200) {
-                        view.getOrderListSuccess(orderListDto);
+            switch(action.getIdentifying()){
+                case WebUrlUtil.POST_ORDER_LIST:
+                    if (aBoolean) {
+                        OrderListDto orderListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<OrderListDto>() {
+                        }.getType());
+                        if (orderListDto.getStatus() == 200) {
+                            view.getOrderListSuccess(orderListDto);
+                            return;
+                        }
+                        view.onError(orderListDto.getMsg(), orderListDto.getStatus());
                         return;
                     }
-                    view.onError(orderListDto.getMsg(), orderListDto.getStatus());
-                    return;
-                }
-                view.onError(msg, action.getErrorType());
+                    view.onError(msg, action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_EDIT_STATUS:
+                    if (aBoolean) {
+                        GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                        }.getType());
+                        if (generalDto.getStatus() == 200) {
+                            view.cancelOrderOrConfirmToReceiveSuccess(generalDto);
+                            return;
+                        }
+                        view.onError(generalDto.getMsg(), generalDto.getStatus());
+                        return;
+                    }
+                    view.onError(msg, action.getErrorType());
+                    break;
             }
         });
     }

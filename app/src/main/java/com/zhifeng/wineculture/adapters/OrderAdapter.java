@@ -61,14 +61,30 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
         btnRight.setVisibility(View.GONE);
         int status = model.getStatus();
         //1：待付款，2：待发货，3：待收货，4：交易成功（待评价），5：已取消，6：待退款，7：已退款，8：拒绝退款
-        int state;
-        if (status == 2) {
+        int state = 0;
+        if (status == 1) {
+            state = R.string.myorder_obligation;
+            btnLeft.setText(R.string.orderdetail_cancel);
+            btnRight.setText(R.string.orderdetail_payNow2);
+            btnLeft.setVisibility(View.VISIBLE);
+            btnRight.setVisibility(View.VISIBLE);
+            btnLeft.setOnClickListener(this);
+            btnRight.setOnClickListener(this);
+            int[] dataLeft = {CANCEL, model.getOrder_id(), status};
+            btnLeft.setTag(dataLeft);
+            double totalPrice = 0;
+            for (OrderListDto.DataBean.GoodsBean goodsBean : model.getGoods()) {
+                totalPrice += Double.parseDouble(goodsBean.getGoods_price());
+            }
+            Object[] dataRight = {PAY_NOW, model.getOrder_id(), model.getPay_type(), totalPrice};
+            btnRight.setTag(dataRight);
+        } else if (status == 2) {
             state = R.string.myorder_toBeShipped;
             btnRight.setText(R.string.myorder_returnofgoods);
             btnRight.setVisibility(View.VISIBLE);
             btnRight.setOnClickListener(this);
-            int[] data = {REFUND, model.getOrder_id()};
-            btnRight.setTag(data);
+            Object[] dataRight = {REFUND, model.getOrder_id()};
+            btnRight.setTag(dataRight);
         } else if (status == 3) {
             state = R.string.myorder_toBeReceived;
             btnLeft.setText(R.string.myorder_confirmtakeover);
@@ -77,9 +93,9 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
             btnRight.setVisibility(View.VISIBLE);
             btnLeft.setOnClickListener(this);
             btnRight.setOnClickListener(this);
-            int[] dataLeft = {REFUND, model.getOrder_id()};
+            int[] dataLeft = {CONFIRM_TO_RECEIVE, model.getOrder_id(), status};
             btnLeft.setTag(dataLeft);
-            int[] dataRight = {LOOK_UP_LOGISTICS, model.getOrder_id()};
+            Object[] dataRight = {LOOK_UP_LOGISTICS, model.getOrder_id()};
             btnRight.setTag(dataRight);
         } else if (status == 4) {
             state = R.string.myorder_toBeComment;
@@ -87,8 +103,8 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
             btnRight.setVisibility(View.VISIBLE);
             btnRight.setOnClickListener(this);
             OrderListDto.DataBean.GoodsBean goodsBean = model.getGoods().get(0);
-            int[] data = {COMMENT, model.getOrder_id(), goodsBean.getGoods_id(), goodsBean.getSku_id()};
-            btnRight.setTag(data);
+            Object[] dataRight = {COMMENT, model.getOrder_id(), goodsBean.getGoods_id(), goodsBean.getSku_id()};
+            btnRight.setTag(dataRight);
         } else if (status == 5) {
             state = R.string.myorder_hadCancel;
             btnLeft.setVisibility(View.VISIBLE);
@@ -105,20 +121,10 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
             state = R.string.myorder_refuseRefund;
             btnLeft.setVisibility(View.VISIBLE);
             btnLeft.setText(state);
-        } else {
-            state = R.string.myorder_obligation;
-            btnLeft.setText(R.string.orderdetail_cancel);
-            btnRight.setText(R.string.orderdetail_payNow2);
-            btnLeft.setVisibility(View.VISIBLE);
-            btnRight.setVisibility(View.VISIBLE);
-            btnLeft.setOnClickListener(this);
-            btnRight.setOnClickListener(this);
-            int[] dataLeft = {CANCEL, model.getOrder_id()};
-            btnLeft.setTag(dataLeft);
-            int[] dataRight = {PAY_NOW, model.getOrder_id(), model.getPay_type()};
-            btnRight.setTag(dataRight);
         }
-        holder.text(R.id.tvGoodsStatus, state);
+        if (state != 0) {
+            holder.text(R.id.tvGoodsStatus, state);
+        }
         RecyclerView rv = holder.itemView.findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(context));
         OrderGoodResAdapter adapter = new OrderGoodResAdapter(context);
@@ -141,27 +147,28 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
             int[] data = (int[]) v.getTag();
             if (onButtonClickListener != null) {
                 int type = data[0];
-                int order_id = data[1];
-                if (type == CANCEL) {
-                    onButtonClickListener.cancel(order_id);
-                } else if (type == CONFIRM_TO_RECEIVE) {
-                    onButtonClickListener.confirmToReceive(order_id);
+                if (type == CANCEL || type == CONFIRM_TO_RECEIVE) {
+                    int order_id = data[1];
+                    int status = data[2];
+                    onButtonClickListener.cancelOrConfirmToReceive(order_id, status);
                 }
             }
         } else {
-            int[] data = (int[]) v.getTag();
+            Object[] data = (Object[]) v.getTag();
             if (onButtonClickListener != null) {
-                int type = data[0];
-                int order_id = data[1];
-                int goods_id = data[2];
+                int type = (int) data[0];
+                int order_id = (int) data[1];
                 if (type == PAY_NOW) {
-                    onButtonClickListener.payNow(order_id, goods_id);
+                    int goods_id = (int) data[2];
+                    double totalPrice = (double) data[3];
+                    onButtonClickListener.payNow(order_id, goods_id, totalPrice);
                 } else if (type == REFUND) {
                     onButtonClickListener.refund(order_id);
                 } else if (type == LOOK_UP_LOGISTICS) {
                     onButtonClickListener.lookUpLogistics(order_id);
                 } else if (type == COMMENT) {
-                    int sku_id = data[3];
+                    int goods_id = (int) data[2];
+                    int sku_id = (int) data[3];
                     onButtonClickListener.comment(order_id, goods_id, sku_id);
                 }
             }
@@ -174,19 +181,14 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
 
     public interface OnButtonClickListener {
         /**
-         * 取消
+         * 取消/确认收货
          */
-        void cancel(int order_id);
-
-        /**
-         * 确认收货
-         */
-        void confirmToReceive(int order_id);
+        void cancelOrConfirmToReceive(int order_id, int status);
 
         /**
          * 立即支付
          */
-        void payNow(int order_id, int pay_type);
+        void payNow(int order_id, int pay_type, double totalPrice);
 
         /**
          * 退货

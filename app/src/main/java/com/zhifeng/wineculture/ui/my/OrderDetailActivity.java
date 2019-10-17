@@ -1,5 +1,6 @@
 package com.zhifeng.wineculture.ui.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,11 +75,13 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     TextView tvOrderNo;
     @BindView(R.id.tvCreateTime)
     TextView tvCreateTime;
-    @BindView(R.id.btnCancel)
-    Button btnCancel;
-    @BindView(R.id.btnPayNow)
-    Button btnPayNow;
+    @BindView(R.id.btnLeft)
+    Button btnLeft;
+    @BindView(R.id.btnRight)
+    Button btnRight;
     private String order_id;
+    private int status;
+    private final int REQUEST_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,27 +135,42 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     @Override
     public void getOrderDetailSuccess(OrderDetailDto orderDetailDto) {
         //1待付款 2待发货 3待收货 4待评价 5已取消 6待退款 7已退款 8拒绝退款
-        int status = orderDetailDto.getData().getStatus();
+        status = orderDetailDto.getData().getStatus();
         int drawableRes = 0;
         int stringRes = 0;
+        btnLeft.setVisibility(View.GONE);
+        btnRight.setVisibility(View.GONE);
         switch (status) {
             case 1:
                 drawableRes = R.drawable.icon_wait_pa_bg;
                 stringRes = R.string.orderdetail_waitToPay;
+                btnLeft.setText(R.string.orderdetail_cancel);
+                btnRight.setText(R.string.orderdetail_payNow2);
+                btnLeft.setVisibility(View.VISIBLE);
+                btnRight.setVisibility(View.VISIBLE);
                 break;
             case 2:
                 drawableRes = R.drawable.icon_wait_receive_bg;
                 stringRes = R.string.orderdetail_packaging;
+                btnRight.setVisibility(View.VISIBLE);
+                btnRight.setText(R.string.myorder_returnofgoods);
                 break;
             case 3:
                 drawableRes = R.drawable.icon_wait_receive_bg;
                 stringRes = R.string.orderdetail_transit;
+                btnLeft.setVisibility(View.VISIBLE);
+                btnRight.setVisibility(View.VISIBLE);
+                btnLeft.setText(R.string.myorder_confirmtakeover);
+                btnRight.setText(R.string.myorder_lookuplogistics);
                 break;
             case 4:
                 //0 未评论 1已评论
                 int comment = orderDetailDto.getData().getComment();
                 drawableRes = comment == 0 ? R.drawable.icon_wait_evaluation_bg : R.drawable.icon_sign_in_bg;
                 stringRes = comment == 0 ? R.string.orderdetail_tobecomment : R.string.orderdetail_finish;
+//                btnLeft.setText(R.string.myorder_comment);
+                btnRight.setVisibility(View.VISIBLE);
+                btnRight.setText(comment == 0 ? R.string.myorder_comment : stringRes);
                 break;
         }
         if (drawableRes != 0) {
@@ -214,6 +233,28 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     }
 
     @Override
+    public void refund() {
+        Intent intent = new Intent(mContext, RefundActivity.class);
+        intent.putExtra("order_id", order_id);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    @Override
+    public void confirmToReceive() {
+
+    }
+
+    @Override
+    public void lookUpLogistics() {
+
+    }
+
+    @Override
+    public void comment() {
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         baseAction.toRegister();
@@ -225,15 +266,50 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         baseAction.toUnregister();
     }
 
-    @OnClick({R.id.btnCancel, R.id.btnPayNow})
+    @OnClick({R.id.btnLeft, R.id.btnRight})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btnCancel:
-                cancelOrder();
+            case R.id.btnLeft:
+                //1待付款 2待发货 3待收货 4待评价 5已取消 6待退款 7已退款 8拒绝退款
+                switch (status) {
+                    case 1:
+                        //todo 取消订单
+                        cancelOrder();
+                        break;
+                    case 3:
+                        //todo 确认收货
+                        confirmToReceive();
+                        break;
+                }
                 break;
-            case R.id.btnPayNow:
-                pay();
+            case R.id.btnRight:
+                //1待付款 2待发货 3待收货 4待评价 5已取消 6待退款 7已退款 8拒绝退款
+                switch (status) {
+                    case 1:
+                        //todo 立即支付
+                        pay();
+                        break;
+                    case 2:
+                        //todo 退货
+                        refund();
+                        break;
+                    case 3:
+                        //todo 查看物流
+                        lookUpLogistics();
+                        break;
+                    case 4:
+                        //todo 评价
+                        comment();
+                        break;
+                }
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            getOrderDetail();
         }
     }
 }

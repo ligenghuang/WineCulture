@@ -8,12 +8,12 @@ public class BankCardDto {
     /**
      * status : 200
      * msg : 获取成功！
-     * bank_card : [{"bank_card":"123456789","bank_name":"5行"},{"bank_card":"123456789","bank_name":"4行"}]
+     * data : [{"bank_card":"1111111111111111111","bank_name":"1"}]
      */
 
     private int status;
     private String msg;
-    private List<BankCardBean> bank_card;
+    private List<DataBean> data;
 
     public int getStatus() {
         return status;
@@ -31,21 +31,21 @@ public class BankCardDto {
         this.msg = msg == null ? "" : msg;
     }
 
-    public List<BankCardBean> getBank_card() {
-        if (bank_card == null) {
+    public List<DataBean> getData() {
+        if (data == null) {
             return new ArrayList<>();
         }
-        return bank_card;
+        return data;
     }
 
-    public void setBank_card(List<BankCardBean> bank_card) {
-        this.bank_card = bank_card;
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
 
-    public static class BankCardBean {
+    public static class DataBean {
         /**
-         * bank_card : 123456789
-         * bank_name : 5行
+         * bank_card : 1111111111111111111
+         * bank_name : 1
          */
 
         private String bank_card;

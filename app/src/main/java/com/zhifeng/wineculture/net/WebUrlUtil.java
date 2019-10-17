@@ -289,4 +289,14 @@ public class WebUrlUtil {
      * 转账
      */
     public static final String POST_TRANSFER = "user/exchange_money_handle";
+
+    /**
+     * 申请退款
+     */
+    public static final String POST_APPLY_REFUND = "Order/apply_refund";
+
+    /**
+     * 取消订单/确认收货
+     */
+    public static final String POST_EDIT_STATUS = "order/edit_status";
 }

@@ -15,15 +15,41 @@ public interface OrderDetailView extends BaseView {
 
     void getOrderDetailSuccess(OrderDetailDto orderDetailDto);
 
+    /**
+     * 取消订单
+     */
     void cancelOrder();
 
     void cancelOrderSuccess(GeneralDto generalDto);
 
     void cancelOrderFail(int code, String msg);
 
+    /**
+     * 立即支付
+     */
     void pay();
 
     void paySuccess(GeneralDto generalDto);
 
     void payFail(int code, String msg);
+
+    /**
+     * 退货
+     */
+    void refund();
+
+    /**
+     * 确认收货
+     */
+    void confirmToReceive();
+
+    /**
+     * 查看物流
+     */
+    void lookUpLogistics();
+
+    /**
+     * 评价
+     */
+    void comment();
 }

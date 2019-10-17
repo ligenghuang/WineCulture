@@ -343,22 +343,22 @@
         android:padding="@dimen/dp_10">
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnLeft"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:background="@drawable/shape_orderdetail_btnleft"
-            android:text="@string/orderdetail_cancel"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size12" />
+            android:textSize="@dimen/text_size12"
+            android:visibility="gone" />
 
         <Button
-            android:id="@+id/btnPayNow"
+            android:id="@+id/btnRight"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginStart="20dp"
             android:background="@drawable/shape_orderdetail_btnright"
-            android:text="@string/orderdetail_payNow"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size12" />
+            android:textSize="@dimen/text_size12"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

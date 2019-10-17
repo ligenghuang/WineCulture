@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
                     android:hint="@string/bindalipayaccount_alipayhint"
-                    android:inputType="phone"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/color_15"
                     android:textSize="@dimen/text_size12" />
             </LinearLayout>

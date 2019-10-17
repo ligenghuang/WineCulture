@@ -82,6 +82,8 @@
     <string name="balance_withdrawal_tab_14">忘记密码？</string>
     <string name="balance_withdrawal_tab_15">余额不足，无法提现</string>
     <string name="balance_withdrawal_tab_16">请先绑定一张银行卡</string>
+    <string name="balance_withdrawal_tab_17">提现金额必须是100的倍数</string>
+    <string name="balance_withdrawal_tab_18">￥%0$s</string>
 
     <string name="transfer_record_tab_1">日期</string>
     <string name="transfer_record_tab_2">名称</string>
@@ -109,6 +111,7 @@
     <string name="myorder_toBeReceived">待收货</string>
     <string name="myorder_toBeComment">交易成功（待评价）</string>
     <string name="myorder_hadCancel">已取消</string>
+    <string name="myorder_refund">退款</string>
     <string name="myorder_toBeRefund">待退款</string>
     <string name="myorder_hadRefund">已退款</string>
     <string name="myorder_refuseRefund">拒绝退款</string>
@@ -280,4 +283,7 @@
     <string name="transfer_tab_8">%1$s&#160;&#160;&#160;&#160;ID：%2$s</string>
     <string name="transfer_tab_9">转账金额必须大于0</string>
 
+    <string name="refund_title">退货申请</string>
+    <string name="refund_refundReason">请说明退货原因</string>
+    <string name="refund_confirm">确认提交</string>
 </resources>

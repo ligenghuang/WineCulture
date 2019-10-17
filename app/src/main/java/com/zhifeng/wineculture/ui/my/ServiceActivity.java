@@ -1,9 +1,11 @@
 package com.zhifeng.wineculture.ui.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.OrderListAction;
 import com.zhifeng.wineculture.adapters.ServiceAdapter;
+import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderListDto;
 import com.zhifeng.wineculture.ui.impl.OrderListView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
@@ -41,12 +44,15 @@ public class ServiceActivity extends UserBaseActivity<OrderListAction> implement
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     private ServiceAdapter adapter;
+    private int page = 1;
+    private final int REQUEST_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         binding();
+        getOrderList();
     }
 
     @Override
@@ -63,7 +69,18 @@ public class ServiceActivity extends UserBaseActivity<OrderListAction> implement
         rv.addItemDecoration(new VerticalItemDecoration(DensityUtil.dp2px(5)));
         adapter = new ServiceAdapter(mContext);
         rv.setAdapter(adapter);
+        refreshLayout.setEnableLoadMore(false);
         refreshLayout.autoRefresh();
+        loadView();
+    }
+
+    @Override
+    protected void loadView() {
+        adapter.setOnRefundButtonClickListener(order_id -> {
+            Intent intent = new Intent(mContext, RefundActivity.class);
+            intent.putExtra("order_id", String.valueOf(order_id));
+            startActivityForResult(intent, REQUEST_CODE);
+        });
     }
 
     /**
@@ -84,12 +101,12 @@ public class ServiceActivity extends UserBaseActivity<OrderListAction> implement
 
     @Override
     protected OrderListAction initAction() {
-        return null;
+        return new OrderListAction(this, this);
     }
 
     @Override
     public void getOrderList() {
-
+        baseAction.getOrderList(page, "tk");
     }
 
     @Override
@@ -99,8 +116,32 @@ public class ServiceActivity extends UserBaseActivity<OrderListAction> implement
     }
 
     @Override
+    public void cancelOrderOrConfirmToReceiveSuccess(GeneralDto orderList) {
+
+    }
+
+    @Override
     public void onError(String message, int code) {
         refreshLayout.finishRefresh();
         showNormalToast(message);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            getOrderList();
+        }
     }
 }
