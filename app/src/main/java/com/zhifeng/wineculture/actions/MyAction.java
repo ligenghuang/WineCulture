@@ -55,26 +55,6 @@ public class MyAction extends BaseAction<MyView> {
 
         final String msg = action.getMsg(action);
         Observable.just(action.getErrorType())
-                .all(integer -> (integer == 200)).subscribe(aBoolean -> {
-            // 输出返回结果
-            L.e("xx", "输出返回结果 " + aBoolean);
-            if (WebUrlUtil.POST_USER_INFO.equals(action.getIdentifying())) {
-                if (aBoolean) {
-                    try {
-                        UserInfoDto userInfoDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<UserInfoDto>() {
-                        }.getType());
-                        if (userInfoDto.getStatus() == 200) {
-                            view.getUserInfoSuccess(userInfoDto);
-                            return;
-                        }
-                        view.onError(userInfoDto.getMsg(), userInfoDto.getStatus());
-                        return;
-                    } catch (JsonSyntaxException e) {
-                        view.noLogin();
-                        return;
-                    }
-                }
-                view.onError(msg, action.getErrorType());
                 .all(new Predicate<Integer>() {
                     @Override
                     public boolean test(Integer integer) throws Exception {
