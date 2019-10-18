@@ -2,6 +2,7 @@ package com.zhifeng.wineculture.ui.my;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.data.DensityUtil;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -23,8 +26,12 @@ import com.zhifeng.wineculture.actions.OrderListAction;
 import com.zhifeng.wineculture.adapters.OrderAdapter;
 import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderListDto;
+import com.zhifeng.wineculture.modules.PayOrderDto;
+import com.zhifeng.wineculture.modules.post.SubmitOrderPost;
 import com.zhifeng.wineculture.ui.impl.OrderListView;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
+import com.zhifeng.wineculture.utils.data.MySp;
+import com.zhifeng.wineculture.utils.dialog.BuyPwdDialog;
 import com.zhifeng.wineculture.utils.view.VerticalItemDecoration;
 
 import java.util.List;
@@ -130,9 +137,48 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
                 alertDialog.show();
             }
 
-            @Override
+
             public void payNow(int order_id, int pay_type, double totalPrice) {
                 //todo 立即付款
+                switch (pay_type){
+                    case 1:
+                        //余额支付
+                        if (MySp.getPwd(mContext) == 1) {
+                            BuyPwdDialog bugPwdDialog = new BuyPwdDialog(mContext, R.style.MY_AlertDialog, totalPrice, "余额支付");
+                            bugPwdDialog.setOnFinishInput(new BuyPwdDialog.OnFinishInput() {
+                                @Override
+                                public void inputFinish(String password) {
+                                    //支付订单
+                                    SubmitOrderPost post = new SubmitOrderPost();
+                                    post.setCart_id(order_id+"");
+                                    post.setPay_type(pay_type + "");
+                                    post.setPwd(password);
+                                    payOrder(post);
+                                }
+
+                                @Override
+                                public void close() {
+
+                                }
+                            });
+                            bugPwdDialog.show();
+                        } else {
+                            showToast(ResUtil.getString(R.string.goods_detail_tab_30));
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent intent = new Intent(mContext, ForgetPwdActivity.class);
+                                    intent.putExtra("phone", MySp.getMobile(mContext));
+                                    intent.putExtra("type", 1);
+                                    intent.putExtra("isOrder", true);
+                                    startActivity(intent);
+                                }
+                            }, 2000);
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
 
             @Override
@@ -146,6 +192,9 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             @Override
             public void lookUpLogistics(int order_id) {
                 //todo 查看物流
+                Intent logistics = new Intent(mContext,LogisticsActivity.class);
+                logistics.putExtra("orderId",order_id);
+                startActivity(logistics);
             }
 
             @Override
@@ -191,6 +240,43 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             isMore = false;
             loadSwapTab();
         }
+    }
+
+    /**
+     * 支付
+     *
+     * @param submitOrderPost
+     */
+    @Override
+    public void payOrder(SubmitOrderPost submitOrderPost) {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.payOrder(submitOrderPost);
+        }
+    }
+
+    /**
+     * 支付成功
+     *
+     * @param submitOrderDto
+     */
+    @Override
+    public void payOrderSuccess(PayOrderDto submitOrderDto) {
+        loadDiss();
+        showToast(ResUtil.getString(R.string.goods_detail_tab_29));
+       getOrderList();
+    }
+
+    /**
+     * 支付失败
+     *
+     * @param msg
+     */
+    @Override
+    public void payOrderError(String msg) {
+        L.e("lgh_pay", "输出返回结果4" + msg);
+        loadDiss();
+        showToast(msg);
     }
 
     @Override

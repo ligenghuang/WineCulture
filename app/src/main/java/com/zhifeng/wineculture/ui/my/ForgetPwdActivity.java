@@ -24,6 +24,7 @@ import com.zhifeng.wineculture.modules.post.ForgetPwdPost;
 import com.zhifeng.wineculture.modules.post.SetPayPwdPost;
 import com.zhifeng.wineculture.ui.impl.ForgetPwdView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
 
@@ -186,6 +187,7 @@ public class ForgetPwdActivity extends UserBaseActivity<ForgetPwdAction> impleme
     public void setPayPwdSuccess(GeneralDto generalDto) {
         loadDiss();
         showNormalToast(generalDto.getMsg());
+        MySp.setPwd(mContext,1);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -170,12 +170,41 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
             }
         });
 
+        bannerAdvertising.setDelegate(new BGABanner.Delegate() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
+                L.e("lghl", url.get(position));
+                bannerAdvertising.stopAutoPlay();
+                jumpAdvertisingActivity(urlSelfnav.get(position),titleSelfnav.get(position));
+            }
+        });
+
+        bannerHome.setDelegate(new BGABanner.Delegate() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
+                L.e("lghl", url.get(position));
+                bannerHome.stopAutoPlay();
+                jumpAdvertisingActivity(url.get(position),titles.get(position));
+            }
+        });
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 getHomeData();
             }
         });
+    }
+
+    /**
+     * 跳转至详情页
+     * @param url
+     */
+    private void jumpAdvertisingActivity(String url,String title){
+        Intent intent = new Intent(mContext,AdvertisingActivity.class);
+        intent.putExtra("url",url);
+        intent.putExtra("title",title);
+        startActivity(intent);
     }
 
     /**

@@ -156,8 +156,7 @@ public class CartFragment extends UserBaseFragment<CartAction> implements CartVi
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
-        super.onFragmentVisibleChange(isVisible);
-        if (isVisible){
+        if (isVisible&& ((MainActivity) mActivity).Position == 2){
             getCartList();
         }
     }

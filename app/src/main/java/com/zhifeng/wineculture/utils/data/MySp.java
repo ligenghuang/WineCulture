@@ -23,6 +23,9 @@ public class MySp extends MySharedPreferencesUtil {
     public static void clearAllSP(Context context) {
         setAccessToken(context,null);
         setMobile(context,null);
+        setPwd(context,0);
+        setAvatar(context,null);
+        setName(context,null);
     }
 
     /**
@@ -106,5 +109,71 @@ public class MySp extends MySharedPreferencesUtil {
     public static String getMobile(Context context){
         SharedPreferences sp = getProjectSP(context);
         return sp.getString("UserMobile", null);
+    }
+
+    /**
+     * 保存昵称
+     * @param context
+     * @param mobile
+     * @return
+     */
+    public static boolean setName(Context context,String name){
+        SharedPreferences sp = getProjectSP(context);
+        SharedPreferences.Editor editor = sp.edit();
+        return editor.putString("UserName", name).commit();
+    }
+
+    /**
+     * 获取昵称
+     * @param context
+     * @return
+     */
+    public static String getName(Context context){
+        SharedPreferences sp = getProjectSP(context);
+        return sp.getString("UserName", null);
+    }
+
+    /**
+     * 保存头像
+     * @param context
+     * @param avatar
+     * @return
+     */
+    public static boolean setAvatar(Context context,String avatar){
+        SharedPreferences sp = getProjectSP(context);
+        SharedPreferences.Editor editor = sp.edit();
+        return editor.putString("UserAvatar", avatar).commit();
+    }
+
+    /**
+     * 获取头像
+     * @param context
+     * @return
+     */
+    public static String getAvatar(Context context){
+        SharedPreferences sp = getProjectSP(context);
+        return sp.getString("UserAvatar", null);
+    }
+
+    /**
+     * 是否设置支付密码
+     * @param context
+     * @param pwd
+     * @return
+     */
+    public static boolean setPwd(Context context,int pwd){
+        SharedPreferences sp = getProjectSP(context);
+        SharedPreferences.Editor editor = sp.edit();
+        return editor.putInt("UserPwd", pwd).commit();
+    }
+
+    /**
+     * 是否设置支付密码
+     * @param context
+     * @return
+     */
+    public static int getPwd(Context context){
+        SharedPreferences sp = getProjectSP(context);
+        return sp.getInt("UserPwd", 0);
     }
 }

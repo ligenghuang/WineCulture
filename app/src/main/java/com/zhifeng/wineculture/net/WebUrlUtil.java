@@ -291,6 +291,21 @@ public class WebUrlUtil {
     public static final String POST_TRANSFER = "user/exchange_money_handle";
 
     /**
+     * 查看物流
+     */
+    public static final String POST_ORDER_EXPRESS = "Order/express";
+
+    /**
+     * 开通会员
+     */
+    public static final String POST_OPEN_VIP = "user/open_vip";
+
+    /**
+     * 预约领商品
+     */
+    public static final String POST_GET_GOODS = "user/get_goods";
+
+    /**
      * 申请退款
      */
     public static final String POST_APPLY_REFUND = "Order/apply_refund";

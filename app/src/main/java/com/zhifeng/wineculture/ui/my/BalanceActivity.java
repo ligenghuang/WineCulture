@@ -133,6 +133,7 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
         switch (view.getId()) {
             case R.id.tv_balance_opening_member:
                 //todo 开通会员
+                jumpActivityNotFinish(mContext,OpenMemberActivity.class);
                 break;
             case R.id.tv_balance_transfer:
                 //todo 转账

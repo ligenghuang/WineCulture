@@ -168,6 +168,7 @@ public class CartSubmitOrdersActivity extends UserBaseActivity<CartSubmitOrdersA
         money = Double.parseDouble(dataBean.getOrder_amount());
         tvTotalAmount.setText("￥" + dataBean.getOrder_amount());
         pwd = dataBean.getPwd();
+        MySp.setPwd(mContext,pwd);
         payTypeDialog = new PayTypeDialog(mContext, R.style.MY_AlertDialog, dataBean.getPay_type());
         payTypeDialog.setOnClickListener(new PayTypeDialog.OnClickListener() {
             @Override
@@ -387,6 +388,7 @@ public class CartSubmitOrdersActivity extends UserBaseActivity<CartSubmitOrdersA
         }else if (resultCode == 201) {
             if (data != null) {
                 pwd = data.getIntExtra("pwd", 0);
+                MySp.setPwd(mContext,pwd);
             }
         }
     }
