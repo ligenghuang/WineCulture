@@ -1,49 +1,52 @@
 package com.zhifeng.wineculture.ui.my;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
-import com.lzy.imagepicker.ImagePicker;
-import com.lzy.imagepicker.bean.ImageItem;
-import com.lzy.imagepicker.ui.ImageGridActivity;
-import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
-import com.lzy.imagepicker.view.CropImageView;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.CommentAction;
-import com.zhifeng.wineculture.adapters.ImagePickerAdapter;
-import com.zhifeng.wineculture.modules.CommentDto;
+import com.zhifeng.wineculture.adapters.CommentAdapter;
+import com.zhifeng.wineculture.adapters.EvaluteAdapter;
 import com.zhifeng.wineculture.modules.GeneralDto;
+import com.zhifeng.wineculture.modules.MyCommentListDto;
+import com.zhifeng.wineculture.modules.OrderCommentListDto;
 import com.zhifeng.wineculture.ui.impl.CommentView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
-import com.zhifeng.wineculture.utils.dialog.PicturesDialog;
-import com.zhifeng.wineculture.utils.imageloader.GlideImageLoader;
 import com.zhifeng.wineculture.utils.photo.PicUtils;
+import com.zhifeng.wineculture.utils.photo.utilFixSevent.PhotoFitSevent;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class CommentActivity extends UserBaseActivity<CommentAction> implements CommentView, ImagePickerAdapter.OnRecyclerViewItemClickListener {
-    public static final int REQUEST_CODE_SELECT = 100;
-    public static final int REQUEST_CODE_PREVIEW = 101;
-    public static final int IMAGE_ITEM_ADD = -1;
-    public static final int REQUEST_CODE_TAKE = 102;
-    public static final int REQUEST_CODE_ALBUM = 103;
-    public static int REQUEST_SELECT_TYPE = -1;//选择的类型
+public class CommentActivity extends UserBaseActivity<CommentAction> implements CommentView {
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
@@ -52,26 +55,25 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
     TextView fRightTv;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.ivGoods)
-    ImageView ivGoods;
-    @BindView(R.id.tvGoodsName)
-    TextView tvGoodsName;
-    @BindView(R.id.etContent)
-    EditText etContent;
     @BindView(R.id.rv)
     RecyclerView rv;
     private String order_id;
     private String goods_id;
     private String sku_id;
-    private ArrayList<ImageItem> selImageList = new ArrayList<>(); //当前选择的所有图片
-    private final int maxImgCount = 9;               //允许选择图片最大数
-    private ImagePickerAdapter adapter;
+    int id;
+    EvaluteAdapter evaluteAdapter;
+    private OrderCommentListDto.DataBean persons;
+    private int positions;
+    MyCommentListDto.DataBean data;
+    private List<MyCommentListDto.DataBean> images;
+    private CommentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         binding();
+        getOrderCommentList();
     }
 
     @Override
@@ -89,17 +91,172 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
         super.init();
         mActicity = this;
         mContext = this;
-        order_id = String.valueOf(getIntent().getIntExtra("order_id", 0));
-        goods_id = getIntent().getStringExtra("goods_id");
-        sku_id = getIntent().getStringExtra("sku_id");
-        selImageList = new ArrayList<>();
-        adapter = new ImagePickerAdapter(this, selImageList, maxImgCount);
-        adapter.setOnItemClickListener(this);
-
-        rv.setLayoutManager(new GridLayoutManager(this, 3));
-        rv.setHasFixedSize(true);
+        order_id = getIntent().getStringExtra("order_id");
+        adapter = new CommentAdapter(mContext);
+        rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.setAdapter(adapter);
-        initImagePicker();
+        loadView();
+    }
+
+    @Override
+    protected void loadView() {
+        super.loadView();
+        evaluteAdapter.setStatusClickListener(new EvaluteAdapter.OnStatusClickListener() {
+            @Override
+            public void pictureOrder(OrderCommentListDto.DataBean person, int position) {
+                persons = person;
+                positions = position;
+                showSelectDiaLog();
+            }
+        });
+    }
+
+    /**
+     * 图片选择
+     */
+    private void showSelectDiaLog() {
+        final Dialog dialog = new Dialog(this, R.style.MY_AlertDialog);
+        dialog.setCanceledOnTouchOutside(true);
+        View inflate = LayoutInflater.from(this).inflate(R.layout.userinfo_dialog_head, null);
+        TextView cancel = (TextView) inflate.findViewById(R.id.btn_cancel);
+        TextView camera_tv = ((TextView) inflate.findViewById(R.id.camera_tv));
+        TextView photo_tv = ((TextView) inflate.findViewById(R.id.photo_tv));
+        camera_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePhotoNoCompress();
+                dialog.dismiss();
+            }
+        });
+        photo_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                picPhoto();
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setContentView(inflate);
+        Window dialogWindow = dialog.getWindow();
+        if (dialogWindow != null) {
+            dialogWindow.setGravity(Gravity.BOTTOM);
+            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+            lp.y = 20;
+            dialogWindow.setAttributes(lp);
+            dialog.show();
+        }
+
+    }
+
+    /**
+     * --------------------拍照-------------
+     **/
+
+    private static final int REQUEST_CODE_TAKE_PHOTO = 0x110;
+    private static final int REQ_PERMISSION_CODE_TAKE_PHOTO = 0X112;
+    private String mCurrentPhotoPath;
+    private String fileName;
+
+    /**
+     * 拍照准备（需要判断是否有权限）
+     */
+    public void takePhotoNoCompress() {
+        boolean b = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED;//判断是否有写的权限
+        if (b) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE},//获取照片权限
+                    REQ_PERMISSION_CODE_TAKE_PHOTO);
+        } else {
+            mCurrentPhotoPath = PhotoFitSevent.takePhotoNoCompress(this);
+        }
+    }
+
+    /**
+     * 从相册获取图片
+     */
+    public void picPhoto() {
+        boolean b = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED;//判断是否有写的权限
+        if (b) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE},//获取照片权限
+                    REQUEST_CODE_TAKE_PHOTO);
+        } else {
+
+            PhotoFitSevent.takePhoto(this);
+        }
+    }
+
+    /**
+     * 权限获取结果
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQ_PERMISSION_CODE_TAKE_PHOTO:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    ;
+                    mCurrentPhotoPath = PhotoFitSevent.takePhotoNoCompress(this);//获取权限成功后再起请求拍照功能
+                } else {
+                    // Permission Denied
+                    Toast.makeText(CommentActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case REQUEST_CODE_TAKE_PHOTO:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    PhotoFitSevent.takePhoto(this);//获取权限成功后再起请求拍照功能
+                } else {
+                    // Permission Denied
+                    Toast.makeText(CommentActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+
+    }
+
+    /**
+     * 获取路径
+     *
+     * @param s
+     */
+    private void getPhotoDir(String s) {
+        if (s == null) {
+            return;
+        }
+        Bitmap bitmap = BitmapFactory.decodeFile(s);
+//            mIvPhoto.setImageBitmap(bitmap);
+//        L.e("mCurrentPhotoPath", " s " + s + "fileName" + fileName);
+//        String[] split = s.split("/");
+//        L.e("split", "fileName" + split[split.length - 1]);
+//        fileName = split[split.length - 1];//截取最后一段图片
+        fileName = s;//截取最后一段图片
+        File file = new File(s);
+        L.e("liaos", " 之前" + file.length() + "  " + s);
+        if (file.length() / 1024 > 512) {
+            fileName = PicUtils.getCompressedImgPath(s);
+            L.e("liaos", " 现在 " + fileName);
+        }
+        if (CheckNetwork.checkNetwork(this)) {
+//            feedbackAction.uploadImage(fileName);
+            //todo 2018-11-2 上传图片
+            loadDialog(ResUtil.getString(R.string.main_process));
+//            baseAction.upload(fileName);
+            return;
+        }
+        showToast(ResUtil.getString(R.string.main_net_error));
     }
 
     /**
@@ -119,46 +276,47 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
         fRightTv.setText(R.string.mycomment_publish);
     }
 
-    private void initImagePicker() {
-        ImagePicker imagePicker = ImagePicker.getInstance();
-        imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
-        imagePicker.setShowCamera(true);                      //显示拍照按钮
-        imagePicker.setCrop(false);                           //允许裁剪（单选才有效）
-        imagePicker.setMultiMode(true);
-        imagePicker.setSaveRectangle(true);
-        imagePicker.setSelectLimit(maxImgCount);              //选中数量限制
-        imagePicker.setStyle(CropImageView.Style.CIRCLE);  //裁剪框的形状
-        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setFocusHeight(800);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setOutPutX(400);                         //保存文件的宽度。单位像素
-        imagePicker.setOutPutY(400);                         //保存文件的高度。单位像素
+    @Override
+    public void getOrderCommentList() {
+        baseAction.getOrderCommentList(order_id);
+    }
+
+    @Override
+    public void getOrderCommentListSuccess(OrderCommentListDto orderCommentListDto) {
+        List<OrderCommentListDto.DataBean> beans = orderCommentListDto.getData();
+        adapter.refresh(beans);
     }
 
     @Override
     public void postComment() {
         String star_rating = "1";
-        String content = etContent.getText().toString();
-        if (TextUtils.isEmpty(content)) {
-            showNormalToast(R.string.mycomment_commentContent);
-            return;
-        }
-        List<String> str = new ArrayList<>();
-        if (selImageList.size() > 0) {
-            for (int i = 0; i < selImageList.size(); i++) {
-                str.add("data:image/gif;base64," + PicUtils.imageToBase64(selImageList.get(i).path));
-            }
-        }
-        CommentDto orderComment = new CommentDto(order_id, goods_id, sku_id, content, str);
-        if (CheckNetwork.checkNetwork2(mContext)) {
-            loadDialog();
-            baseAction.postComment(orderComment.toString());
-        }
+//        String content = etContent.getText().toString();
+//        if (TextUtils.isEmpty(content)) {
+//            showNormalToast(R.string.mycomment_commentContent);
+//            return;
+//        }
+//        List<String> str = new ArrayList<>();
+//        if (selImageList.size() > 0) {
+//            for (int i = 0; i < selImageList.size(); i++) {
+//                str.add("data:image/gif;base64," + PicUtils.imageToBase64(selImageList.get(i).path));
+//            }
+//        }
+//        CommentDto orderComment = new CommentDto(order_id, goods_id, sku_id, content, str);
+//        if (CheckNetwork.checkNetwork2(mContext)) {
+//            loadDialog();
+//            baseAction.postComment(orderComment.toString());
+//        }
     }
 
     @Override
     public void postCommentSuccess(GeneralDto generalDto) {
         showNormalToast(generalDto.getMsg());
         finish();
+    }
+
+    @Override
+    public void postCommentFail(String msg, int code) {
+        showNormalToast(msg);
     }
 
     @Override
@@ -178,90 +336,30 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
         baseAction.toUnregister();
     }
 
-    private void takePhoto() {
-        // 直接调起相机
-        /**
-         * 0.4.7 目前直接调起相机不支持裁剪，如果开启裁剪后不会返回图片，请注意，后续版本会解决
-         *
-         * 但是当前直接依赖的版本已经解决，考虑到版本改动很少，所以这次没有上传到远程仓库
-         *
-         * 如果实在有所需要，请直接下载源码引用。
-         */
-        //打开选择,本次允许选择的数量
-        ImagePicker.getInstance().setSelectLimit(maxImgCount - selImageList.size());
-        Intent intent = new Intent(mContext, ImageGridActivity.class);
-        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
-        startActivityForResult(intent, REQUEST_CODE_SELECT);
-    }
-
-    /**
-     * 打开相册
-     */
-    private void takeUserGally() {
-        //打开选择,本次允许选择的数量
-        ImagePicker.getInstance().setSelectLimit(maxImgCount - selImageList.size());
-        Intent intent1 = new Intent(mContext, ImageGridActivity.class);
-        /* 如果需要进入选择的时候显示已经选中的图片，
-         * 详情请查看ImagePickerActivity
-         * */
-//                                intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES,images);
-        startActivityForResult(intent1, REQUEST_CODE_SELECT);
-    }
-
-    /**
-     * 选择图片
-     */
-    public void showSelectDiaLog() {
-        PicturesDialog dialog = new PicturesDialog(this, R.style.MY_AlertDialog);
-        dialog.setOnClickListener(new PicturesDialog.OnClickListener() {
-            @Override
-            public void onCamera() {
-                takePhoto();
-            }
-
-            @Override
-            public void onPhoto() {
-                takeUserGally();
-            }
-        });
-        dialog.show();
-    }
-
     @Override
-    public void onItemClick(View view, int position) {
-        if (position == IMAGE_ITEM_ADD) {//添加图片
-            showSelectDiaLog();
-        } else {//打开预览
-            Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
-            intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
-            intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
-            intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
-            startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
-            //添加图片返回
-            if (data != null && requestCode == REQUEST_CODE_SELECT) {
-                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                if (images != null) {
-                    selImageList.addAll(images);
-                    adapter.setImages(selImageList);
+//        if (resultCode == RESULT_OK && requestCode == PhotoFitSevent.REQUEST_CODE_TAKE_PHOTO) {
+//            getPhotoDir(mCurrentPhotoPath);
+//        }
+        L.e("fileName", "----------------------->" + fileName + "data" + data);
+        L.e("resultCode" + resultCode + "  requestCode " + requestCode);
+        switch (requestCode) {
+            case PhotoFitSevent.REQUEST_CODE_TAKE_PHOTO:
+                getPhotoDir(mCurrentPhotoPath);
+                break;
+            case PhotoFitSevent.SELECT_PIC_BY_PICK_PHOTO:
+                if (data == null) {
+                    return;
                 }
-            }
-        } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
-            //预览图片返回
-            if (data != null && requestCode == REQUEST_CODE_PREVIEW) {
-                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
-                if (images != null) {
-                    selImageList.clear();
-                    selImageList.addAll(images);
-                    adapter.setImages(selImageList);
+                if (Build.VERSION.SDK_INT >= 19) {
+                    //4.4 及以上系统使用这个方法处理图片
+                    getPhotoDir(PhotoFitSevent.handleImageOnKitKat(data, this));
+                    return;
                 }
-            }
+                //4.4 及以下系统使用这个方法处理图片
+                getPhotoDir(PhotoFitSevent.handleImageBeforeKitKat(data, this));
+                break;
         }
     }
 

@@ -299,4 +299,9 @@ public class WebUrlUtil {
      * 取消订单/确认收货
      */
     public static final String POST_EDIT_STATUS = "order/edit_status";
+
+    /**
+     * 订单评论列表
+     */
+    public static final String POST_ORDER_COMMENT_LIST = "order_comment_list";
 }

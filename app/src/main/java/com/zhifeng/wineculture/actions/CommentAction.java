@@ -9,6 +9,7 @@ import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.modules.GeneralDto;
+import com.zhifeng.wineculture.modules.OrderCommentListDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.CommentView;
 import com.zhifeng.wineculture.utils.config.MyApp;
@@ -25,8 +26,12 @@ public class CommentAction extends BaseAction<CommentView> {
         attachView(commentView);
     }
 
+    public void getOrderCommentList(String order_id) {
+        post(WebUrlUtil.POST_ORDER_COMMENT_LIST, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id), WebUrlUtil.POST_ORDER_COMMENT_LIST)));
+    }
+
     public void postComment(String comments) {
-        post(WebUrlUtil.POST_ORDER_COMMENT, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"comments",comments), WebUrlUtil.POST_ORDER_COMMENT)));
+        post(WebUrlUtil.POST_ORDER_COMMENT, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "comments", comments), WebUrlUtil.POST_ORDER_COMMENT)));
     }
 
     /**
@@ -42,18 +47,33 @@ public class CommentAction extends BaseAction<CommentView> {
                 .all(integer -> (integer == 200)).subscribe(aBoolean -> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
-            if (WebUrlUtil.POST_ORDER_COMMENT.equals(action.getIdentifying())) {
-                if (aBoolean) {
-                    GeneralDto myCommentListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
-                    }.getType());
-                    if (myCommentListDto.getStatus() == 200) {
-                        view.postCommentSuccess(myCommentListDto);
+            switch (action.getIdentifying()) {
+                case WebUrlUtil.POST_ORDER_COMMENT_LIST:
+                    if (aBoolean) {
+                        OrderCommentListDto orderCommentListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<OrderCommentListDto>() {
+                        }.getType());
+                        if (orderCommentListDto.getStatus() == 200) {
+                            view.getOrderCommentListSuccess(orderCommentListDto);
+                            return;
+                        }
+                        view.onError(orderCommentListDto.getMsg(), orderCommentListDto.getStatus());
                         return;
                     }
-                    view.onError(myCommentListDto.getMsg(), myCommentListDto.getStatus());
-                    return;
-                }
-                view.onError(msg, action.getErrorType());
+                    view.onError(msg, action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_ORDER_COMMENT:
+                    if (aBoolean) {
+                        GeneralDto myCommentListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                        }.getType());
+                        if (myCommentListDto.getStatus() == 200) {
+                            view.postCommentSuccess(myCommentListDto);
+                            return;
+                        }
+                        view.postCommentFail(myCommentListDto.getMsg(), myCommentListDto.getStatus());
+                        return;
+                    }
+                    view.postCommentFail(msg, action.getErrorType());
+                    break;
             }
         });
     }

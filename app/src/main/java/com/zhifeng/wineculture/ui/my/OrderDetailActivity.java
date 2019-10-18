@@ -82,6 +82,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     private String order_id;
     private int status;
     private final int REQUEST_CODE = 0;
+    private int goods_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +137,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     public void getOrderDetailSuccess(OrderDetailDto orderDetailDto) {
         //1待付款 2待发货 3待收货 4待评价 5已取消 6待退款 7已退款 8拒绝退款
         status = orderDetailDto.getData().getStatus();
+        goods_id = orderDetailDto.getData().getGoods_res().get(0).getGoods_id();
         int drawableRes = 0;
         int stringRes = 0;
         btnLeft.setVisibility(View.GONE);
@@ -251,7 +253,10 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
 
     @Override
     public void comment() {
-
+        //todo 评价
+        Intent intent = new Intent(mContext, CommentActivity.class);
+        intent.putExtra("order_id", order_id);
+        startActivity(intent);
     }
 
     @Override

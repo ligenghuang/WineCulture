@@ -102,8 +102,8 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
             btnRight.setText(R.string.myorder_comment);
             btnRight.setVisibility(View.VISIBLE);
             btnRight.setOnClickListener(this);
-            OrderListDto.DataBean.GoodsBean goodsBean = model.getGoods().get(0);
-            Object[] dataRight = {COMMENT, model.getOrder_id(), goodsBean.getGoods_id(), goodsBean.getSku_id()};
+            int order_id = model.getOrder_id();
+            Object[] dataRight = {COMMENT, order_id};
             btnRight.setTag(dataRight);
         } else if (status == 5) {
             state = R.string.myorder_hadCancel;
@@ -167,9 +167,7 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
                 } else if (type == LOOK_UP_LOGISTICS) {
                     onButtonClickListener.lookUpLogistics(order_id);
                 } else if (type == COMMENT) {
-                    int goods_id = (int) data[2];
-                    int sku_id = (int) data[3];
-                    onButtonClickListener.comment(order_id, goods_id, sku_id);
+                    onButtonClickListener.comment(order_id);
                 }
             }
         }
@@ -203,6 +201,6 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
         /**
          * 评价
          */
-        void comment(int order_id, int goods_id, int sku_id);
+        void comment(int order_id);
     }
 }

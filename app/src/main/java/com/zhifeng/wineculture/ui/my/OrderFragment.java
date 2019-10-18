@@ -149,12 +149,10 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             }
 
             @Override
-            public void comment(int order_id, int goods_id, int sku_id) {
+            public void comment(int order_id) {
                 //todo 评价
                 Intent intent = new Intent(mContext, CommentActivity.class);
-                intent.putExtra("order_id", order_id);
-                intent.putExtra("goods_id", goods_id);
-                intent.putExtra("sku_id", sku_id);
+                intent.putExtra("order_id", String.valueOf(order_id));
                 startActivity(intent);
             }
         });
