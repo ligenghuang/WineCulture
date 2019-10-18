@@ -104,6 +104,11 @@
     <string name="booking_goods_tab_2">联系电话</string>
     <string name="booking_goods_tab_3">联系地址</string>
     <string name="booking_goods_tab_4">我要预约领商品</string>
+    <string name="booking_goods_tab_5">提交</string>
+    <string name="booking_goods_tab_6">联系人不能为空</string>
+    <string name="booking_goods_tab_7">联系电话不能为空</string>
+    <string name="booking_goods_tab_8">联系地址不能为空</string>
+    <string name="booking_goods_tab_9">联系电话格式不正确</string>
 
     <string name="myorder_title">订单详情</string>
     <string name="myorder_obligation">待付款</string>
@@ -282,6 +287,10 @@
     <string name="transfer_tab_7">余额转账</string>
     <string name="transfer_tab_8">%1$s&#160;&#160;&#160;&#160;ID：%2$s</string>
     <string name="transfer_tab_9">转账金额必须大于0</string>
+
+    <string name="logistics_tab_1">点击查看更多物流详情</string>
+    <string name="logistics_tab_2">查看物流</string>
+    <string name="logistics_tab_3">运单号：%0$s</string>
 
     <string name="refund_title">退货申请</string>
     <string name="refund_refundReason">请说明退货原因</string>

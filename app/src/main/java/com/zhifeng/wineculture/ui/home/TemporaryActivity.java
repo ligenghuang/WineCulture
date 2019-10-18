@@ -322,6 +322,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         tvTotalNum.setText(ResUtil.getFormatString(R.string.temporary_tab_16, String.valueOf(num)));
         tvTotalPrice.setText(ResUtil.getFormatString(R.string.temporary_tab_14, String.valueOf(totalPrice)));
         pwd = dataBean.getPwd();
+        MySp.setPwd(mContext,pwd);
     }
 
     @Override
@@ -416,6 +417,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         }else if (resultCode == 201) {
             if (data != null) {
                 pwd = data.getIntExtra("pwd", 0);
+                MySp.setPwd(mContext,pwd);
             }
         }
     }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.config.GlideUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.MyCommentsListAction;
@@ -18,6 +19,7 @@ import com.zhifeng.wineculture.adapters.MyCommentsAdapter;
 import com.zhifeng.wineculture.modules.MyCommentListDto;
 import com.zhifeng.wineculture.ui.impl.MyCommentsListView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -69,6 +71,10 @@ public class MyCommentsListActivity extends UserBaseActivity<MyCommentsListActio
         rv.setAdapter(adapter);
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.autoRefresh();
+
+        tvUserName.setText(MySp.getName(mContext));
+        GlideUtil.setImageCircle(mContext,MySp.getAvatar(mContext),iv,R.drawable.icon_avatar);
+
         loadView();
     }
 

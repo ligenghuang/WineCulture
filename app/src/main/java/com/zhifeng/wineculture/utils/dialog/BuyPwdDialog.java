@@ -256,7 +256,7 @@ public class BuyPwdDialog extends Dialog implements DialogInterface.OnDismissLis
     void Onclick(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
-               onFinishInput.close();
+               dismiss();
                 break;
         }
     }

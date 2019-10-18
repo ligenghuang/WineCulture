@@ -18,6 +18,8 @@ import com.zhifeng.wineculture.actions.OrderListAction;
 import com.zhifeng.wineculture.adapters.ServiceAdapter;
 import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderListDto;
+import com.zhifeng.wineculture.modules.PayOrderDto;
+import com.zhifeng.wineculture.modules.post.SubmitOrderPost;
 import com.zhifeng.wineculture.ui.impl.OrderListView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.view.VerticalItemDecoration;
@@ -117,6 +119,21 @@ public class ServiceActivity extends UserBaseActivity<OrderListAction> implement
 
     @Override
     public void cancelOrderOrConfirmToReceiveSuccess(GeneralDto orderList) {
+
+    }
+
+    @Override
+    public void payOrder(SubmitOrderPost submitOrderPost) {
+
+    }
+
+    @Override
+    public void payOrderSuccess(PayOrderDto submitOrderDto) {
+
+    }
+
+    @Override
+    public void payOrderError(String msg) {
 
     }
 

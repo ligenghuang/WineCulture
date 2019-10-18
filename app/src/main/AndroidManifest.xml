@@ -18,6 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
+        <activity android:name=".ui.my.LogisticsActivity"></activity>
+        <activity android:name=".ui.home.AdvertisingActivity"/>
         <activity android:name=".ui.my.RefundActivity" />
         <activity android:name=".ui.my.BindBankCardActivity" />
         <activity android:name=".ui.my.BindAliPayAccountActivity" />

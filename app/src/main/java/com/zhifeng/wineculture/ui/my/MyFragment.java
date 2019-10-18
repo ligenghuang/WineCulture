@@ -129,6 +129,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     public void updataAvatarSuccess(String url) {
         loadDiss();
         GlideUtil.setImageCircle(mContext, url, iv, R.drawable.icon_avatar);
+        MySp.setAvatar(mContext,url);
         images = new ArrayList<>();
         selImageList = new ArrayList<>();
     }
@@ -159,6 +160,8 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
         tvName.setText(dataBean.getRealname());
         tvId.setText(String.valueOf(dataBean.getId()));
         MySp.setMobile(mContext, dataBean.getMobile());
+        MySp.setName(mContext,dataBean.getRealname());
+        MySp.setAvatar(mContext,dataBean.getAvatar());
         String mobile = dataBean.getMobile();
         mobile = mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
         tvMobile.setText(mobile);
@@ -276,7 +279,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
                 jumpActivityNotFinish(mContext, AboutWineCultureActivity.class);
                 break;
             case R.id.iv_booking_goods:
-                //todo 我要预约商品
+                //todo 我要预约领商品
                 jumpActivityNotFinish(mContext, BookingGoodsActivity.class);
                 break;
             case R.id.iv_setting:
