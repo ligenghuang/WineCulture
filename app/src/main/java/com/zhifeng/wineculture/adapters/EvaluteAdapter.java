@@ -50,7 +50,8 @@ public class EvaluteAdapter extends BaseQuickAdapter<OrderCommentListDto.DataBea
     protected void convert(BaseViewHolder viewHolder, OrderCommentListDto.DataBean item) {
         picFlow = (FlowLayout) viewHolder.getView(R.id.pic_flow);
         ImageView imageIv = (ImageView) viewHolder.getView(R.id.ivGoods);
-        TextView textSizeTv = (TextView) viewHolder.getView(R.id.tvGoodsName);
+        TextView tvGoodsName = (TextView) viewHolder.getView(R.id.tvGoodsName);
+        tvGoodsName.setText(item.getGoods_name());
         EditText noteTv = (EditText) viewHolder.getView(R.id.etContent);
         GlideApp.with(mContext).load(item.getImg())
                 .centerCrop().placeholder(R.drawable.icon_goods_img).error(R.drawable.icon_goods_img)

@@ -4,8 +4,6 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -26,10 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
-import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.CommentAction;
-import com.zhifeng.wineculture.adapters.CommentAdapter;
 import com.zhifeng.wineculture.adapters.EvaluteAdapter;
 import com.zhifeng.wineculture.modules.CommentDto;
 import com.zhifeng.wineculture.modules.GeneralDto;
@@ -306,6 +302,7 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
 
     @Override
     public void postCommentFail(String msg, int code) {
+        loadDiss();
         showNormalToast(msg);
     }
 

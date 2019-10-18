@@ -8,6 +8,7 @@ import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.modules.MyCommentListDto;
+
 /**
  * @ClassName:
  * @Description: 我的-我的评论
@@ -26,22 +27,25 @@ public class MyCommentsAdapter extends BaseRecyclerAdapter<MyCommentListDto.Data
     @Override
     protected void onBindViewHolder(SmartViewHolder holder, MyCommentListDto.DataBean model, int position) {
         holder.setIsRecyclable(false);
-        ImageView iv=holder.itemView.findViewById(R.id.iv_item_goods);
-        GlideUtil.setImage(context,model.getImg(),iv,R.drawable.icon_goods_img);
+        ImageView iv = holder.itemView.findViewById(R.id.iv_item_goods);
+        GlideUtil.setImage(context, model.getImg(), iv, R.drawable.icon_goods_img);
         holder.text(R.id.tvGoodsName, model.getGoods_name());
-        holder.text(R.id.tvGoodsPrice, ResUtil.getFormatString(R.string.mycomment_goodPrice,model.getGoods_price()));
-        holder.text(R.id.tvGoodsNum, ResUtil.getFormatString(R.string.mycomment_goodNum,model.getGoods_num()));
-        holder.text(R.id.tvTotalGoodsNum, ResUtil.getFormatString(R.string.mycomment_totalGoodNum,model.getGoods_num()));
-        holder.text(R.id.tvTotalGoodsPrice, ResUtil.getFormatString(R.string.mycomment_totalGoodPrice,model.getOrder_amount()));
+        holder.text(R.id.tvGoodsPrice, ResUtil.getFormatString(R.string.mycomment_goodPrice, model.getGoods_price()));
+        holder.text(R.id.tvGoodsNum, ResUtil.getFormatString(R.string.mycomment_goodNum, model.getGoods_num()));
+        holder.text(R.id.tvTotalGoodsNum, ResUtil.getFormatString(R.string.mycomment_totalGoodNum, model.getGoods_num()));
+        holder.text(R.id.tvTotalGoodsPrice, ResUtil.getFormatString(R.string.mycomment_totalGoodPrice, model.getOrder_amount()));
         Button btnComment = holder.itemView.findViewById(R.id.btnComment);
-        btnComment.setOnClickListener(v -> {
-            if (onButtonClickListener != null) {
-                onButtonClickListener.onClick(model.getOrder_id());
-            }
-        });
+        btnComment.setText(model.getComment() == 0 ? R.string.mycomment_comment : R.string.mycomment_hadComment);
+        if (model.getComment() == 0) {
+            btnComment.setOnClickListener(v -> {
+                if (onButtonClickListener != null) {
+                    onButtonClickListener.onClick(model.getOrder_id());
+                }
+            });
+        }
     }
 
-    public void setOnButtonClickListener(OnButtonClickListener onButtonClickListener){
+    public void setOnButtonClickListener(OnButtonClickListener onButtonClickListener) {
         this.onButtonClickListener = onButtonClickListener;
     }
 

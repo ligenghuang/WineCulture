@@ -8,7 +8,7 @@ public class MyCommentListDto {
     /**
      * status : 200
      * msg : 成功！
-     * data : [{"order_id":8,"goods_id":74,"sku_id":74,"goods_name":"长白山人参","goods_num":1,"goods_price":"500.00","spec_key_name":"规格:无","img":"http://jiuwenhua.cn/public/images/goods/20190716156326939839222.png","order_amount":"500.00"},{"order_id":9,"goods_id":74,"sku_id":74,"goods_name":"长白山人参","goods_num":1,"goods_price":"500.00","spec_key_name":"规格:无","img":"http://jiuwenhua.cn/public/images/goods/20190716156326939839222.png","order_amount":"500.00"}]
+     * data : [{"order_id":8,"goods_id":74,"sku_id":74,"goods_name":"长白山人参","goods_num":1,"goods_price":"500.00","spec_key_name":"规格:无","img":"http://jiuwenhua.cn/public/images/goods/20190716156326939839222.png","order_amount":"500.00","comment":"0"},{"order_id":9,"goods_id":74,"sku_id":74,"goods_name":"长白山人参","goods_num":1,"goods_price":"500.00","spec_key_name":"规格:无","img":"http://jiuwenhua.cn/public/images/goods/20190716156326939839222.png","order_amount":"500.00","comment":"1"}]
      */
 
     private int status;
@@ -53,6 +53,7 @@ public class MyCommentListDto {
          * spec_key_name : 规格:无
          * img : http://jiuwenhua.cn/public/images/goods/20190716156326939839222.png
          * order_amount : 500.00
+         * comment : 0
          */
 
         private int order_id;
@@ -64,6 +65,7 @@ public class MyCommentListDto {
         private String spec_key_name;
         private String img;
         private String order_amount;
+        private int comment;
 
         public int getOrder_id() {
             return order_id;
@@ -135,6 +137,14 @@ public class MyCommentListDto {
 
         public void setOrder_amount(String order_amount) {
             this.order_amount = order_amount == null ? "" : order_amount;
+        }
+
+        public int getComment() {
+            return comment;
+        }
+
+        public void setComment(int comment) {
+            this.comment = comment;
         }
     }
 }
