@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.DensityUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.ServiceAction;
 import com.zhifeng.wineculture.adapters.ServiceAdapter;
@@ -74,6 +77,17 @@ public class ServiceActivity extends UserBaseActivity<ServiceAction> implements 
 
     @Override
     protected void loadView() {
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getOrderList();
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+            }
+        });
         adapter.setOnRefundButtonClickListener(order_id -> {
             Intent intent = new Intent(mContext, RefundActivity.class);
             intent.putExtra("order_id", String.valueOf(order_id));
