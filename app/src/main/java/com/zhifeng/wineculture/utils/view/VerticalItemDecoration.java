@@ -15,11 +15,9 @@ public class VerticalItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
                                RecyclerView.State state) {
-        outRect.left=padding/4;
         if (parent.getChildAdapterPosition(view)!=0){
             outRect.top=padding;
         }
-        outRect.right=padding/4;
         outRect.bottom=padding;
     }
 }

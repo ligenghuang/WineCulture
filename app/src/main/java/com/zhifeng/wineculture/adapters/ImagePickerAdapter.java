@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.zhifeng.wineculture.R;
-import com.zhifeng.wineculture.ui.my.CommentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +97,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
             ImageItem item = mData.get(position);
             if (isAdded && position == getItemCount() - 1) {
                 iv_img.setImageResource(R.drawable.addpic);
-                clickPosition = CommentActivity.IMAGE_ITEM_ADD;
+                clickPosition = -1;
             } else {
                 ImagePicker.getInstance().getImageLoader().displayImage((Activity) mContext, item.path, iv_img, 0, 0);
                 clickPosition = position;

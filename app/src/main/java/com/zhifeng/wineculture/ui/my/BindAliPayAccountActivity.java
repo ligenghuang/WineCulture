@@ -56,6 +56,13 @@ public class BindAliPayAccountActivity extends UserBaseActivity<BindAliPayAccoun
         super.init();
         mContext = this;
         mActicity = this;
+        String aliPayName = getIntent().getStringExtra("aliPayName");
+        String aliPay = getIntent().getStringExtra("aliPay");
+        etUserName.setText(aliPayName);
+        etAliPay.setText(aliPay);
+        if (TextUtils.isEmpty(aliPayName)) {
+            etUserName.requestFocus();
+        }
     }
 
     /**

@@ -35,12 +35,15 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
         post(WebUrlUtil.POST_ORDER_DETAIL, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id), WebUrlUtil.POST_ORDER_DETAIL)));
     }
 
-    public void cancel() {
-
+    public void cancelOrderOrConfirmToReceive(String order_id, int status) {
+        post(WebUrlUtil.POST_EDIT_STATUS, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id, "status", status), WebUrlUtil.POST_EDIT_STATUS)));
     }
 
-    public void pay() {
-
+    public void pay(String order_id, int pay_type, String pwd) {
+        post(WebUrlUtil.POST_PAY_ORDER, false, service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),
+                        "order_id", order_id, "pay_type", pay_type, "pwd", pwd), WebUrlUtil.POST_PAY_ORDER)
+        ));
     }
 
     /**
@@ -56,7 +59,7 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
                 .all(integer -> (integer == 200)).subscribe(aBoolean -> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
-            switch (action.getIdentifying()){
+            switch (action.getIdentifying()) {
                 case WebUrlUtil.POST_ORDER_DETAIL:
                     if (aBoolean) {
                         OrderDetailDto orderDetailDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<OrderDetailDto>() {

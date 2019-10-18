@@ -114,7 +114,7 @@
     <string name="myorder_obligation">待付款</string>
     <string name="myorder_toBeShipped">待发货</string>
     <string name="myorder_toBeReceived">待收货</string>
-    <string name="myorder_toBeComment">交易成功（待评价）</string>
+    <string name="myorder_toBeComment">待评价</string>
     <string name="myorder_hadCancel">已取消</string>
     <string name="myorder_refund">退款</string>
     <string name="myorder_toBeRefund">待退款</string>

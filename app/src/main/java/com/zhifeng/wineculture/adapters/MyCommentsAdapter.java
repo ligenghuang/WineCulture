@@ -1,8 +1,8 @@
 package com.zhifeng.wineculture.adapters;
 
 import android.content.Context;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.ResUtil;
@@ -33,10 +33,10 @@ public class MyCommentsAdapter extends BaseRecyclerAdapter<MyCommentListDto.Data
         holder.text(R.id.tvGoodsNum, ResUtil.getFormatString(R.string.mycomment_goodNum,model.getGoods_num()));
         holder.text(R.id.tvTotalGoodsNum, ResUtil.getFormatString(R.string.mycomment_totalGoodNum,model.getGoods_num()));
         holder.text(R.id.tvTotalGoodsPrice, ResUtil.getFormatString(R.string.mycomment_totalGoodPrice,model.getOrder_amount()));
-        TextView tvComment = holder.itemView.findViewById(R.id.tvComment);
-        tvComment.setOnClickListener(v -> {
+        Button btnComment = holder.itemView.findViewById(R.id.btnComment);
+        btnComment.setOnClickListener(v -> {
             if (onButtonClickListener != null) {
-                onButtonClickListener.onClick(model.getGoods_id());
+                onButtonClickListener.onClick(model.getOrder_id());
             }
         });
     }
@@ -46,6 +46,6 @@ public class MyCommentsAdapter extends BaseRecyclerAdapter<MyCommentListDto.Data
     }
 
     public interface OnButtonClickListener {
-        void onClick(int goods_id);
+        void onClick(int order_id);
     }
 }

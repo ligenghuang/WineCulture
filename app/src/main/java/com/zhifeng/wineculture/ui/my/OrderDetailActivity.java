@@ -2,6 +2,7 @@ package com.zhifeng.wineculture.ui.my;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,8 @@ import com.zhifeng.wineculture.modules.OrderDetailDto;
 import com.zhifeng.wineculture.ui.impl.OrderDetailView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.data.DynamicTimeFormat;
+import com.zhifeng.wineculture.utils.data.MySp;
+import com.zhifeng.wineculture.utils.dialog.BuyPwdDialog;
 
 import java.lang.ref.WeakReference;
 
@@ -82,7 +85,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     private String order_id;
     private int status;
     private final int REQUEST_CODE = 0;
-    private int goods_id;
+    BuyPwdDialog bugPwdDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +140,6 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     public void getOrderDetailSuccess(OrderDetailDto orderDetailDto) {
         //1待付款 2待发货 3待收货 4待评价 5已取消 6待退款 7已退款 8拒绝退款
         status = orderDetailDto.getData().getStatus();
-        goods_id = orderDetailDto.getData().getGoods_res().get(0).getGoods_id();
         int drawableRes = 0;
         int stringRes = 0;
         btnLeft.setVisibility(View.GONE);
@@ -148,6 +150,14 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
                 stringRes = R.string.orderdetail_waitToPay;
                 btnLeft.setText(R.string.orderdetail_cancel);
                 btnRight.setText(R.string.orderdetail_payNow2);
+                OrderDetailDto.DataBean dataBean = orderDetailDto.getData();
+                double totalPrice = 0;
+                for (OrderDetailDto.DataBean.GoodsResBean goodsResBean : dataBean.getGoods_res()) {
+                    totalPrice += Double.parseDouble(goodsResBean.getGoods_price());
+                }
+                int pay_type = dataBean.getPay_type().getPay_type();
+                Object[] data = {totalPrice, pay_type};
+                btnRight.setTag(data);
                 btnLeft.setVisibility(View.VISIBLE);
                 btnRight.setVisibility(View.VISIBLE);
                 break;
@@ -170,9 +180,9 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
                 int comment = orderDetailDto.getData().getComment();
                 drawableRes = comment == 0 ? R.drawable.icon_wait_evaluation_bg : R.drawable.icon_sign_in_bg;
                 stringRes = comment == 0 ? R.string.orderdetail_tobecomment : R.string.orderdetail_finish;
-//                btnLeft.setText(R.string.myorder_comment);
                 btnRight.setVisibility(View.VISIBLE);
-                btnRight.setText(comment == 0 ? R.string.myorder_comment : stringRes);
+                btnRight.setTag(comment);
+                btnRight.setText(comment == 0 ? R.string.myorder_comment : R.string.orderdetail_finish);
                 break;
         }
         if (drawableRes != 0) {
@@ -205,50 +215,89 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     }
 
     @Override
-    public void cancelOrder() {
-
+    public void cancelOrderOrConfirmToReceive(int status) {
+        //todo 取消订单/确认收货
+        baseAction.cancelOrderOrConfirmToReceive(order_id, status);
     }
 
     @Override
-    public void cancelOrderSuccess(GeneralDto generalDto) {
-
+    public void cancelOrderOrConfirmToReceiveSuccess(GeneralDto generalDto) {
+        showNormalToast(generalDto.getMsg());
+        finish();
     }
 
     @Override
-    public void cancelOrderFail(int code, String msg) {
-
+    public void cancelOrderOrConfirmToReceiveFail(int code, String msg) {
+        showNormalToast(msg);
     }
 
     @Override
     public void pay() {
+        //todo 立即支付
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            Object[] data = (Object[]) btnRight.getTag();
+            double totalPrice = (double) data[0];
+            int pay_type = (int) data[1];
+            //余额支付
+            if (pay_type == 1) {
+                bugPwdDialog = new BuyPwdDialog(mContext, R.style.MY_AlertDialog, totalPrice, "余额支付");
+                bugPwdDialog.setOnFinishInput(new BuyPwdDialog.OnFinishInput() {
+                    @Override
+                    public void inputFinish(String password) {
+                        loadDialog();
+                        //支付订单
+                        baseAction.pay(order_id, pay_type, password);
+                    }
 
+                    @Override
+                    public void close() {
+
+                    }
+                });
+                bugPwdDialog.show();
+            } else {
+                showToast(ResUtil.getString(R.string.goods_detail_tab_30));
+                new Handler().postDelayed(() -> {
+                    Intent intent = new Intent(mContext, ForgetPwdActivity.class);
+                    intent.putExtra("phone", MySp.getMobile(mContext));
+                    intent.putExtra("type", 1);
+                    intent.putExtra("isOrder", true);
+                    startActivity(intent);
+                }, 2000);
+            }
+        }
     }
 
     @Override
     public void paySuccess(GeneralDto generalDto) {
-
+        loadDiss();
+        showNormalToast(generalDto.getMsg());
+        if (bugPwdDialog != null) {
+            bugPwdDialog.dismiss();
+        }
+        finish();
     }
 
     @Override
     public void payFail(int code, String msg) {
-
+        loadDiss();
+        showNormalToast(msg);
     }
 
     @Override
     public void refund() {
+        //todo 退货
         Intent intent = new Intent(mContext, RefundActivity.class);
         intent.putExtra("order_id", order_id);
         startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
-    public void confirmToReceive() {
-
-    }
-
-    @Override
     public void lookUpLogistics() {
-
+        //todo 查看物流
+        Intent logistics = new Intent(mContext, LogisticsActivity.class);
+        logistics.putExtra("orderId", Integer.parseInt(order_id));
+        startActivity(logistics);
     }
 
     @Override
@@ -256,7 +305,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         //todo 评价
         Intent intent = new Intent(mContext, CommentActivity.class);
         intent.putExtra("order_id", order_id);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
@@ -279,11 +328,11 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
                 switch (status) {
                     case 1:
                         //todo 取消订单
-                        cancelOrder();
+                        cancelOrderOrConfirmToReceive(1);
                         break;
                     case 3:
                         //todo 确认收货
-                        confirmToReceive();
+                        cancelOrderOrConfirmToReceive(3);
                         break;
                 }
                 break;
@@ -304,7 +353,11 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
                         break;
                     case 4:
                         //todo 评价
-                        comment();
+                        //0 未评论 1已评论
+                        int comment = (int) btnRight.getTag();
+                        if (comment == 0) {
+                            comment();
+                        }
                         break;
                 }
                 break;

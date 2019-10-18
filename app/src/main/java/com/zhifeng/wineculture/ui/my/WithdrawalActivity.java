@@ -88,9 +88,15 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
     private double rate;
 
     /**
+     * 支付宝名称
+     */
+    private String aliPayName;
+    /**
      * 支付宝账号
      */
     private String alipay;
+
+    private String bankName;
 
     /**
      * 银行卡
@@ -228,7 +234,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
     @Override
     public void getAliPayAccountSuccess(AliPayAccountDto aliPayAccountDto) {
         AliPayAccountDto.DataBean bean = aliPayAccountDto.getData().get(0);
-        String aliPayName = bean.getAlipay_name();
+        aliPayName = bean.getAlipay_name();
         alipay = bean.getAlipay();
         if (!TextUtils.isEmpty(aliPayName) && !TextUtils.isEmpty(alipay)) {
             aliPayAccount = aliPayName + "(" + alipay.replaceAll(ValidateUtils.isPhone2(alipay) ? "(\\d{3})(\\d{4})(\\d{4})"
@@ -254,7 +260,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
         List<BankCardDto.DataBean> beans = bankCardDto.getData();
         if (beans.size() > 0) {
             BankCardDto.DataBean bean = beans.get(0);
-            String bankName = bean.getBank_name();
+            bankName = bean.getBank_name();
             bankCard = bean.getBank_card();
             bankAccount = bankName + "(" + bankCard.replaceAll("(\\d{15})(\\d{4})", "***************$2") + ")";
             if (withdrawalType == 4) {
@@ -391,12 +397,18 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
             }
             case R.id.tv_withdrawal_account:
                 //todo 账号
-                if (TextUtils.isEmpty(alipay) && withdrawalType == 3) {
-                    startActivityForResult(new Intent(mContext, BindAliPayAccountActivity.class), REQUEST_CODE);
+                if (withdrawalType == 3) {
+                    Intent intent = new Intent(mContext, BindAliPayAccountActivity.class);
+                    intent.putExtra("aliPayName", aliPayName);
+                    intent.putExtra("aliPay", alipay);
+                    startActivityForResult(intent, REQUEST_CODE);
                     return;
                 }
-                if (TextUtils.isEmpty(bankCard) && withdrawalType == 4) {
-                    startActivityForResult(new Intent(mContext, BindBankCardActivity.class), REQUEST_CODE);
+                if (withdrawalType == 4) {
+                    Intent intent = new Intent(mContext, BindBankCardActivity.class);
+                    intent.putExtra("bankName", bankName);
+                    intent.putExtra("bankCard", bankCard);
+                    startActivityForResult(intent, REQUEST_CODE);
                 }
                 break;
             case R.id.tv_withdrawal_money_all:

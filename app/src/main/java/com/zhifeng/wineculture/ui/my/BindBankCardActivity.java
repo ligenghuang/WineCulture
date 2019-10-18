@@ -57,6 +57,13 @@ public class BindBankCardActivity extends UserBaseActivity<BindBankCardAction> i
         super.init();
         mContext = this;
         mActicity = this;
+        String bankName = getIntent().getStringExtra("bankName");
+        String bankCard = getIntent().getStringExtra("bankCard");
+        etBankName.setText(bankName);
+        etBankCard.setText(bankCard);
+        if (TextUtils.isEmpty(bankName)) {
+            etBankName.requestFocus();
+        }
     }
 
     /**

@@ -18,11 +18,11 @@ public interface OrderDetailView extends BaseView {
     /**
      * 取消订单
      */
-    void cancelOrder();
+    void cancelOrderOrConfirmToReceive(int status);
 
-    void cancelOrderSuccess(GeneralDto generalDto);
+    void cancelOrderOrConfirmToReceiveSuccess(GeneralDto generalDto);
 
-    void cancelOrderFail(int code, String msg);
+    void cancelOrderOrConfirmToReceiveFail(int code, String msg);
 
     /**
      * 立即支付
@@ -37,11 +37,6 @@ public interface OrderDetailView extends BaseView {
      * 退货
      */
     void refund();
-
-    /**
-     * 确认收货
-     */
-    void confirmToReceive();
 
     /**
      * 查看物流

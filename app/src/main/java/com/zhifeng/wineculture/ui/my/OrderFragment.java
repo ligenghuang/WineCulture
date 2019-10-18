@@ -34,6 +34,7 @@ import com.zhifeng.wineculture.utils.data.MySp;
 import com.zhifeng.wineculture.utils.dialog.BuyPwdDialog;
 import com.zhifeng.wineculture.utils.view.VerticalItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,6 +50,7 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
     private boolean isRefresh = true;
     private boolean isMore = true;
     private OrderAdapter adapter;
+    private BuyPwdDialog bugPwdDialog;
 
     public OrderFragment(int position) {
         this.position = position;
@@ -71,7 +73,7 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
-        if (isVisible && position == ((MyOrderActivity) mActivity).currentPosition) {
+        if (isVisible) {
             rv.setVisibility(View.GONE);
             refreshLayout.autoRefresh();
         }
@@ -95,16 +97,21 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                page = 1;
-                isRefresh = true;
-                getOrderList();
+                if (position == ((MyOrderActivity) mActivity).currentPosition) {
+                    page = 1;
+                    isRefresh = true;
+                    getOrderList();
+                }
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                isRefresh = false;
-                page++;
-                getOrderList();
+                if (position == ((MyOrderActivity) mActivity).currentPosition) {
+                    isRefresh = false;
+                    page++;
+                    getOrderList();
+                }
+
             }
         });
         adapter.setOnItemClickListener((parent, view, position, id) -> {
@@ -140,17 +147,17 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
 
             public void payNow(int order_id, int pay_type, double totalPrice) {
                 //todo 立即付款
-                switch (pay_type){
+                switch (pay_type) {
                     case 1:
                         //余额支付
                         if (MySp.getPwd(mContext) == 1) {
-                            BuyPwdDialog bugPwdDialog = new BuyPwdDialog(mContext, R.style.MY_AlertDialog, totalPrice, "余额支付");
+                            bugPwdDialog = new BuyPwdDialog(mContext, R.style.MY_AlertDialog, totalPrice, "余额支付");
                             bugPwdDialog.setOnFinishInput(new BuyPwdDialog.OnFinishInput() {
                                 @Override
                                 public void inputFinish(String password) {
                                     //支付订单
                                     SubmitOrderPost post = new SubmitOrderPost();
-                                    post.setCart_id(order_id+"");
+                                    post.setCart_id(order_id + "");
                                     post.setPay_type(pay_type + "");
                                     post.setPwd(password);
                                     payOrder(post);
@@ -164,15 +171,12 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
                             bugPwdDialog.show();
                         } else {
                             showToast(ResUtil.getString(R.string.goods_detail_tab_30));
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent intent = new Intent(mContext, ForgetPwdActivity.class);
-                                    intent.putExtra("phone", MySp.getMobile(mContext));
-                                    intent.putExtra("type", 1);
-                                    intent.putExtra("isOrder", true);
-                                    startActivity(intent);
-                                }
+                            new Handler().postDelayed(() -> {
+                                Intent intent = new Intent(mContext, ForgetPwdActivity.class);
+                                intent.putExtra("phone", MySp.getMobile(mContext));
+                                intent.putExtra("type", 1);
+                                intent.putExtra("isOrder", true);
+                                startActivity(intent);
                             }, 2000);
                         }
                         break;
@@ -192,8 +196,8 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             @Override
             public void lookUpLogistics(int order_id) {
                 //todo 查看物流
-                Intent logistics = new Intent(mContext,LogisticsActivity.class);
-                logistics.putExtra("orderId",order_id);
+                Intent logistics = new Intent(mContext, LogisticsActivity.class);
+                logistics.putExtra("orderId", order_id);
                 startActivity(logistics);
             }
 
@@ -235,6 +239,7 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
                 adapter.loadMore(dataBeans);
             }
         } else {
+            adapter.refresh(new ArrayList<>());
             isMore = false;
             loadSwapTab();
         }
@@ -260,9 +265,12 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
      */
     @Override
     public void payOrderSuccess(PayOrderDto submitOrderDto) {
+        if (bugPwdDialog != null) {
+            bugPwdDialog.dismiss();
+        }
         loadDiss();
         showToast(ResUtil.getString(R.string.goods_detail_tab_29));
-       getOrderList();
+        refreshLayout.autoRefresh();
     }
 
     /**
@@ -280,7 +288,7 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
     @Override
     public void cancelOrderOrConfirmToReceiveSuccess(GeneralDto generalDto) {
         showToast(generalDto.getMsg());
-        getOrderList();
+        refreshLayout.autoRefresh();
     }
 
     /**

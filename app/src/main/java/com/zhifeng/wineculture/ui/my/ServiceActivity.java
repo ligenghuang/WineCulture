@@ -14,13 +14,10 @@ import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.DensityUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhifeng.wineculture.R;
-import com.zhifeng.wineculture.actions.OrderListAction;
+import com.zhifeng.wineculture.actions.ServiceAction;
 import com.zhifeng.wineculture.adapters.ServiceAdapter;
-import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderListDto;
-import com.zhifeng.wineculture.modules.PayOrderDto;
-import com.zhifeng.wineculture.modules.post.SubmitOrderPost;
-import com.zhifeng.wineculture.ui.impl.OrderListView;
+import com.zhifeng.wineculture.ui.impl.ServiceView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.view.VerticalItemDecoration;
 
@@ -34,7 +31,7 @@ import butterknife.BindView;
  * @Author: Administrator
  * @Date: 2019/9/28 18:07
  */
-public class ServiceActivity extends UserBaseActivity<OrderListAction> implements OrderListView {
+public class ServiceActivity extends UserBaseActivity<ServiceAction> implements ServiceView {
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
@@ -54,7 +51,6 @@ public class ServiceActivity extends UserBaseActivity<OrderListAction> implement
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         binding();
-        getOrderList();
     }
 
     @Override
@@ -102,8 +98,8 @@ public class ServiceActivity extends UserBaseActivity<OrderListAction> implement
     }
 
     @Override
-    protected OrderListAction initAction() {
-        return new OrderListAction(this, this);
+    protected ServiceAction initAction() {
+        return new ServiceAction(this, this);
     }
 
     @Override
@@ -115,26 +111,6 @@ public class ServiceActivity extends UserBaseActivity<OrderListAction> implement
     public void getOrderListSuccess(OrderListDto orderList) {
         refreshLayout.finishRefresh();
         adapter.refresh(orderList.getData());
-    }
-
-    @Override
-    public void cancelOrderOrConfirmToReceiveSuccess(GeneralDto orderList) {
-
-    }
-
-    @Override
-    public void payOrder(SubmitOrderPost submitOrderPost) {
-
-    }
-
-    @Override
-    public void payOrderSuccess(PayOrderDto submitOrderDto) {
-
-    }
-
-    @Override
-    public void payOrderError(String msg) {
-
     }
 
     @Override
