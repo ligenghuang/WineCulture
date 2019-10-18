@@ -45,6 +45,7 @@
     <string name="add_address_tab_15">请输入详细的收货地址</string>
     <string name="add_address_tab_16">选择地址</string>
     <string name="add_address_tab_17">请输入有效的手机号码</string>
+    <string name="add_address_tab_18">默认地址不可删除</string>
 
     <string name="member_center_tab_1">余额</string>
     <string name="member_center_tab_2">可使用</string>
@@ -78,6 +79,7 @@
     <string name="balance_withdrawal_tab_10">手续费：%0$s</string>
     <string name="balance_withdrawal_tab_11">提交提现</string>
     <string name="balance_withdrawal_tab_12">支付方式</string>
+    <string name="balance_withdrawal_tab_12_1">提现方式</string>
     <string name="balance_withdrawal_tab_13">确认支付</string>
     <string name="balance_withdrawal_tab_14">忘记密码？</string>
     <string name="balance_withdrawal_tab_15">余额不足，无法提现</string>

@@ -106,6 +106,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     int addressId = -1;
     BuyPwdDialog bugPwdDialog;
     int pwd;
+    int isVip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +132,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         mContext = this;
         mActicity = this;
         cartId = getIntent().getStringExtra("cartId");
+        isVip = getIntent().getIntExtra("isVip",0);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new GoodsResAdapter(mContext);
         rv.setAdapter(adapter);
@@ -269,9 +271,11 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(mContext, OrderDetailActivity.class);
-                intent.putExtra("order_id", submitOrderDto.getData().getOrder_id());
-                startActivity(intent);
+                if (isVip != 2){
+                    Intent intent = new Intent(mContext, OrderDetailActivity.class);
+                    intent.putExtra("order_id", submitOrderDto.getData().getOrder_id()+"");
+                    startActivity(intent);
+                }
                 finish();
             }
         }, 2000);

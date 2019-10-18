@@ -65,6 +65,8 @@
                         android:background="@color/transparent"
                         android:hint="@string/search_tab_2"
                         android:maxLines="1"
+                        android:imeOptions="actionSearch"
+                        android:singleLine="true"
                         android:textColor="@color/color_15"
                         android:textColorHint="@color/color_9"
                         android:textSize="@dimen/text_size12" />

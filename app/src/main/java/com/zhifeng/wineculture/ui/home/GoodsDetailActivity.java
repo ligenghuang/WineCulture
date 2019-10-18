@@ -161,6 +161,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
 
     boolean isBuy = false;
     int IsBuy = 2;
+    int isVip = 1;
 
     @Override
     public int intiLayout() {
@@ -262,6 +263,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         loadDiss();
         addFootPrint();
         dataBean = goodsDetailDto.getData();
+        isVip = dataBean.getIs_vip();
         tvGoodsOriginalPrice.setText("￥" + dataBean.getOriginal_price());//原价
         tvGoodsOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         tvGoodsPrice.setText("￥" + dataBean.getPrice());//价格
@@ -359,7 +361,10 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         L.e("lgh_goods","isBuy  = "+isBuy);
         if (isBuy){
             //todo 2019 10 10 订单页面
-            startActivity(TemporaryActivity.class, "cartId", String.valueOf(cartId));
+            Intent intent = new Intent(mContext,TemporaryActivity.class);
+            intent.putExtra("isVip",isVip);
+            intent.putExtra("cartId", String.valueOf(cartId));
+            startActivity(intent);
         }else {
             showNormalToast(ResUtil.getString(R.string.goods_detail_tab_33));
         }
@@ -809,9 +814,13 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 break;
             case R.id.tv_goods_add_cart:
                 //todo 加入购物车
-                isBuy = false;
-                IsBuy = 0;
-                showBottomSheetDialog(testData);
+                if (isVip ==2){
+                    showNormalToast(ResUtil.getString(R.string.goods_detail_tab_35));
+                }else {
+                    isBuy = false;
+                    IsBuy = 0;
+                    showBottomSheetDialog(testData);
+                }
                 break;
             case R.id.iv_to_up_top:
                 //todo 回到顶部

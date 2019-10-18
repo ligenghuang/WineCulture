@@ -208,7 +208,9 @@ public class CartSubmitOrdersActivity extends UserBaseActivity<CartSubmitOrdersA
         List<String> note = new ArrayList<>();
         for (int i = 0; i <list.size() ; i++) {
             L.e("lgh_note","note  = "+list.get(i).getNote());
-            note.add(list.get(i).getNote());
+          if (!TextUtils.isEmpty(list.get(i).getNote())){
+              note.add(list.get(i).getNote());
+          }
         }
         post.setUser_note(note);
         submitOrders(post);
@@ -298,7 +300,7 @@ public class CartSubmitOrdersActivity extends UserBaseActivity<CartSubmitOrdersA
             @Override
             public void run() {
                 Intent intent = new Intent(mContext, OrderDetailActivity.class);
-                intent.putExtra("order_id", submitOrderDto.getData().getOrder_id());
+                intent.putExtra("order_id", submitOrderDto.getData().getOrder_id()+"");
                 startActivity(intent);
                 finish();
             }

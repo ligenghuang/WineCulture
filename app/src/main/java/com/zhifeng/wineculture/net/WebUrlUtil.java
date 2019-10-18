@@ -318,5 +318,10 @@ public class WebUrlUtil {
     /**
      * 订单评论列表
      */
-    public static final String POST_ORDER_COMMENT_LIST = "order_comment_list";
+    public static final String POST_ORDER_COMMENT_LIST = "Order/order_comment_list";
+
+    /**
+     * 关于酒文化
+     */
+    public static final String POST_ABOUT = "index/about";
 }

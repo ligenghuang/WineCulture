@@ -239,7 +239,10 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
                 adapter.loadMore(dataBeans);
             }
         } else {
-            adapter.refresh(new ArrayList<>());
+            if (isRefresh) {
+                page = page - 1;
+                adapter.refresh(new ArrayList<>());
+            }
             isMore = false;
             loadSwapTab();
         }

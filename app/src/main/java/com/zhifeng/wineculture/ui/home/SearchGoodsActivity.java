@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,6 +19,8 @@ import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.enums.PopupPosition;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -27,10 +30,12 @@ import com.zhifeng.wineculture.adapters.BannerHome;
 import com.zhifeng.wineculture.adapters.SearchGoodsAdapter;
 import com.zhifeng.wineculture.adapters.SearchGoodsHistoryAdapter;
 import com.zhifeng.wineculture.modules.GeneralDto;
+import com.zhifeng.wineculture.modules.ScreenDto;
 import com.zhifeng.wineculture.modules.SearchGoodsDto;
 import com.zhifeng.wineculture.modules.SearchGoodsHistoryDto;
 import com.zhifeng.wineculture.ui.impl.SearchGoodsView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
+import com.zhifeng.wineculture.utils.popup.CustomDrawerPopupView;
 import com.zhifeng.wineculture.utils.view.FlowLayoutManager;
 import com.zhifeng.wineculture.utils.view.SpaceItemDecoration;
 
@@ -87,11 +92,14 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
     int price = 0;
     //升序 asc 降序desc
     String sort = "";
+    int shipping_price = 0;
+    int stock = 0;
+    int sales = 0;
     boolean isRefresh = true;
     boolean isMore = true;
 
     SearchGoodsAdapter searchGoodsAdapter;
-
+    List<ScreenDto> list = new ArrayList<>();
     @Override
     public int intiLayout() {
         return R.layout.activity_search_goods;
@@ -196,6 +204,12 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
                 searchGoods();
             }
         });
+        etSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                search();
+            }
+            return false;
+        });
     }
 
     /**
@@ -288,6 +302,11 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
         SearchGoodsDto.DataBeanX dataBean = searchGoodsDto.getData();
         if (isRefresh) {
             setAdBanner(dataBean.getBanners());
+            list = new ArrayList<>();
+            list.add(new ScreenDto("查看全部",false));
+            list.add(new ScreenDto("仅看包邮",false));
+            list.add(new ScreenDto("仅看有货",false));
+            list.add(new ScreenDto("促销商品",false));
         }
         SearchGoodsDto.DataBeanX.ListBean listBeans = dataBean.getList();
         List<SearchGoodsDto.DataBeanX.ListBean.DataBean> beans = listBeans.getData();
@@ -392,6 +411,20 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
                 break;
             case R.id.ll_search_screen:
                 //todo 筛选
+                new XPopup.Builder(mActicity)
+                        .popupPosition(PopupPosition.Right)//右边
+                        .hasStatusBarShadow(true) //启用状态栏阴影
+                        .atView(llSearch)
+                        .asCustom(new CustomDrawerPopupView(mActicity, list, new CustomDrawerPopupView.OnListClickListener() {
+                            @Override
+                            public void onClick(boolean t1, boolean t2, boolean t3, boolean t4) {
+                                shipping_price = t1?1:0;//仅看包邮
+                                stock = t1?1:0;//仅看有货
+                                sales = t1?1:0;//促销商品
+                                refreshLayout.autoRefresh();
+                            }
+                        }))
+                        .show();
                 break;
         }
     }

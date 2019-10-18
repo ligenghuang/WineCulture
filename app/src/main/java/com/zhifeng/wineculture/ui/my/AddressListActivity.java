@@ -137,9 +137,13 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
             }
 
             @Override
-            public void Detele(int id) {
+            public void Detele(int id,boolean b) {
                 //删除
-                deteleAddress(id);
+                if (b){
+                    showNormalToast(ResUtil.getString(R.string.add_address_tab_18));
+                }else {
+                    deteleAddress(id);
+                }
             }
 
         });

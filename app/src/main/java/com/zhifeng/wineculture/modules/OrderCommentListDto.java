@@ -59,6 +59,18 @@ public class OrderCommentListDto {
         private String spec_key_name;
         private String img;
         private String note;
+        private List<String> imgStrs;
+
+        public List<String> getImgStrs() {
+            if (imgStrs == null) {
+                return new ArrayList<>();
+            }
+            return imgStrs;
+        }
+
+        public void setImgStrs(List<String> imgStrs) {
+            this.imgStrs = imgStrs;
+        }
 
         public int getGoods_id() {
             return goods_id;

@@ -311,7 +311,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
             return;
         }
         if (CheckNetwork.checkNetwork2(mContext)) {
-            payPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, moneyString, ResUtil.getString(withdrawalType == 3 ? R.string.balance_withdrawal_tab_4 : R.string.balance_withdrawal_tab_5), withdrawalType == 3 ? 1 : 2);
+            payPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, moneyString, ResUtil.getString(withdrawalType == 3 ? R.string.balance_withdrawal_tab_4 : R.string.balance_withdrawal_tab_5), withdrawalType == 3 ? 1 : 2,ResUtil.getString(R.string.balance_withdrawal_tab_12_1));
             payPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
                 @Override
                 public void inputFinish(String password) {

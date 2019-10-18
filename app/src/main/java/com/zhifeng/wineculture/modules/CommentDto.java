@@ -9,13 +9,13 @@ public class CommentDto {
     private String content;
     private List<String> img;
 
-    public CommentDto(String order_id, String goods_id, String sku_id, String content, List<String> img) {
-        this.order_id = order_id;
-        this.goods_id = goods_id;
-        this.sku_id = sku_id;
-        this.content = content;
-        this.img = img;
-    }
+//    public CommentDto(String order_id, String goods_id, String sku_id, String content, List<String> img) {
+//        this.order_id = order_id;
+//        this.goods_id = goods_id;
+//        this.sku_id = sku_id;
+//        this.content = content;
+//        this.img = img;
+//    }
 
     public String getOrder_id() {
         return order_id == null ? "" : order_id;

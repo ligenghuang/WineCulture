@@ -31,6 +31,7 @@ import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.CommentAction;
 import com.zhifeng.wineculture.adapters.CommentAdapter;
 import com.zhifeng.wineculture.adapters.EvaluteAdapter;
+import com.zhifeng.wineculture.modules.CommentDto;
 import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.MyCommentListDto;
 import com.zhifeng.wineculture.modules.OrderCommentListDto;
@@ -41,6 +42,7 @@ import com.zhifeng.wineculture.utils.photo.utilFixSevent.PhotoFitSevent;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -58,15 +60,9 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
     @BindView(R.id.rv)
     RecyclerView rv;
     private String order_id;
-    private String goods_id;
-    private String sku_id;
-    int id;
     EvaluteAdapter evaluteAdapter;
-    private OrderCommentListDto.DataBean persons;
     private int positions;
     MyCommentListDto.DataBean data;
-    private List<MyCommentListDto.DataBean> images;
-    private CommentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +88,9 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
         mActicity = this;
         mContext = this;
         order_id = getIntent().getStringExtra("order_id");
-        adapter = new CommentAdapter(mContext);
+        evaluteAdapter = new EvaluteAdapter();
         rv.setLayoutManager(new LinearLayoutManager(mContext));
-        rv.setAdapter(adapter);
+        rv.setAdapter(evaluteAdapter);
         loadView();
     }
 
@@ -104,7 +100,6 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
         evaluteAdapter.setStatusClickListener(new EvaluteAdapter.OnStatusClickListener() {
             @Override
             public void pictureOrder(OrderCommentListDto.DataBean person, int position) {
-                persons = person;
                 positions = position;
                 showSelectDiaLog();
             }
@@ -236,27 +231,19 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
         if (s == null) {
             return;
         }
-        Bitmap bitmap = BitmapFactory.decodeFile(s);
-//            mIvPhoto.setImageBitmap(bitmap);
-//        L.e("mCurrentPhotoPath", " s " + s + "fileName" + fileName);
-//        String[] split = s.split("/");
-//        L.e("split", "fileName" + split[split.length - 1]);
-//        fileName = split[split.length - 1];//截取最后一段图片
         fileName = s;//截取最后一段图片
         File file = new File(s);
-        L.e("liaos", " 之前" + file.length() + "  " + s);
+        L.e("lgh", " 之前" + file.length() + "  " + s);
         if (file.length() / 1024 > 512) {
             fileName = PicUtils.getCompressedImgPath(s);
-            L.e("liaos", " 现在 " + fileName);
+            L.e("lgh", " 现在 " + fileName);
         }
-        if (CheckNetwork.checkNetwork(this)) {
-//            feedbackAction.uploadImage(fileName);
-            //todo 2018-11-2 上传图片
-            loadDialog(ResUtil.getString(R.string.main_process));
-//            baseAction.upload(fileName);
-            return;
-        }
-        showToast(ResUtil.getString(R.string.main_net_error));
+        List<OrderCommentListDto.DataBean> dataBeans = evaluteAdapter.getData();
+        OrderCommentListDto.DataBean dataBean = dataBeans.get(positions);
+        List<String> imgStrs = dataBean.getImgStrs();
+        imgStrs.add(fileName);
+        dataBean.setImgStrs(imgStrs);
+        evaluteAdapter.replaceData(dataBeans);
     }
 
     /**
@@ -284,28 +271,31 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
     @Override
     public void getOrderCommentListSuccess(OrderCommentListDto orderCommentListDto) {
         List<OrderCommentListDto.DataBean> beans = orderCommentListDto.getData();
-        adapter.refresh(beans);
+        evaluteAdapter.addData(beans);
     }
 
     @Override
     public void postComment() {
-        String star_rating = "1";
-//        String content = etContent.getText().toString();
-//        if (TextUtils.isEmpty(content)) {
-//            showNormalToast(R.string.mycomment_commentContent);
-//            return;
-//        }
-//        List<String> str = new ArrayList<>();
-//        if (selImageList.size() > 0) {
-//            for (int i = 0; i < selImageList.size(); i++) {
-//                str.add("data:image/gif;base64," + PicUtils.imageToBase64(selImageList.get(i).path));
-//            }
-//        }
-//        CommentDto orderComment = new CommentDto(order_id, goods_id, sku_id, content, str);
-//        if (CheckNetwork.checkNetwork2(mContext)) {
-//            loadDialog();
-//            baseAction.postComment(orderComment.toString());
-//        }
+        List<CommentDto> list = new ArrayList<>();
+        List<OrderCommentListDto.DataBean> dataBeans = evaluteAdapter.getData();
+        for (int i = 0; i < dataBeans.size(); i++) {
+            CommentDto commentDto = new CommentDto();
+            OrderCommentListDto.DataBean dataBean = dataBeans.get(i);
+            commentDto.setContent(dataBean.getNote());
+            commentDto.setGoods_id(dataBean.getGoods_id() + "");
+            commentDto.setOrder_id(order_id + "");
+            commentDto.setSku_id(dataBean.getSku_id() + "");
+            List<String> str = new ArrayList<>();
+            for (int j = 0; j < dataBean.getImgStrs().size(); j++) {
+                str.add("data:image/gif;base64," + PicUtils.imageToBase64(dataBean.getImgStrs().get(j)));
+            }
+            commentDto.setImg(str);
+            list.add(commentDto);
+        }
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.postComment(list);
+        }
     }
 
     @Override
@@ -363,8 +353,13 @@ public class CommentActivity extends UserBaseActivity<CommentAction> implements 
         }
     }
 
-    @OnClick(R.id.f_title_tv)
+    @OnClick(R.id.f_right_tv)
     public void onClick(View view) {
-        postComment();
+
+        switch (view.getId()){
+            case R.id.f_right_tv:
+                postComment();
+                break;
+        }
     }
 }

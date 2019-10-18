@@ -167,7 +167,6 @@ public class RegisterActivity extends UserBaseActivity<RegisterAction> implement
     @Override
     public void hadRegister(String message) {
         showNormalToast(message);
-        finish();
     }
 
     @Override

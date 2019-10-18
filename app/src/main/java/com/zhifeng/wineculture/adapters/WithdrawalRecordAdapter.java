@@ -30,7 +30,8 @@ public class WithdrawalRecordAdapter extends BaseRecyclerAdapter<WithdrawalRecor
     @Override
     protected void onBindViewHolder(SmartViewHolder holder, WithdrawalRecordDto.DataBean.ListBean model, int position) {
         holder.setIsRecyclable(false);
-        holder.text(R.id.tv_item_time, DynamicTimeFormat.LongToString5(model.getCreatetime()));
+        long time = model.getCreatetime() * (long)1000;
+        holder.text(R.id.tv_item_time, DynamicTimeFormat.LongToString5(time));
         DecimalFormat df = new DecimalFormat("#0.00");
         holder.text(R.id.tv_item_money,"￥"+ model.getMoney());
         holder.text(R.id.tv_item_poundage,"￥"+model.getTaxfee());

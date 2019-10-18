@@ -8,6 +8,7 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.CommentDto;
 import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderCommentListDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
@@ -18,7 +19,11 @@ import com.zhifeng.wineculture.utils.data.MySp;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.List;
+
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class CommentAction extends BaseAction<CommentView> {
     public CommentAction(RxAppCompatActivity _rxAppCompatActivity, CommentView commentView) {
@@ -30,8 +35,14 @@ public class CommentAction extends BaseAction<CommentView> {
         post(WebUrlUtil.POST_ORDER_COMMENT_LIST, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id), WebUrlUtil.POST_ORDER_COMMENT_LIST)));
     }
 
-    public void postComment(String comments) {
-        post(WebUrlUtil.POST_ORDER_COMMENT, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "comments", comments), WebUrlUtil.POST_ORDER_COMMENT)));
+    public void postComment(List<CommentDto> list) {
+        String json = new Gson().toJson(list);
+        MultipartBody.Builder build = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("token", MySp.getAccessToken(MyApp.getContext()))
+                .addFormDataPart("comments",json);
+        RequestBody body = build.build();
+        post(WebUrlUtil.POST_ORDER_COMMENT, false, service -> manager.runHttp(service.PostData(
+                body, WebUrlUtil.POST_ORDER_COMMENT)));
     }
 
     /**

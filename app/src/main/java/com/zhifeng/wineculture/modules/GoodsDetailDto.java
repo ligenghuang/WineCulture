@@ -147,6 +147,15 @@ public class GoodsDetailDto {
         private List<?> coupon;
         private List<ProductAttrBean> productAttr;
         private List<ProductSkuBean> productSku;
+        private int is_vip;
+
+        public int getIs_vip() {
+            return is_vip;
+        }
+
+        public void setIs_vip(int is_vip) {
+            this.is_vip = is_vip;
+        }
 
         public int getGoods_id() {
             return goods_id;

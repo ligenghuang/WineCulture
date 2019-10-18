@@ -136,8 +136,9 @@ public class LogisticsActivity extends UserBaseActivity<LogisticsAction> impleme
 //        LogisticsDto logostocsDto1 = new Gson().fromJson(json, new TypeToken<LogisticsDto>() {
 //        }.getType());
         LogisticsDto.DataBean.ResultBean resultBean = logostocsDto.getData().getResult();
-        List<LogisticsDto.DataBean.ResultBean.ListBean> listBeans = resultBean.getList();
         list.add(new LogisticsDto.DataBean.ResultBean.ListBean("",resultBean.getAddress()));
+
+        List<LogisticsDto.DataBean.ResultBean.ListBean> listBeans = resultBean.getList();
         if (listBeans.size() > 1){
             list.add(listBeans.get(0));
             for (int i = 1; i <listBeans.size() ; i++) {
@@ -146,11 +147,11 @@ public class LogisticsActivity extends UserBaseActivity<LogisticsAction> impleme
         }else {
             tvLogisticsMore.setVisibility(View.GONE);
         }
-        logisticsListAdapter.refresh(list);
         GlideUtil.setImage(mContext,resultBean.getLogo(),ivLogisticsLogo);
         tvLogisticsName.setText(resultBean.getExpName());
         tvLogisticsNo.setText(ResUtil.getFormatString(R.string.logistics_tab_3,resultBean.getNumber()));
 
+        logisticsListAdapter.refresh(list);
     }
 
     /**

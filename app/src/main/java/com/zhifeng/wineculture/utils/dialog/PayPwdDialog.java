@@ -33,12 +33,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
-  *
-  * @ClassName:     支付密码输入框
-  * @Description:
-  * @Author:         lgh
-  * @CreateDate:     2019/9/29 14:55
-  * @Version:        1.0
+ * @ClassName: 支付密码输入框
+ * @Description:
+ * @Author: lgh
+ * @CreateDate: 2019/9/29 14:55
+ * @Version: 1.0
  */
 
 public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissListener {
@@ -76,6 +75,10 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
     TextView tvPayType;
     @BindView(R.id.ll_pwd)
     LinearLayout llPwd;
+    @BindView(R.id.title)
+    TextView tvTitle;
+    @BindView(R.id.tv_type)
+    TextView tvType;
 
     private TextView[] tvList;      //用数组保存6个TextView，为什么用数组？
 
@@ -92,13 +95,15 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
     String money;
     String payTypeName;
     int paytype;
+    String title;
 
-    public PayPwdDialog(@NonNull Context context, int themeResId, String money, String payTypeName,int paytype) {
+    public PayPwdDialog(@NonNull Context context, int themeResId, String money, String payTypeName, int paytype, String title) {
         super(context, themeResId);
         mContext = context;
         this.money = money;
         this.payTypeName = payTypeName;
         this.paytype = paytype;
+        this.title = title;
     }
 
     @Override
@@ -150,9 +155,11 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
 
 
     private void initView() {
+        tvTitle.setText(title);
+        tvType.setText(title);
         tvMoney.setText("￥" + money);
         tvPayType.setText(payTypeName);
-        ivPayType.setImageResource(paytype == 1?R.drawable.icon_balance_ali:R.drawable.icon_balance_bank);
+        ivPayType.setImageResource(paytype == 1 ? R.drawable.icon_balance_ali : R.drawable.icon_balance_bank);
 
         tvList = new TextView[6];
 
@@ -255,7 +262,7 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
 
     }
 
-    @OnClick({R.id.iv_close,R.id.dialog_forget_pwd})
+    @OnClick({R.id.iv_close, R.id.dialog_forget_pwd})
     void Onclick(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
@@ -303,7 +310,9 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
 
     public interface OnFinishInput {
         void inputFinish(String password);
+
         void forget();
+
         void close();
     }
 }

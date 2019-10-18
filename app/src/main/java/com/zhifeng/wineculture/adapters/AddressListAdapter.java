@@ -48,14 +48,14 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataB
         holder.itemView.findViewById(R.id.iv_detele).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.Detele(model.getAddress_id());
+                onClickListener.Detele(model.getAddress_id(),model.getIs_default()==1);
             }
         });
 
     }
 
     public interface OnClickListener{
-        void Detele(int id);
+        void Detele(int id,boolean b);
         void itemView(AddressListDto.DataBean model);
     }
 }

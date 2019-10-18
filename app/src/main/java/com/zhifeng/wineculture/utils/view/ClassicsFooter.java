@@ -177,6 +177,7 @@ public class ClassicsFooter extends InternalClassics<com.scwang.smartrefresh.lay
             final View arrowView = mArrowView;
             if (noMoreData) {
                 mTitleText.setText(REFRESH_FOOTER_NOTHING);
+                mProgressView.setVisibility(GONE);
                 arrowView.setVisibility(GONE);
             } else {
                 mTitleText.setText(REFRESH_FOOTER_PULLING);
