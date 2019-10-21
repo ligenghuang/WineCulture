@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.actions;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
@@ -71,15 +72,19 @@ public class LogisticsAction extends BaseAction<LogisticsView> {
                         //todo 查看物流
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            LogisticsDto logisticsDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<LogisticsDto>() {
-                            }.getType());
-                            if (logisticsDto.getStatus() == 200){
-                                //todo 查看物流 成功
-                                view.getLogostocsSuccess(logisticsDto);
-                                return;
-                            }
-                            view.onError(logisticsDto.getMsg(),logisticsDto.getStatus());
-                            return;
+                           try{
+                               LogisticsDto logisticsDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<LogisticsDto>() {
+                               }.getType());
+                               if (logisticsDto.getStatus() == 200){
+                                   //todo 查看物流 成功
+                                   view.getLogostocsSuccess(logisticsDto);
+                                   return;
+                               }
+                               view.onError(logisticsDto.getMsg(),logisticsDto.getStatus());
+                               return;
+                           }catch (JsonSyntaxException e){
+                              view.getLogisticsError("查询物流信息失败");
+                           }
                         }
                         view.onError(msg,action.getErrorType());
                         break;

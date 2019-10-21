@@ -15,4 +15,5 @@ import com.zhifeng.wineculture.modules.LogisticsDto;
 public interface LogisticsView extends BaseView {
     void getLogostocs();
     void getLogostocsSuccess(LogisticsDto logostocsDto);
+    void getLogisticsError(String msg);
 }

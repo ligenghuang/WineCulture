@@ -27,7 +27,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/myteam_lookup_orderid"
-                android:textSize="@dimen/text_size20" />
+                android:textSize="@dimen/text_size16" />
 
             <TextView
                 android:layout_width="0dp"
@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/myteam_lookup_name"
-                android:textSize="@dimen/text_size20" />
+                android:textSize="@dimen/text_size16" />
 
             <TextView
                 android:layout_width="0dp"
@@ -43,7 +43,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/myteam_lookup_money"
-                android:textSize="@dimen/text_size20" />
+                android:textSize="@dimen/text_size16" />
 
             <TextView
                 android:layout_width="0dp"
@@ -51,7 +51,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/myteam_lookup_date"
-                android:textSize="@dimen/text_size20" />
+                android:textSize="@dimen/text_size16" />
         </LinearLayout>
 
         <View

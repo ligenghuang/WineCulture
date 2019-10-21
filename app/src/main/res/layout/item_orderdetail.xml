@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ivGoods"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="@dimen/item_height60"
+        android:layout_height="@dimen/item_height60" />
 
     <TextView
         android:id="@+id/tvGoodsName"

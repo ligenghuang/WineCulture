@@ -77,6 +77,7 @@ public class FansOrderActivity extends UserBaseActivity<FansOrderAction> impleme
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.setAdapter(adapter);
         refreshLayout.autoRefresh();
+        loadView();
     }
 
     @Override
@@ -84,16 +85,12 @@ public class FansOrderActivity extends UserBaseActivity<FansOrderAction> impleme
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                page = 1;
-                isRefresh = true;
                 getFansOrder();
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                page++;
-                isRefresh = false;
-                getFansOrder();
+                loadMoreFansOrder();
             }
         });
     }
@@ -117,10 +114,21 @@ public class FansOrderActivity extends UserBaseActivity<FansOrderAction> impleme
     @Override
     public void getFansOrder() {
         if (CheckNetwork.checkNetwork2(mContext)) {
+            page = 1;
+            isRefresh = true;
             baseAction.getFansOrder(id, page);
-        } else if(isRefresh){
+        } else{
             refreshLayout.finishRefresh();
-        }else{
+        }
+    }
+
+    @Override
+    public void loadMoreFansOrder() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            page++;
+            isRefresh = false;
+            baseAction.getFansOrder(id, page);
+        } else{
             refreshLayout.finishLoadMore();
         }
     }

@@ -22,7 +22,9 @@ public class TeamAdapter extends BaseRecyclerAdapter<MyTeamDto.DataBean.ListBean
         holder.setIsRecyclable(false);
         holder.text(R.id.tvUserId, String.valueOf(model.getId()));
         holder.text(R.id.tvUserName, model.getRealname());
-        holder.text(R.id.tvMobile, model.getMobile());
+        String mobile = model.getMobile();
+        mobile = mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        holder.text(R.id.tvMobile,mobile);
         TextView tv=holder.itemView.findViewById(R.id.tvOrder);
         tv.setOnClickListener(v -> {
             if (onClickListener != null) {

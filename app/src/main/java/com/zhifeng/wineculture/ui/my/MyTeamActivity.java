@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
@@ -69,6 +70,7 @@ public class MyTeamActivity extends UserBaseActivity<MyTeamAction> implements My
         mActicity = this;
         mContext = this;
         adapter = new TeamAdapter();
+        rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.setAdapter(adapter);
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.autoRefresh();
@@ -80,11 +82,12 @@ public class MyTeamActivity extends UserBaseActivity<MyTeamAction> implements My
         refreshLayout.setOnRefreshListener(refreshLayout -> {
             getMyTeam();
         });
-        adapter.setOnItemClickListener((parent, view, position, id) -> {
-            MyTeamDto.DataBean.ListBean listBean = (MyTeamDto.DataBean.ListBean) adapter.getItem(position);
-            int beanId = listBean.getId();
-            startActivity(FansOrderActivity.class, "id", String.valueOf(beanId));
-        });
+       adapter.setOnClickListener(new TeamAdapter.OnClickListener() {
+           @Override
+           public void onClick(int id) {
+               startActivity(FansOrderActivity.class, "id", String.valueOf(id));
+           }
+       });
     }
 
     /**

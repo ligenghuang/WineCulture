@@ -1,7 +1,9 @@
 package com.zhifeng.wineculture.ui.my;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,8 +22,11 @@ import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.LogisticsAction;
 import com.zhifeng.wineculture.adapters.LogisticsListAdapter;
 import com.zhifeng.wineculture.modules.LogisticsDto;
+import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.LogisticsView;
+import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
+import com.zhifeng.wineculture.utils.data.MySp;
 import com.zhifeng.wineculture.utils.json.GetJsonDataUtil;
 
 import java.lang.ref.WeakReference;
@@ -135,23 +140,50 @@ public class LogisticsActivity extends UserBaseActivity<LogisticsAction> impleme
 //        String json = new GetJsonDataUtil().getJson(mContext,"logostocs.json");
 //        LogisticsDto logostocsDto1 = new Gson().fromJson(json, new TypeToken<LogisticsDto>() {
 //        }.getType());
-        LogisticsDto.DataBean.ResultBean resultBean = logostocsDto.getData().getResult();
-        list.add(new LogisticsDto.DataBean.ResultBean.ListBean("",resultBean.getAddress()));
+        try {
+            LogisticsDto.DataBean.ResultBean resultBean = logostocsDto.getData().getResult();
+            list.add(new LogisticsDto.DataBean.ResultBean.ListBean("", resultBean.getAddress()));
 
-        List<LogisticsDto.DataBean.ResultBean.ListBean> listBeans = resultBean.getList();
-        if (listBeans.size() > 1){
-            list.add(listBeans.get(0));
-            for (int i = 1; i <listBeans.size() ; i++) {
-                allList.add(listBeans.get(i));
+            List<LogisticsDto.DataBean.ResultBean.ListBean> listBeans = resultBean.getList();
+            if (listBeans.size() > 1) {
+                list.add(listBeans.get(0));
+                for (int i = 1; i < listBeans.size(); i++) {
+                    allList.add(listBeans.get(i));
+                }
+            } else {
+                tvLogisticsMore.setVisibility(View.GONE);
             }
-        }else {
-            tvLogisticsMore.setVisibility(View.GONE);
-        }
-        GlideUtil.setImage(mContext,resultBean.getLogo(),ivLogisticsLogo);
-        tvLogisticsName.setText(resultBean.getExpName());
-        tvLogisticsNo.setText(ResUtil.getFormatString(R.string.logistics_tab_3,resultBean.getNumber()));
+            GlideUtil.setImage(mContext, resultBean.getLogo(), ivLogisticsLogo);
+            tvLogisticsName.setText(resultBean.getExpName());
+            tvLogisticsNo.setText(ResUtil.getFormatString(R.string.logistics_tab_3, resultBean.getNumber()));
 
-        logisticsListAdapter.refresh(list);
+            logisticsListAdapter.refresh(list);
+        }catch (Exception e){
+            showNormalToast("查询物流信息失败");
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 1000);
+        }
+    }
+
+    /**
+     * 查询物流信息失败
+     * @param msg
+     */
+    @Override
+    public void getLogisticsError(String msg) {
+        loadDiss();
+        showNormalToast(msg);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 1000);
     }
 
     /**

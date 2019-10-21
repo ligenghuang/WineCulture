@@ -5,6 +5,7 @@ import com.zhifeng.wineculture.modules.FansOrderDto;
 
 public interface FansOrderView extends BaseView {
     void getFansOrder();
+    void loadMoreFansOrder();
 
     void getFansOrderSuccess(FansOrderDto fansOrderDto);
 }

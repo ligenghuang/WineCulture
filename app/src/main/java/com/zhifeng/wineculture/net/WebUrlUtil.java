@@ -219,7 +219,7 @@ public class WebUrlUtil {
     /**
      * 忘记支付密码
      */
-    public static final  String POST_RESET_PAY_PWD = "user/resetPassword";
+    public static final  String POST_RESET_PAY_PWD = "user/paypwd_reset";
 
     /**
      * 设置支付密码

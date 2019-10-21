@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textSize="@dimen/text_size16" />
+        android:textSize="@dimen/text_size14" />
 
     <TextView
         android:id="@+id/tvUserName"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textSize="@dimen/text_size16" />
+        android:textSize="@dimen/text_size14" />
 
     <TextView
         android:id="@+id/tvMobile"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textSize="@dimen/text_size16" />
+        android:textSize="@dimen/text_size14" />
 
     <TextView
         android:id="@+id/tvOrder"
@@ -37,6 +37,6 @@
         android:gravity="center"
         android:text="@string/myteam_lookup"
         android:textColor="@color/blue"
-        android:textSize="@dimen/text_size16" />
+        android:textSize="@dimen/text_size14" />
 
 </LinearLayout>

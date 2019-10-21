@@ -46,7 +46,7 @@ public class FansOrderAction extends BaseAction<FansOrderView> {
                 if (aBoolean) {
                     FansOrderDto fansOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<FansOrderDto>() {
                     }.getType());
-                    if (fansOrderDto.getStatus() == 1) {
+                    if (fansOrderDto.getStatus() == 200) {
                         view.getFansOrderSuccess(fansOrderDto);
                         return;
                     }

@@ -249,7 +249,14 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         tvCreateTime.setText(DynamicTimeFormat.LongToString2(orderDetailDto.getData().getAdd_time() * (long) 1000));
         money = Double.parseDouble(orderDetailDto.getData().getTotal_amount());
         pwd = orderDetailDto.getData().getIs_pwd();
-
+        OrderDetailDto.DataBean.PayTypeBean payTypeBean = orderDetailDto.getData().getPay_type();
+        List<Temporary.DataBean.PayTypeBean> list = payTypeAdapter.getAllData();
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setSelect(list.get(i).getPay_type() == payTypeBean.getPay_type());
+        }
+        payTypeNam = payTypeBean.getPay_name();
+        payType = payTypeBean.getPay_type();
+        payTypeAdapter.notifyDataSetChanged();
     }
 
     /**
