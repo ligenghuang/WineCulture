@@ -39,13 +39,14 @@ public class OrderListAction extends BaseAction<OrderListView> {
 
     /**
      * 支付
+     *
      * @param submitOrderPost
      */
-    public void payOrder(SubmitOrderPost submitOrderPost){
-        post(WebUrlUtil.POST_PAY_ORDER,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
-                        "order_id",submitOrderPost.getCart_id(),"pay_type",submitOrderPost.getPay_type()
-                        ,"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_PAY_ORDER)
+    public void payOrder(SubmitOrderPost submitOrderPost) {
+        post(WebUrlUtil.POST_PAY_ORDER, false, service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),
+                        "order_id", submitOrderPost.getCart_id(), "pay_type", submitOrderPost.getPay_type()
+                        , "pwd", submitOrderPost.getPwd()), WebUrlUtil.POST_PAY_ORDER)
         ));
     }
 
@@ -62,7 +63,7 @@ public class OrderListAction extends BaseAction<OrderListView> {
                 .all(integer -> (integer == 200)).subscribe(aBoolean -> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
-            switch(action.getIdentifying()){
+            switch (action.getIdentifying()) {
                 case WebUrlUtil.POST_ORDER_LIST:
                     if (aBoolean) {
                         OrderListDto orderListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<OrderListDto>() {
@@ -84,16 +85,16 @@ public class OrderListAction extends BaseAction<OrderListView> {
                             view.cancelOrderOrConfirmToReceiveSuccess(generalDto);
                             return;
                         }
-                        view.onError(generalDto.getMsg(), generalDto.getStatus());
+                        view.cancelOrderOrConfirmToReceiveFail(generalDto.getMsg(), generalDto.getStatus());
                         return;
                     }
-                    view.onError(msg, action.getErrorType());
+                    view.cancelOrderOrConfirmToReceiveFail(msg, action.getErrorType());
                     break;
                 case WebUrlUtil.POST_PAY_ORDER:
                     //todo 订单支付
                     if (aBoolean) {
                         L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                        try{
+                        try {
                             PayOrderDto payOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<PayOrderDto>() {
                             }.getType());
                             if (payOrderDto.getStatus() == 200) {
@@ -101,16 +102,16 @@ public class OrderListAction extends BaseAction<OrderListView> {
                                 view.payOrderSuccess(payOrderDto);
                                 return;
                             }
-                            view.onError(payOrderDto.getMsg(), action.getErrorType());
+                            view.payOrderError(payOrderDto.getMsg(), action.getErrorType());
                             return;
-                        }catch (JsonSyntaxException e){
-                            GeneralDto generalDto =  new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                        } catch (JsonSyntaxException e) {
+                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                             }.getType());
-                            view.payOrderError(generalDto.getMsg());
+                            view.payOrderError(generalDto.getMsg(), generalDto.getStatus());
                             return;
                         }
                     }
-                    view.onError(msg, action.getErrorType());
+                    view.payOrderError(msg, action.getErrorType());
                     break;
             }
         });

@@ -15,8 +15,12 @@ public interface OrderListView extends BaseView {
      * 支付
      */
     void payOrder(SubmitOrderPost submitOrderPost);
+
     void payOrderSuccess(PayOrderDto submitOrderDto);
-    void payOrderError(String msg);
+
+    void payOrderError(String msg, int code);
 
     void cancelOrderOrConfirmToReceiveSuccess(GeneralDto generalDto);
+
+    void cancelOrderOrConfirmToReceiveFail(String msg, int code);
 }

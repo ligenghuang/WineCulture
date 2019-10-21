@@ -128,7 +128,7 @@ public class ServiceActivity extends UserBaseActivity<ServiceAction> implements 
             page = 1;
             isRefresh = true;
             baseAction.getOrderList(page, "tk");
-        }else {
+        } else {
             refreshLayout.finishRefresh();
         }
     }
@@ -139,7 +139,7 @@ public class ServiceActivity extends UserBaseActivity<ServiceAction> implements 
             page++;
             isRefresh = false;
             baseAction.getOrderList(page, "tk");
-        }else {
+        } else {
             refreshLayout.finishLoadMore();
         }
     }
@@ -158,19 +158,38 @@ public class ServiceActivity extends UserBaseActivity<ServiceAction> implements 
             }
         } else {
             if (isRefresh) {
-                page = page - 1;
                 adapter.refresh(new ArrayList<>());
+            } else {
+                page = page - 1;
+                loadSwapTab();
+                isMore = false;
             }
-            isMore = false;
-            loadSwapTab();
+        }
+    }
+
+    /**
+     * tab变换 加载更多的显示方式
+     */
+    private void loadSwapTab() {
+        if (!isMore) {
+            L.e("xx", "设置为没有加载更多....");
+            refreshLayout.finishLoadMoreWithNoMoreData();
+            refreshLayout.setNoMoreData(true);
+        } else {
+            L.e("xx", "设置为可以加载更多....");
+            refreshLayout.setNoMoreData(false);
         }
     }
 
     @Override
     public void onError(String message, int code) {
-        refreshLayout.finishRefresh();
-        refreshLayout.finishLoadMore();
         showNormalToast(message);
+        if (isRefresh) {
+            refreshLayout.finishRefresh();
+        } else {
+            refreshLayout.finishLoadMore();
+            page--;
+        }
     }
 
     @Override
@@ -189,20 +208,6 @@ public class ServiceActivity extends UserBaseActivity<ServiceAction> implements 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             getOrderList();
-        }
-    }
-
-    /**
-     * tab变换 加载更多的显示方式
-     */
-    private void loadSwapTab() {
-        if (!isMore) {
-            L.e("xx", "设置为没有加载更多....");
-            refreshLayout.finishLoadMoreWithNoMoreData();
-            refreshLayout.setNoMoreData(true);
-        } else {
-            L.e("xx", "设置为可以加载更多....");
-            refreshLayout.setNoMoreData(false);
         }
     }
 }

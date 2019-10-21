@@ -22,7 +22,12 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
+/**
+ * @ClassName:
+ * @Description: 会员中心-提现-绑定银行卡
+ * @Author: Administrator
+ * @Date: 2019/10/21 16:36
+ */
 public class BindBankCardActivity extends UserBaseActivity<BindBankCardAction> implements BindBankCardView {
     @BindView(R.id.top_view)
     View topView;

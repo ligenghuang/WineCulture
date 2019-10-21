@@ -1,19 +1,16 @@
 package com.zhifeng.wineculture.modules;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BankCardDto {
 
     /**
      * status : 200
      * msg : 获取成功！
-     * data : [{"bank_card":"1111111111111111111","bank_name":"1"}]
+     * data : {"bank_card":"1215","bank_name":"工行"}
      */
 
     private int status;
     private String msg;
-    private List<DataBean> data;
+    private DataBean data;
 
     public int getStatus() {
         return status;
@@ -31,21 +28,18 @@ public class BankCardDto {
         this.msg = msg == null ? "" : msg;
     }
 
-    public List<DataBean> getData() {
-        if (data == null) {
-            return new ArrayList<>();
-        }
+    public DataBean getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(DataBean data) {
         this.data = data;
     }
 
     public static class DataBean {
         /**
-         * bank_card : 1111111111111111111
-         * bank_name : 1
+         * bank_card : 1215
+         * bank_name : 工行
          */
 
         private String bank_card;

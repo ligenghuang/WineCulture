@@ -117,7 +117,7 @@ public class FansOrderActivity extends UserBaseActivity<FansOrderAction> impleme
             page = 1;
             isRefresh = true;
             baseAction.getFansOrder(id, page);
-        } else{
+        } else {
             refreshLayout.finishRefresh();
         }
     }
@@ -128,7 +128,7 @@ public class FansOrderActivity extends UserBaseActivity<FansOrderAction> impleme
             page++;
             isRefresh = false;
             baseAction.getFansOrder(id, page);
-        } else{
+        } else {
             refreshLayout.finishLoadMore();
         }
     }
@@ -168,9 +168,13 @@ public class FansOrderActivity extends UserBaseActivity<FansOrderAction> impleme
 
     @Override
     public void onError(String message, int code) {
-        refreshLayout.finishRefresh();
-        refreshLayout.finishLoadMore();
         showNormalToast(message);
+        if (isRefresh) {
+            refreshLayout.finishRefresh();
+        } else {
+            page--;
+            refreshLayout.finishLoadMore();
+        }
     }
 
     @Override

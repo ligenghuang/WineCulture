@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -23,6 +24,7 @@ import com.zhifeng.wineculture.ui.impl.CommentsListView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,6 +47,8 @@ public class GoodsCommentsActivity extends UserBaseActivity<CommentsListAction> 
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     private int page = 1;
+    private boolean isRefresh = true;
+    private boolean isMore = true;
     private GoodsCommentsAdapter adapter;
     private String goodsId;
     private String comment_count;
@@ -90,7 +94,7 @@ public class GoodsCommentsActivity extends UserBaseActivity<CommentsListAction> 
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+                loadMoreCommentList();
             }
         });
     }
@@ -115,22 +119,69 @@ public class GoodsCommentsActivity extends UserBaseActivity<CommentsListAction> 
     @Override
     public void getCommentList() {
         if (CheckNetwork.checkNetwork2(mContext)) {
+            isRefresh = true;
+            page = 1;
             baseAction.getCommentList(page, goodsId);
+        } else {
+            refreshLayout.finishRefresh();
+        }
+    }
+
+    private void loadMoreCommentList() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            isRefresh = false;
+            page++;
+            baseAction.getCommentList(page, goodsId);
+        } else {
+            refreshLayout.finishLoadMore();
         }
     }
 
     @Override
     public void getCommentListSuccess(CommentsListDto commentsListDto) {
         refreshLayout.finishRefresh();
-        tvCommentsNum.setText(ResUtil.getFormatString(R.string.goods_detail_tab_34,comment_count));
+        refreshLayout.finishLoadMore();
+        tvCommentsNum.setText(ResUtil.getFormatString(R.string.goods_detail_tab_34, comment_count));
         List<CommentsListDto.DataBean> beans = commentsListDto.getData();
+        if (beans.size() > 0) {
+            if (isRefresh) {
+                adapter.refresh(beans);
+            } else {
+                adapter.loadMore(beans);
+            }
+        } else {
+            if (isRefresh) {
+                adapter.refresh(new ArrayList<>());
+            }
+            isMore = false;
+            loadSwapTab();
+        }
         adapter.refresh(beans);
+    }
+
+    /**
+     * tab变换 加载更多的显示方式
+     */
+    private void loadSwapTab() {
+        if (!isMore) {
+            L.e("xx", "设置为没有加载更多....");
+            refreshLayout.finishLoadMoreWithNoMoreData();
+            refreshLayout.setNoMoreData(true);
+        } else {
+            L.e("xx", "设置为可以加载更多....");
+            refreshLayout.setNoMoreData(false);
+        }
     }
 
     @Override
     public void onError(String message, int code) {
-        refreshLayout.finishRefresh();
         showNormalToast(message);
+        if (isRefresh) {
+            refreshLayout.finishRefresh();
+        } else {
+            page--;
+            refreshLayout.finishLoadMore();
+        }
     }
 
     @Override

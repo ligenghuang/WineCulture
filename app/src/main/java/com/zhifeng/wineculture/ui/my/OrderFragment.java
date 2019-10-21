@@ -2,7 +2,6 @@ package com.zhifeng.wineculture.ui.my;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,6 @@ import com.zhifeng.wineculture.modules.PayOrderDto;
 import com.zhifeng.wineculture.modules.post.SubmitOrderPost;
 import com.zhifeng.wineculture.ui.impl.OrderListView;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
-import com.zhifeng.wineculture.utils.data.MySp;
 import com.zhifeng.wineculture.utils.dialog.BuyPwdDialog;
 import com.zhifeng.wineculture.utils.view.VerticalItemDecoration;
 
@@ -98,8 +96,6 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 if (position == ((MyOrderActivity) mActivity).currentPosition) {
-                    page = 1;
-                    isRefresh = true;
                     getOrderList();
                 }
             }
@@ -107,11 +103,8 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (position == ((MyOrderActivity) mActivity).currentPosition) {
-                    isRefresh = false;
-                    page++;
-                    getOrderList();
+                    loadMoreOrderList();
                 }
-
             }
         });
         adapter.setOnItemClickListener((parent, view, position, id) -> {
@@ -146,8 +139,8 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
 
 
             public void payNow(int order_id, int pay_type, double totalPrice) {
-                Intent detail = new Intent(mContext,OrderDetailActivity.class);
-                detail.putExtra("order_id",order_id+"");
+                Intent detail = new Intent(mContext, OrderDetailActivity.class);
+                detail.putExtra("order_id", order_id + "");
                 startActivity(detail);
                 //todo 立即付款
 //                switch (pay_type) {
@@ -226,7 +219,33 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
         } else if (position == 4) {
             type = "dpj";
         }
-        baseAction.getOrderList(page, type);
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            page = 1;
+            isRefresh = true;
+            baseAction.getOrderList(page, type);
+        } else {
+            refreshLayout.finishRefresh();
+        }
+    }
+
+    private void loadMoreOrderList() {
+        String type = "all";
+        if (position == 1) {
+            type = "dfk";
+        } else if (position == 2) {
+            type = "dfh";
+        } else if (position == 3) {
+            type = "dsh";
+        } else if (position == 4) {
+            type = "dpj";
+        }
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            isRefresh = false;
+            page++;
+            baseAction.getOrderList(page, type);
+        } else {
+            refreshLayout.finishLoadMore();
+        }
     }
 
     @Override
@@ -234,7 +253,7 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
         refreshLayout.finishRefresh();
         refreshLayout.finishLoadMore();
         List<OrderListDto.DataBean> dataBeans = orderList.getData();
-        if (dataBeans.size() != 0) {
+        if (dataBeans.size() > 0) {
             rv.setVisibility(View.VISIBLE);
             if (isRefresh) {
                 adapter.refresh(dataBeans);
@@ -243,11 +262,23 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             }
         } else {
             if (isRefresh) {
-                page = page - 1;
                 adapter.refresh(new ArrayList<>());
+            } else {
+                page--;
+                isMore = false;
+                loadSwapTab();
             }
-            isMore = false;
-            loadSwapTab();
+        }
+    }
+
+    @Override
+    public void onError(String message, int code) {
+        showToast(message);
+        if (isRefresh) {
+            refreshLayout.finishRefresh();
+        } else {
+            refreshLayout.finishLoadMore();
+            page--;
         }
     }
 
@@ -285,7 +316,7 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
      * @param msg
      */
     @Override
-    public void payOrderError(String msg) {
+    public void payOrderError(String msg, int code) {
         L.e("lgh_pay", "输出返回结果4" + msg);
         loadDiss();
         showToast(msg);
@@ -295,6 +326,11 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
     public void cancelOrderOrConfirmToReceiveSuccess(GeneralDto generalDto) {
         showToast(generalDto.getMsg());
         refreshLayout.autoRefresh();
+    }
+
+    @Override
+    public void cancelOrderOrConfirmToReceiveFail(String msg, int code) {
+        showToast(msg);
     }
 
     /**
@@ -309,13 +345,6 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
             L.e("xx", "设置为可以加载更多....");
             refreshLayout.setNoMoreData(false);
         }
-    }
-
-    @Override
-    public void onError(String message, int code) {
-        refreshLayout.finishRefresh();
-        refreshLayout.finishLoadMore();
-        showToast(message);
     }
 
     @Override

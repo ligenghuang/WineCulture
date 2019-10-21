@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -63,10 +62,6 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     TextView tvMobile;
     @BindView(R.id.tvAddress)
     TextView tvAddress;
-    @BindView(R.id.ivMore)
-    ImageView ivMore;
-    @BindView(R.id.cvDingwei)
-    CardView cvDingwei;
     @BindView(R.id.rv)
     RecyclerView rv;
     @BindView(R.id.tvTotalGoodsPrice)
@@ -83,6 +78,8 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     TextView tvOrderNo;
     @BindView(R.id.tvCreateTime)
     TextView tvCreateTime;
+    @BindView(R.id.llButtons)
+    LinearLayout llButtons;
     @BindView(R.id.btnLeft)
     Button btnLeft;
     @BindView(R.id.btnRight)
@@ -220,9 +217,33 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
                 int comment = orderDetailDto.getData().getComment();
                 drawableRes = comment == 0 ? R.drawable.icon_wait_evaluation_bg : R.drawable.icon_sign_in_bg;
                 stringRes = comment == 0 ? R.string.orderdetail_tobecomment : R.string.orderdetail_finish;
-                btnRight.setVisibility(View.VISIBLE);
-                btnRight.setTag(comment);
-                btnRight.setText(comment == 0 ? R.string.myorder_comment : R.string.orderdetail_finish);
+                if (comment == 0) {
+                    btnRight.setVisibility(View.VISIBLE);
+                    btnRight.setTag(comment);
+                    btnRight.setText(R.string.myorder_comment);
+                } else {
+                    llButtons.setVisibility(View.GONE);
+                }
+                break;
+            case 5:
+                llButtons.setVisibility(View.GONE);
+                drawableRes = R.drawable.icon_sign_in_bg;
+                stringRes = R.string.myorder_hadCancel;
+                break;
+            case 6:
+                llButtons.setVisibility(View.GONE);
+                drawableRes = R.drawable.icon_sign_in_bg;
+                stringRes = R.string.myorder_toBeRefund;
+                break;
+            case 7:
+                llButtons.setVisibility(View.GONE);
+                drawableRes = R.drawable.icon_sign_in_bg;
+                stringRes = R.string.myorder_hadRefund;
+                break;
+            case 8:
+                llButtons.setVisibility(View.GONE);
+                drawableRes = R.drawable.icon_sign_in_bg;
+                stringRes = R.string.myorder_refuseRefund;
                 break;
         }
         if (drawableRes != 0) {
@@ -431,11 +452,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
                         break;
                     case 4:
                         //todo 评价
-                        //0 未评论 1已评论
-                        int comment = (int) btnRight.getTag();
-                        if (comment == 0) {
-                            comment();
-                        }
+                        comment();
                         break;
                 }
                 break;

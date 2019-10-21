@@ -22,8 +22,8 @@ import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.WithdrawalAction;
 import com.zhifeng.wineculture.modules.AliPayAccountDto;
 import com.zhifeng.wineculture.modules.BankCardDto;
-import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.RemainderDto;
+import com.zhifeng.wineculture.modules.WithdrawalDto;
 import com.zhifeng.wineculture.ui.impl.WithdrawalView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.data.MySp;
@@ -31,7 +31,6 @@ import com.zhifeng.wineculture.utils.dialog.PayPwdDialog;
 
 import java.lang.ref.WeakReference;
 import java.text.DecimalFormat;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -228,7 +227,9 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
 
     @Override
     public void getAliPayAccount() {
-        baseAction.getAliPayAccount();
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.getAliPayAccount();
+        }
     }
 
     @Override
@@ -237,8 +238,9 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
         aliPayName = bean.getAlipay_name();
         alipay = bean.getAlipay();
         if (!TextUtils.isEmpty(aliPayName) && !TextUtils.isEmpty(alipay)) {
-            aliPayAccount = aliPayName + "(" + alipay.replaceAll(ValidateUtils.isPhone2(alipay) ? "(\\d{3})(\\d{4})(\\d{4})"
-                    : "(.{2}).+(.{2}@.+)", "$1****$2") + ")";
+            boolean phone2 = ValidateUtils.isPhone2(alipay);
+            aliPayAccount = aliPayName + "(" + alipay.replaceAll(phone2 ? "(\\d{3})(\\d{4})(\\d{4})"
+                    : "(.{2}).+(.{2}@.+)", phone2 ? "$1****$3" : "$1****$2") + ")";
             if (withdrawalType == 3) {
                 tv_withdrawal_account.setText(aliPayAccount);
             }
@@ -252,16 +254,17 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
 
     @Override
     public void getBankCard() {
-        baseAction.getBankCard();
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.getBankCard();
+        }
     }
 
     @Override
     public void getBankCardSuccess(BankCardDto bankCardDto) {
-        List<BankCardDto.DataBean> beans = bankCardDto.getData();
-        if (beans.size() > 0) {
-            BankCardDto.DataBean bean = beans.get(0);
-            bankName = bean.getBank_name();
-            bankCard = bean.getBank_card();
+        BankCardDto.DataBean bean = bankCardDto.getData();
+        bankName = bean.getBank_name();
+        bankCard = bean.getBank_card();
+        if (!TextUtils.isEmpty(bankName) && !TextUtils.isEmpty(bankCard)) {
             bankAccount = bankName + "(" + bankCard.replaceAll("(\\d{15})(\\d{4})", "***************$2") + ")";
             if (withdrawalType == 4) {
                 tv_withdrawal_account.setText(bankAccount);
@@ -311,7 +314,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
             return;
         }
         if (CheckNetwork.checkNetwork2(mContext)) {
-            payPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, moneyString, ResUtil.getString(withdrawalType == 3 ? R.string.balance_withdrawal_tab_4 : R.string.balance_withdrawal_tab_5), withdrawalType == 3 ? 1 : 2,ResUtil.getString(R.string.balance_withdrawal_tab_12_1));
+            payPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, moneyString, ResUtil.getString(withdrawalType == 3 ? R.string.balance_withdrawal_tab_4 : R.string.balance_withdrawal_tab_5), withdrawalType == 3 ? 1 : 2, ResUtil.getString(R.string.balance_withdrawal_tab_12_1));
             payPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
                 @Override
                 public void inputFinish(String password) {
@@ -334,11 +337,13 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
     }
 
     @Override
-    public void withdrawalSuccess(GeneralDto generalDto) {
+    public void withdrawalSuccess(WithdrawalDto generalDto) {
+        loadDiss();
         showNormalToast(generalDto.getMsg());
         if (payPwdDialog != null) {
             payPwdDialog.dismiss();
         }
+        getBalance();
     }
 
     @Override

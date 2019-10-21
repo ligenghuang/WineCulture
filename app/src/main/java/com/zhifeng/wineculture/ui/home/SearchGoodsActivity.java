@@ -188,6 +188,7 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
             public void onClick(String keyword) {
                 //todo 搜索商品
                 etSearch.setText(keyword);
+                etSearch.setSelection(keyword.length());
                 Keyword = keyword;
                 loadDialog();
                 searchGoods();

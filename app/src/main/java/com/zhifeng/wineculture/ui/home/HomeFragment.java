@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -22,7 +23,6 @@ import com.superluo.textbannerlibrary.ITextBannerItemClickListener;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.HomeAction;
-import com.zhifeng.wineculture.adapters.AnnounceAdapter;
 import com.zhifeng.wineculture.adapters.BannerHome;
 import com.zhifeng.wineculture.adapters.HotGoodsAdapter;
 import com.zhifeng.wineculture.adapters.LikeGoodsAdapter;
@@ -119,7 +119,7 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
         view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
         binding();
-        mImmersionBar.setStatusBarView(getActivity(), topView);
+        ImmersionBar.setStatusBarView(getActivity(), topView);
         return view;
     }
 
@@ -166,7 +166,7 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
 //                Intent intent = new Intent(mContext, NoticeDetailActivity.class);
 //                intent.putExtra("id",announceBeans.get(position).getId()+"");
 //                startActivity(intent);
-                tvBanner.stopViewAnimator();
+//                tvBanner.stopViewAnimator();
             }
         });
 
@@ -253,12 +253,14 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
     public void onResume() {
         super.onResume();
         baseAction.toRegister();
+        tvBanner.startViewAnimator();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         baseAction.toUnregister();
+        tvBanner.stopViewAnimator();
     }
 
     private void setBanner(List<HomeDto.DataBean.BannersBean> banners) {

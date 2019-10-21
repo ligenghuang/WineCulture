@@ -105,23 +105,24 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
             int order_id = model.getOrder_id();
             Object[] dataRight = {COMMENT, order_id};
             btnRight.setTag(dataRight);
-        } else if (status == 5) {
-            state = R.string.myorder_hadCancel;
-            btnLeft.setVisibility(View.VISIBLE);
-            btnLeft.setText(state);
-        } else if (status == 6) {
-            state = R.string.myorder_toBeRefund;
-            btnLeft.setVisibility(View.VISIBLE);
-            btnLeft.setText(state);
-        } else if (status == 7) {
-            state = R.string.myorder_hadRefund;
-            btnLeft.setVisibility(View.VISIBLE);
-            btnLeft.setText(state);
-        } else if (status == 8) {
-            state = R.string.myorder_refuseRefund;
-            btnLeft.setVisibility(View.VISIBLE);
-            btnLeft.setText(state);
         }
+//        else if (status == 5) {
+//            state = R.string.myorder_hadCancel;
+//            btnLeft.setVisibility(View.VISIBLE);
+//            btnLeft.setText(state);
+//        } else if (status == 6) {
+//            state = R.string.myorder_toBeRefund;
+//            btnLeft.setVisibility(View.VISIBLE);
+//            btnLeft.setText(state);
+//        } else if (status == 7) {
+//            state = R.string.myorder_hadRefund;
+//            btnLeft.setVisibility(View.VISIBLE);
+//            btnLeft.setText(state);
+//        } else if (status == 8) {
+//            state = R.string.myorder_refuseRefund;
+//            btnLeft.setVisibility(View.VISIBLE);
+//            btnLeft.setText(state);
+//        }
         if (state != 0) {
             holder.text(R.id.tvGoodsStatus, state);
         }
@@ -137,7 +138,7 @@ public class OrderAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> imp
             double postage = Double.parseDouble(shipping_price);
             holder.text(R.id.tvPostage, postage == 0 ? ResUtil.getString(R.string.myorder_free) : ResUtil.getFormatString(R.string.myorder_shipping_price, shipping_price));
         } catch (Exception e) {
-            holder.text(R.id.tvPostage, shipping_price);
+            holder.text(R.id.tvPostage, ResUtil.getFormatString(R.string.myorder_shipping_price, shipping_price));
         }
     }
 

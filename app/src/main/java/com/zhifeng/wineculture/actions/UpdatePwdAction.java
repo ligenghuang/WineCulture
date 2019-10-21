@@ -54,6 +54,8 @@ public class UpdatePwdAction extends BaseAction<UpdatePwdView> {
                             view.sendVerifyCodeSuccess(sendVerifyCodeDto);
                             return;
                         }
+                        view.sendVerifyCodeFail(sendVerifyCodeDto.getMsg(), sendVerifyCodeDto.getStatus());
+                        return;
                     }
                     view.sendVerifyCodeFail(msg, action.getErrorType());
                     break;
@@ -65,6 +67,8 @@ public class UpdatePwdAction extends BaseAction<UpdatePwdView> {
                             view.updatePwdSuccess(generalDto);
                             return;
                         }
+                        view.onError(generalDto.getMsg(), generalDto.getStatus());
+                        return;
                     }
                     view.onError(msg, action.getErrorType());
                     break;

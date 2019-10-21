@@ -3,8 +3,8 @@ package com.zhifeng.wineculture.ui.impl;
 import com.lgh.huanglib.util.base.BaseView;
 import com.zhifeng.wineculture.modules.AliPayAccountDto;
 import com.zhifeng.wineculture.modules.BankCardDto;
-import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.RemainderDto;
+import com.zhifeng.wineculture.modules.WithdrawalDto;
 
 /**
   *
@@ -46,7 +46,7 @@ public interface WithdrawalView extends BaseView {
      */
     void withdrawal();
 
-    void withdrawalSuccess(GeneralDto generalDto);
+    void withdrawalSuccess(WithdrawalDto generalDto);
 
     void withdrawalFail(int code, String msg);
 }

@@ -95,6 +95,10 @@ public class MyCommentsListActivity extends UserBaseActivity<MyCommentsListActio
             intent.putExtra("order_id", String.valueOf(order_id));
             startActivityForResult(intent, REQUEST_CODE);
         });
+        adapter.setOnItemClickListener((parent, view, position, id) -> {
+            MyCommentListDto.DataBean bean = (MyCommentListDto.DataBean) adapter.getItem(position);
+            startActivity(OrderDetailActivity.class, "order_id", String.valueOf(bean.getOrder_id()));
+        });
     }
 
     /**

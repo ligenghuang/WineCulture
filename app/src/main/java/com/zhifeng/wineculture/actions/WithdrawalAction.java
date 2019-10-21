@@ -9,8 +9,8 @@ import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.modules.AliPayAccountDto;
 import com.zhifeng.wineculture.modules.BankCardDto;
-import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.RemainderDto;
+import com.zhifeng.wineculture.modules.WithdrawalDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.WithdrawalView;
 import com.zhifeng.wineculture.utils.config.MyApp;
@@ -117,12 +117,12 @@ public class WithdrawalAction extends BaseAction<WithdrawalView> {
                     break;
                 case WebUrlUtil.POST_WITHDRAWAL:
                     if (aBoolean) {
-                        GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), GeneralDto.class);
-                        if (generalDto.getStatus() == 200) {
-                            view.withdrawalSuccess(generalDto);
+                        WithdrawalDto withdrawalDto = new Gson().fromJson(action.getUserData().toString(), WithdrawalDto.class);
+                        if (withdrawalDto.getStatus() == 200) {
+                            view.withdrawalSuccess(withdrawalDto);
                             return;
                         }
-                        view.withdrawalFail(generalDto.getStatus(), generalDto.getMsg());
+                        view.withdrawalFail(withdrawalDto.getStatus(), withdrawalDto.getMsg());
                         return;
                     }
                     view.withdrawalFail(action.getErrorType(), msg);
