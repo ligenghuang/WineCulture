@@ -127,7 +127,7 @@ public class SearchGoodsAction extends BaseAction<SearchGoodsView> {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
                             GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                             }.getType());
-                            if (generalDto.getStatus() == 200) {
+                            if (generalDto.getStatus() == 1) {
                                 //todo 删除搜索历史 成功
                                 view.deleteHistorySuccess(generalDto);
                                 return;

@@ -324,4 +324,9 @@ public class WebUrlUtil {
      * 关于酒文化
      */
     public static final String POST_ABOUT = "index/about";
+
+    /**
+     * 获取支付方式
+     */
+    public static final String POST_PAY_TYPE = "Order/get_pay_type";
 }

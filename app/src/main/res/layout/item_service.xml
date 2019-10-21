@@ -24,15 +24,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/btnRefund"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginStart="@dimen/dp_10"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginTop="@dimen/dp_10"
-            android:background="@drawable/shape_item_myorder_btnright"
-            android:text="@string/myorder_refund"
-            android:textColor="@color/color_cc1b21"
-            android:textSize="@dimen/text_size13" />
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_item_stats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textColor="@color/color_cc1b21"
+                android:textSize="@dimen/text_size13"/>
+
+
+            <Button
+                android:id="@+id/btnRefund"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@drawable/shape_item_myorder_btnright"
+                android:text="@string/myorder_refund"
+                android:textColor="@color/color_cc1b21"
+                android:textSize="@dimen/text_size13" />
+
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

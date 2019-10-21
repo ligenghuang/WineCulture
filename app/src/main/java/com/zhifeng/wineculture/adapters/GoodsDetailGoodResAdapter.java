@@ -1,7 +1,9 @@
 package com.zhifeng.wineculture.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -9,6 +11,8 @@ import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.modules.OrderDetailDto;
+import com.zhifeng.wineculture.ui.home.GoodsDetailActivity;
+
 /**
  * @ClassName:
  * @Description: 订单详情-商品
@@ -34,5 +38,13 @@ public class GoodsDetailGoodResAdapter extends BaseRecyclerAdapter<OrderDetailDt
         tvGoodsOriginPrice.setText(ResUtil.getFormatString(R.string.temporary_tab_14, model.getOriginal_price()));
         tvGoodsOriginPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
         holder.text(R.id.tvGoodsNum, ResUtil.getFormatString(R.string.temporary_tab_15, model.getGoods_num()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, GoodsDetailActivity.class);
+                intent.putExtra("goods_id", model.getGoods_id()+"");
+                context.startActivity(intent);
+            }
+        });
     }
 }

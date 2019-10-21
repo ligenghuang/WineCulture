@@ -3,6 +3,8 @@ package com.zhifeng.wineculture.ui.impl;
 import com.lgh.huanglib.util.base.BaseView;
 import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderDetailDto;
+import com.zhifeng.wineculture.modules.PayOrderDto;
+import com.zhifeng.wineculture.modules.PayTypeDto;
 
 /**
  * @ClassName:
@@ -14,6 +16,9 @@ public interface OrderDetailView extends BaseView {
     void getOrderDetail();
 
     void getOrderDetailSuccess(OrderDetailDto orderDetailDto);
+
+    void getPayType();
+    void getPayTypeSuccess(PayTypeDto payTypeDto);
 
     /**
      * 取消订单
@@ -29,9 +34,9 @@ public interface OrderDetailView extends BaseView {
      */
     void pay();
 
-    void paySuccess(GeneralDto generalDto);
+    void paySuccess(PayOrderDto payOrderDto);
 
-    void payFail(int code, String msg);
+    void payFail(String msg);
 
     /**
      * 退货

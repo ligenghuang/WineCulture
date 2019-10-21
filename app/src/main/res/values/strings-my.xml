@@ -300,4 +300,8 @@
     <string name="refund_title">退货申请</string>
     <string name="refund_refundReason">请说明退货原因</string>
     <string name="refund_confirm">确认提交</string>
+    <string name="refund_tab_1">未申请</string>
+    <string name="refund_tab_2">待审核</string>
+    <string name="refund_tab_3">退货成功</string>
+    <string name="refund_tab_4">退货失败</string>
 </resources>

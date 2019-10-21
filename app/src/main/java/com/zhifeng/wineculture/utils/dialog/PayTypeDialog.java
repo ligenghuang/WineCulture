@@ -68,7 +68,7 @@ public class PayTypeDialog extends Dialog {
     }
 
     private void initView(){
-        payTypeAdapter = new PayTypeAdapter();
+        payTypeAdapter = new PayTypeAdapter(R.layout.layout_item_paytype);
         recyclerview.setLayoutManager(new LinearLayoutManager(context));
         recyclerview.setAdapter(payTypeAdapter);
         payTypeAdapter.refresh(list);

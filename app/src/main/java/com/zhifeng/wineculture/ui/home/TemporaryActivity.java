@@ -137,7 +137,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         adapter = new GoodsResAdapter(mContext);
         rv.setAdapter(adapter);
         rvPayType.setLayoutManager(new LinearLayoutManager(mContext));
-        payTypeAdapter = new PayTypeAdapter();
+        payTypeAdapter = new PayTypeAdapter(R.layout.layout_item_paytype);
         rvPayType.setAdapter(payTypeAdapter);
         loadView();
     }

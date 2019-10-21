@@ -3,12 +3,16 @@ package com.zhifeng.wineculture.actions;
 import android.annotation.SuppressLint;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderDetailDto;
+import com.zhifeng.wineculture.modules.PayOrderDto;
+import com.zhifeng.wineculture.modules.PayTypeDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.OrderDetailView;
 import com.zhifeng.wineculture.utils.config.MyApp;
@@ -31,14 +35,38 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
         attachView(orderDetailView);
     }
 
+    /**
+     * 获取订单详情
+     * @param order_id
+     */
     public void getOrderDetail(String order_id) {
         post(WebUrlUtil.POST_ORDER_DETAIL, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id), WebUrlUtil.POST_ORDER_DETAIL)));
     }
 
+    /**
+     * 获取支付方式
+     */
+    public void getPayType(){
+        post(WebUrlUtil.POST_PAY_TYPE,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())),WebUrlUtil.POST_PAY_TYPE)
+        ));
+    }
+
+    /**
+     * 修改订单状态
+     * @param order_id
+     * @param status
+     */
     public void cancelOrderOrConfirmToReceive(String order_id, int status) {
         post(WebUrlUtil.POST_EDIT_STATUS, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id, "status", status), WebUrlUtil.POST_EDIT_STATUS)));
     }
 
+    /**
+     * 支付
+     * @param order_id
+     * @param pay_type
+     * @param pwd
+     */
     public void pay(String order_id, int pay_type, String pwd) {
         post(WebUrlUtil.POST_PAY_ORDER, false, service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),
@@ -70,6 +98,45 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
                         }
                         view.onError(orderDetailDto.getMsg(), orderDetailDto.getStatus());
                         return;
+                    }
+                    view.onError(msg, action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_PAY_TYPE:
+                    //todo 获取支付方式
+                    if (aBoolean) {
+                        L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                        PayTypeDto payTypeDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<PayTypeDto>() {
+                        }.getType());
+                        if (payTypeDto.getStatus() == 200){
+                            //todo 获取支付方式成功
+                            view.getPayTypeSuccess(payTypeDto);
+                            return;
+                        }
+                        view.onError(payTypeDto.getMsg(),action.getErrorType());
+                        return;
+                    }
+                    view.onError(msg,action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_PAY_ORDER:
+                    //todo 订单支付
+                    if (aBoolean) {
+                        L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                        try{
+                            PayOrderDto payOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<PayOrderDto>() {
+                            }.getType());
+                            if (payOrderDto.getStatus() == 200) {
+                                //todo 订单支付成功
+                                view.paySuccess(payOrderDto);
+                                return;
+                            }
+                            view.onError(payOrderDto.getMsg(), action.getErrorType());
+                            return;
+                        }catch (JsonSyntaxException e){
+                            GeneralDto generalDto =  new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            }.getType());
+                            view.payFail(generalDto.getMsg());
+                            return;
+                        }
                     }
                     view.onError(msg, action.getErrorType());
                     break;

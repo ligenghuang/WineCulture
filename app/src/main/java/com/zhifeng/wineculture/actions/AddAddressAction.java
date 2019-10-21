@@ -61,9 +61,6 @@ public class AddAddressAction extends BaseAction<AddAddressView> {
         map = CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),
                 "consignee",addOrEditAddressPost.getConsignee(),"district",Integer.parseInt(addOrEditAddressPost.getDistrict()),"address",addOrEditAddressPost.getAddress(),
                 "mobile",addOrEditAddressPost.getMobile(),"is_default",addOrEditAddressPost.getIs_default(),"address_id",addOrEditAddressPost.getAddress_id());
-
-
-
         Map<Object, Object> finalMap = map;
         post(WebUrlUtil.POST_ADD_ADDRESS,false, service -> manager.runHttp(
                 service.PostData(finalMap,WebUrlUtil.POST_ADD_ADDRESS)

@@ -63,7 +63,6 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
         mActicity = this;
         mContext = this;
 
-        getBalanceData();
     }
 
     /**
@@ -120,6 +119,7 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
     protected void onResume() {
         super.onResume();
         baseAction.toRegister();
+        getBalanceData();
     }
 
     @Override

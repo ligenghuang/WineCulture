@@ -101,7 +101,7 @@ public class CartAction extends BaseAction<CartView> {
                                 view.getCartListSuccess(cartListDto);
                                 return;
                             }
-                            view.onError(cartListDto.getMsg(),action.getErrorType());
+                            view.onError(cartListDto.getMsg(),cartListDto.getStatus());
                             return;
                         }
                         view.onError(msg,action.getErrorType());

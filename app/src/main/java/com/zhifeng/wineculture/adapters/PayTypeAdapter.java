@@ -25,8 +25,8 @@ public class PayTypeAdapter extends BaseRecyclerAdapter<Temporary.DataBean.PayTy
         this.onClickListener = onClickListener;
     }
 
-    public PayTypeAdapter() {
-        super(R.layout.layout_item_paytype);
+    public PayTypeAdapter(int layoutId) {
+        super(layoutId);
     }
 
     @Override

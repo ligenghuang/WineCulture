@@ -11,6 +11,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.DensityUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -25,6 +27,8 @@ import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.view.VerticalItemDecoration;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -47,6 +51,8 @@ public class ServiceActivity extends UserBaseActivity<ServiceAction> implements 
     SmartRefreshLayout refreshLayout;
     private ServiceAdapter adapter;
     private int page = 1;
+    private boolean isRefresh = true;
+    private boolean isMore = true;
     private final int REQUEST_CODE = 0;
 
     @Override
@@ -70,7 +76,7 @@ public class ServiceActivity extends UserBaseActivity<ServiceAction> implements 
         rv.addItemDecoration(new VerticalItemDecoration(DensityUtil.dp2px(5)));
         adapter = new ServiceAdapter(mContext);
         rv.setAdapter(adapter);
-        refreshLayout.setEnableLoadMore(false);
+
         refreshLayout.autoRefresh();
         loadView();
     }
@@ -85,7 +91,7 @@ public class ServiceActivity extends UserBaseActivity<ServiceAction> implements 
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+                loadMoreOrderList();
             }
         });
         adapter.setOnRefundButtonClickListener(order_id -> {
@@ -118,18 +124,52 @@ public class ServiceActivity extends UserBaseActivity<ServiceAction> implements 
 
     @Override
     public void getOrderList() {
-        baseAction.getOrderList(page, "tk");
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            page = 1;
+            isRefresh = true;
+            baseAction.getOrderList(page, "tk");
+        }else {
+            refreshLayout.finishRefresh();
+        }
+    }
+
+    @Override
+    public void loadMoreOrderList() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            page++;
+            isRefresh = false;
+            baseAction.getOrderList(page, "tk");
+        }else {
+            refreshLayout.finishLoadMore();
+        }
     }
 
     @Override
     public void getOrderListSuccess(OrderListDto orderList) {
         refreshLayout.finishRefresh();
-        adapter.refresh(orderList.getData());
+        refreshLayout.finishLoadMore();
+        List<OrderListDto.DataBean> dataBeans = orderList.getData();
+        if (dataBeans.size() != 0) {
+            rv.setVisibility(View.VISIBLE);
+            if (isRefresh) {
+                adapter.refresh(dataBeans);
+            } else {
+                adapter.loadMore(dataBeans);
+            }
+        } else {
+            if (isRefresh) {
+                page = page - 1;
+                adapter.refresh(new ArrayList<>());
+            }
+            isMore = false;
+            loadSwapTab();
+        }
     }
 
     @Override
     public void onError(String message, int code) {
         refreshLayout.finishRefresh();
+        refreshLayout.finishLoadMore();
         showNormalToast(message);
     }
 
@@ -149,6 +189,20 @@ public class ServiceActivity extends UserBaseActivity<ServiceAction> implements 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             getOrderList();
+        }
+    }
+
+    /**
+     * tab变换 加载更多的显示方式
+     */
+    private void loadSwapTab() {
+        if (!isMore) {
+            L.e("xx", "设置为没有加载更多....");
+            refreshLayout.finishLoadMoreWithNoMoreData();
+            refreshLayout.setNoMoreData(true);
+        } else {
+            L.e("xx", "设置为可以加载更多....");
+            refreshLayout.setNoMoreData(false);
         }
     }
 }

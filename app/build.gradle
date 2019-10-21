@@ -10,6 +10,19 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+
+        android.applicationVariants.all { variant ->
+            variant.outputs.all {
+                if ("release".equals(variant.buildType.name)) {
+                    def fileName = "WineCulture_v${defaultConfig.versionName}_${defaultConfig.versionCode}_${packageTime()}_release.apk"
+                    outputFileName = fileName
+                } else if ("debug".equals(variant.buildType.name)) {
+                    def fileName = "WineCulture_v${defaultConfig.versionName}_${packageTime()}_debug.apk"
+                    outputFileName = fileName
+                }
+//                outputFileName = "${variant.name}-${variant.versionName}.apk"
+            }
+        }
     }
     buildTypes {
         release {

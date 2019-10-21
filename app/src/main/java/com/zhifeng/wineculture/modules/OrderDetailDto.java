@@ -89,6 +89,15 @@ public class OrderDetailDto {
         private int status;
         private OrderRefundBean order_refund;
         private List<GoodsResBean> goods_res;
+        private int is_pwd;
+
+        public int getIs_pwd() {
+            return is_pwd;
+        }
+
+        public void setIs_pwd(int is_pwd) {
+            this.is_pwd = is_pwd;
+        }
 
         public int getOrder_id() {
             return order_id;
@@ -179,11 +188,11 @@ public class OrderDetailDto {
         }
 
         public String getTotal_amount() {
-            return total_amount == null ? "" : total_amount;
+            return total_amount == null ? "0" : total_amount;
         }
 
         public void setTotal_amount(String total_amount) {
-            this.total_amount = total_amount == null ? "" : total_amount;
+            this.total_amount = total_amount == null ? "0" : total_amount;
         }
 
         public int getAdd_time() {

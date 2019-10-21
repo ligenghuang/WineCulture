@@ -93,7 +93,7 @@ public class TransferActivity extends UserBaseActivity<TransferAction> implement
         avatar = getIntent().getStringExtra("avatar");
 
         tvNameId.setText(ResUtil.getFormatString(R.string.transfer_tab_8,name,id+""));
-        GlideUtil.setImage(mContext,avatar,ivAvatar,R.drawable.icon_avatar);
+        GlideUtil.setImageCircle(mContext,avatar,ivAvatar,R.drawable.icon_avatar);
 
         getBalanceData();
     }

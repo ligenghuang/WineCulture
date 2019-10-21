@@ -22,8 +22,12 @@ import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.OrderDetailAction;
 import com.zhifeng.wineculture.adapters.GoodsDetailGoodResAdapter;
+import com.zhifeng.wineculture.adapters.PayTypeAdapter;
 import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.modules.OrderDetailDto;
+import com.zhifeng.wineculture.modules.PayOrderDto;
+import com.zhifeng.wineculture.modules.PayTypeDto;
+import com.zhifeng.wineculture.modules.Temporary;
 import com.zhifeng.wineculture.ui.impl.OrderDetailView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.data.DynamicTimeFormat;
@@ -31,6 +35,7 @@ import com.zhifeng.wineculture.utils.data.MySp;
 import com.zhifeng.wineculture.utils.dialog.BuyPwdDialog;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -82,10 +87,20 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     Button btnLeft;
     @BindView(R.id.btnRight)
     Button btnRight;
+    @BindView(R.id.rvPayType)
+    RecyclerView rvPayType;
+    @BindView(R.id.cd_pay_type)
+    CardView llPayType;
     private String order_id;
     private int status;
     private final int REQUEST_CODE = 0;
     BuyPwdDialog bugPwdDialog;
+
+    double money = 0;
+    String payTypeNam;
+    int payType;
+    int pwd;
+    private PayTypeAdapter payTypeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +126,29 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         mActicity = this;
         mContext = this;
         order_id = getIntent().getStringExtra("order_id");
+
+        rvPayType.setLayoutManager(new LinearLayoutManager(mContext));
+        payTypeAdapter = new PayTypeAdapter(R.layout.layout_item_paytype2);
+        rvPayType.setAdapter(payTypeAdapter);
+        getPayType();
+        loadView();
+    }
+
+    @Override
+    protected void loadView() {
+        super.loadView();
+        payTypeAdapter.setOnClickListener(new PayTypeAdapter.OnClickListener() {
+            @Override
+            public void onClick(int type, String name) {
+                List<Temporary.DataBean.PayTypeBean> list = payTypeAdapter.getAllData();
+                for (int i = 0; i < list.size(); i++) {
+                    list.get(i).setSelect(list.get(i).getPay_type() == type);
+                }
+                payTypeNam = name;
+                payType = type;
+                payTypeAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /**
@@ -144,6 +182,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         int stringRes = 0;
         btnLeft.setVisibility(View.GONE);
         btnRight.setVisibility(View.GONE);
+        llPayType.setVisibility(View.GONE);
         switch (status) {
             case 1:
                 drawableRes = R.drawable.icon_wait_pa_bg;
@@ -160,6 +199,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
                 btnRight.setTag(data);
                 btnLeft.setVisibility(View.VISIBLE);
                 btnRight.setVisibility(View.VISIBLE);
+                llPayType.setVisibility(View.VISIBLE);
                 break;
             case 2:
                 drawableRes = R.drawable.icon_wait_receive_bg;
@@ -207,6 +247,33 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         tvRemark.setText(TextUtils.isEmpty(user_note) ? ResUtil.getString(R.string.orderdetail_remark_no) : user_note);
         tvOrderNo.setText(orderDetailDto.getData().getOrder_sn());
         tvCreateTime.setText(DynamicTimeFormat.LongToString2(orderDetailDto.getData().getAdd_time() * (long) 1000));
+        money = Double.parseDouble(orderDetailDto.getData().getTotal_amount());
+        pwd = orderDetailDto.getData().getIs_pwd();
+
+    }
+
+    /**
+     * 获取支付方式
+     */
+    @Override
+    public void getPayType() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.getPayType();
+        }
+    }
+
+    /**
+     * 获取支付方式 成功
+     *
+     * @param payTypeDto
+     */
+    @Override
+    public void getPayTypeSuccess(PayTypeDto payTypeDto) {
+        List<Temporary.DataBean.PayTypeBean> payTypeBeans = payTypeDto.getData();
+        payTypeBeans.get(0).setSelect(true);
+        payTypeNam = payTypeBeans.get(0).getPay_name();
+        payType = payTypeBeans.get(0).getPay_type();
+        payTypeAdapter.refresh(payTypeBeans);
     }
 
     @Override
@@ -235,51 +302,55 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     public void pay() {
         //todo 立即支付
         if (CheckNetwork.checkNetwork2(mContext)) {
-            Object[] data = (Object[]) btnRight.getTag();
-            double totalPrice = (double) data[0];
-            int pay_type = (int) data[1];
-            //余额支付
-            if (pay_type == 1) {
-                bugPwdDialog = new BuyPwdDialog(mContext, R.style.MY_AlertDialog, totalPrice, "余额支付");
-                bugPwdDialog.setOnFinishInput(new BuyPwdDialog.OnFinishInput() {
-                    @Override
-                    public void inputFinish(String password) {
-                        loadDialog();
-                        //支付订单
-                        baseAction.pay(order_id, pay_type, password);
-                    }
+            switch (payType) {
+                case 1:
+                    //余额支付
+                    if (pwd == 1) {
+                        bugPwdDialog = new BuyPwdDialog(mContext, R.style.MY_AlertDialog, money, "余额支付");
+                        bugPwdDialog.setOnFinishInput(new BuyPwdDialog.OnFinishInput() {
+                            @Override
+                            public void inputFinish(String password) {
+                                loadDialog();
+                                //支付订单
+                                baseAction.pay(order_id, payType, password);
+                            }
 
-                    @Override
-                    public void close() {
+                            @Override
+                            public void close() {
 
+                            }
+                        });
+                        bugPwdDialog.show();
+                    } else {
+                        showToast(ResUtil.getString(R.string.goods_detail_tab_30));
+                        new Handler().postDelayed(() -> {
+                            Intent intent = new Intent(mContext, ForgetPwdActivity.class);
+                            intent.putExtra("phone", MySp.getMobile(mContext));
+                            intent.putExtra("type", 1);
+                            intent.putExtra("isOrder", true);
+                            startActivity(intent);
+                        }, 1000);
                     }
-                });
-                bugPwdDialog.show();
-            } else {
-                showToast(ResUtil.getString(R.string.goods_detail_tab_30));
-                new Handler().postDelayed(() -> {
-                    Intent intent = new Intent(mContext, ForgetPwdActivity.class);
-                    intent.putExtra("phone", MySp.getMobile(mContext));
-                    intent.putExtra("type", 1);
-                    intent.putExtra("isOrder", true);
-                    startActivity(intent);
-                }, 2000);
+                    break;
+                default:
+                    showNormalToast("暂无开通其他支付方式");
+                    break;
             }
         }
     }
 
     @Override
-    public void paySuccess(GeneralDto generalDto) {
+    public void paySuccess(PayOrderDto payOrderDto) {
         loadDiss();
-        showNormalToast(generalDto.getMsg());
+        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_29));
         if (bugPwdDialog != null) {
             bugPwdDialog.dismiss();
         }
-        finish();
+        getOrderDetail();
     }
 
     @Override
-    public void payFail(int code, String msg) {
+    public void payFail(String msg) {
         loadDiss();
         showNormalToast(msg);
     }

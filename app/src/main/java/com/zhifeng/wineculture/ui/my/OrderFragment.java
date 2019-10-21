@@ -146,43 +146,46 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
 
 
             public void payNow(int order_id, int pay_type, double totalPrice) {
+                Intent detail = new Intent(mContext,OrderDetailActivity.class);
+                detail.putExtra("order_id",order_id+"");
+                startActivity(detail);
                 //todo 立即付款
-                switch (pay_type) {
-                    case 1:
-                        //余额支付
-                        if (MySp.getPwd(mContext) == 1) {
-                            bugPwdDialog = new BuyPwdDialog(mContext, R.style.MY_AlertDialog, totalPrice, "余额支付");
-                            bugPwdDialog.setOnFinishInput(new BuyPwdDialog.OnFinishInput() {
-                                @Override
-                                public void inputFinish(String password) {
-                                    //支付订单
-                                    SubmitOrderPost post = new SubmitOrderPost();
-                                    post.setCart_id(order_id + "");
-                                    post.setPay_type(pay_type + "");
-                                    post.setPwd(password);
-                                    payOrder(post);
-                                }
-
-                                @Override
-                                public void close() {
-
-                                }
-                            });
-                            bugPwdDialog.show();
-                        } else {
-                            showToast(ResUtil.getString(R.string.goods_detail_tab_30));
-                            new Handler().postDelayed(() -> {
-                                Intent intent = new Intent(mContext, ForgetPwdActivity.class);
-                                intent.putExtra("phone", MySp.getMobile(mContext));
-                                intent.putExtra("type", 1);
-                                intent.putExtra("isOrder", true);
-                                startActivity(intent);
-                            }, 2000);
-                        }
-                        break;
-                    default:
-                        break;
-                }
+//                switch (pay_type) {
+//                    case 1:
+//                        //余额支付
+//                        if (MySp.getPwd(mContext) == 1) {
+//                            bugPwdDialog = new BuyPwdDialog(mContext, R.style.MY_AlertDialog, totalPrice, "余额支付");
+//                            bugPwdDialog.setOnFinishInput(new BuyPwdDialog.OnFinishInput() {
+//                                @Override
+//                                public void inputFinish(String password) {
+//                                    //支付订单
+//                                    SubmitOrderPost post = new SubmitOrderPost();
+//                                    post.setCart_id(order_id + "");
+//                                    post.setPay_type(pay_type + "");
+//                                    post.setPwd(password);
+//                                    payOrder(post);
+//                                }
+//
+//                                @Override
+//                                public void close() {
+//
+//                                }
+//                            });
+//                            bugPwdDialog.show();
+//                        } else {
+//                            showToast(ResUtil.getString(R.string.goods_detail_tab_30));
+//                            new Handler().postDelayed(() -> {
+//                                Intent intent = new Intent(mContext, ForgetPwdActivity.class);
+//                                intent.putExtra("phone", MySp.getMobile(mContext));
+//                                intent.putExtra("type", 1);
+//                                intent.putExtra("isOrder", true);
+//                                startActivity(intent);
+//                            }, 2000);
+//                        }
+//                        break;
+//                    default:
+//                        break;
+//                }
             }
 
             @Override

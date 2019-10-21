@@ -81,7 +81,7 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
 
     @Override
     protected CartAction initAction() {
-        return new CartAction(this,this);
+        return new CartAction(this, this);
     }
 
     /**
@@ -115,7 +115,6 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
         recyclerview.setAdapter(cartListAdapter);
 
         loadDialog();
-        getCartList();
         loadView();
     }
 
@@ -128,17 +127,17 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
                 List<CartListDto.DataBean> list = cartListAdapter.getAllData();
                 int num = 0;
                 double total = 0;
-                for (int i = 0; i <list.size() ; i++) {
-                    if (list.get(i).getCart_id() == id){
-                        list.get(i).setSelected( list.get(i).getSelected() == 1 ? 0:1);
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getCart_id() == id) {
+                        list.get(i).setSelected(list.get(i).getSelected() == 1 ? 0 : 1);
                     }
-                    if (list.get(i).getSelected() == 1){
+                    if (list.get(i).getSelected() == 1) {
                         num++;//todo 计算选中数量
                         double totalPrice = Double.parseDouble(list.get(i).getGoods_price()) * list.get(i).getGoods_num();
-                        total = total+totalPrice;
+                        total = total + totalPrice;
                     }
                 }
-                tvCartTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_12,total+""));
+                tvCartTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_12, total + ""));
                 tvCartSelectorAll.setSelected(num == list.size());
                 cartListAdapter.notifyDataSetChanged();
             }
@@ -148,18 +147,18 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
                 //todo 计算总价
                 List<CartListDto.DataBean> list = cartListAdapter.getAllData();
                 double total = 0;
-                for (int i = 0; i <list.size() ; i++) {
-                    if (list.get(i).getSelected() == 1){
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getSelected() == 1) {
                         double totalPrice = Double.parseDouble(list.get(i).getGoods_price()) * list.get(i).getGoods_num();
-                        total = total+totalPrice;
+                        total = total + totalPrice;
                     }
                 }
-                tvCartTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_12,total+""));
+                tvCartTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_12, total + ""));
             }
 
             @Override
             public void editGoodsNum(int id, int num) {
-                editCart(id+"",num+"");
+                editCart(id + "", num + "");
             }
         });
     }
@@ -169,35 +168,36 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
      */
     @Override
     public void getCartList() {
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             baseAction.getCartList();
         }
     }
 
     /**
      * 获取购物车列表成功
+     *
      * @param cartListDto
      */
     @Override
     public void getCartListSuccess(CartListDto cartListDto) {
         loadDiss();
-        if (cartListDto.getData().size()!= 0){
+        if (cartListDto.getData().size() != 0) {
             llCartData.setVisibility(View.VISIBLE);
             llCartNull.setVisibility(View.GONE);
             cartListAdapter.refresh(cartListDto.getData());
-            fTitleTv.setText(ResUtil.getFormatString(R.string.cart_tab_13,cartListDto.getData().size()+""));
+            fTitleTv.setText(ResUtil.getFormatString(R.string.cart_tab_13, cartListDto.getData().size() + ""));
             double total = 0;
             int num = 0;
-            for (int i = 0; i <cartListDto.getData().size() ; i++) {
-                if (cartListDto.getData().get(i).getSelected() == 1){
+            for (int i = 0; i < cartListDto.getData().size(); i++) {
+                if (cartListDto.getData().get(i).getSelected() == 1) {
                     double totalPrice = Double.parseDouble(cartListDto.getData().get(i).getGoods_price()) * cartListDto.getData().get(i).getGoods_num();
-                    total = total+totalPrice;
+                    total = total + totalPrice;
                     num++;
                 }
             }
-            tvCartTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_12,total+""));
+            tvCartTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_12, total + ""));
             tvCartSelectorAll.setSelected(num == cartListDto.getData().size());
-        }else {
+        } else {
             llCartData.setVisibility(View.GONE);
             llCartNull.setVisibility(View.VISIBLE);
             fTitleTv.setText(ResUtil.getString(R.string.cart_tab_1));
@@ -206,11 +206,12 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
 
     /**
      * 删除购物车商品
+     *
      * @param id
      */
     @Override
     public void delCart(String id) {
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             loadDialog();
             baseAction.delCart(id);
         }
@@ -228,8 +229,8 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
 
     @Override
     public void editCart(String id, String num) {
-        if (CheckNetwork.checkNetwork2(mContext)){
-            baseAction.editCart(id,num);
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.editCart(id, num);
         }
     }
 
@@ -246,6 +247,7 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
 
     /**
      * 失败
+     *
      * @param message
      * @param code
      */
@@ -260,6 +262,7 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
     protected void onResume() {
         super.onResume();
         baseAction.toRegister();
+        getCartList();
     }
 
     @Override
@@ -274,22 +277,22 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
     private void setSelected() {
         List<CartListDto.DataBean> list = cartListAdapter.getAllData();
         double total = 0;
-        if (tvCartSelectorAll.isSelected()){
+        if (tvCartSelectorAll.isSelected()) {
             //todo 已全选中
-            for (int i = 0; i <list.size() ; i++) {
+            for (int i = 0; i < list.size(); i++) {
                 //todo 进行反选
                 list.get(i).setSelected(0);
             }
-        }else {
+        } else {
             //todo 未全选中
-            for (int i = 0; i <list.size() ; i++) {
+            for (int i = 0; i < list.size(); i++) {
                 //todo 进行全选
                 list.get(i).setSelected(1);
                 double totalPrice = Double.parseDouble(list.get(i).getGoods_price()) * list.get(i).getGoods_num();
-                total = total+totalPrice;
+                total = total + totalPrice;
             }
         }
-        tvCartTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_12,total+""));
+        tvCartTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_12, total + ""));
         tvCartSelectorAll.setSelected(!tvCartSelectorAll.isSelected());
         cartListAdapter.notifyDataSetChanged();
     }
@@ -302,18 +305,18 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
         String id = "";
         int num = 0;
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getSelected() == 1){
+            if (list.get(i).getSelected() == 1) {
                 num++;
                 //todo 拼接id
-                if (i == 0){
-                    id = list.get(i).getCart_id()+"";
-                }else {
-                    id = id+","+list.get(i).getCart_id();
+                if (i == 0) {
+                    id = list.get(i).getCart_id() + "";
+                } else {
+                    id = id + "," + list.get(i).getCart_id();
                 }
             }
         }
         //todo 判断是否有选中的商品
-        if (num == 0){
+        if (num == 0) {
             showNormalToast(ResUtil.getString(R.string.cart_tab_10));
             return;
         }
@@ -337,16 +340,16 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
                         .atView(ivCartMenu)
                         .hasStatusBarShadow(true) //启用状态栏阴影
                         .asAttachList(new String[]{"首页", "分类", "购物车", "我的"},
-                                new int[]{R.drawable.icon_home_y,R.drawable.icon_classify_y,
-                                        R.drawable.icon_shopping_cart_y,R.drawable.icon_my_y},
+                                new int[]{R.drawable.icon_home_y, R.drawable.icon_classify_y,
+                                        R.drawable.icon_shopping_cart_y, R.drawable.icon_my_y},
                                 new OnSelectListener() {
                                     @Override
                                     public void onSelect(int position, String text) {
                                         //todo 点击事件
                                         if (position != 2) {
                                             MainActivity.Position = position;
-                                            ((MainActivity)mActicity).setSelectedLin();
-                                            ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class,CartActivity.class);
+                                            startActivity(new Intent(mContext, MainActivity.class));
+                                            ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class, CartActivity.class);
                                             finish();
                                         }
                                     }
@@ -364,8 +367,8 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
             case R.id.tv_to_home:
                 //todo 返回首页
                 MainActivity.Position = 0;
-                ((MainActivity)mActicity).setSelectedLin();
-                ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class,CartActivity.class);
+//                startActivity(new Intent(mContext, MainActivity.class));
+                ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class, CartActivity.class);
                 finish();
                 break;
         }
@@ -378,24 +381,24 @@ public class CartActivity extends UserBaseActivity<CartAction> implements CartVi
         List<CartListDto.DataBean> listDtos = cartListAdapter.getAllData();
         String id = "";
         int num = 0;
-        for (int i = 0; i <listDtos.size() ; i++) {
-            if (listDtos.get(i).getSelected() == 1){
+        for (int i = 0; i < listDtos.size(); i++) {
+            if (listDtos.get(i).getSelected() == 1) {
                 num++;
-                if (i ==0){
-                    id = listDtos.get(i).getCart_id()+"";
-                }else {
-                    id = id+","+listDtos.get(i).getCart_id();
+                if (i == 0) {
+                    id = listDtos.get(i).getCart_id() + "";
+                } else {
+                    id = id + "," + listDtos.get(i).getCart_id();
                 }
             }
         }
 
-        if (num == 0){
+        if (num == 0) {
             showNormalToast(ResUtil.getString(R.string.cart_tab_10));
             return;
         }
 
         Intent intent = new Intent(mContext, CartSubmitOrdersActivity.class);
-        intent.putExtra("cartId",id);
+        intent.putExtra("cartId", id);
         startActivity(intent);
     }
 }

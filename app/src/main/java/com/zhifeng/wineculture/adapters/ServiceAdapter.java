@@ -7,6 +7,7 @@ import android.widget.Button;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.modules.OrderListDto;
 
@@ -34,15 +35,31 @@ public class ServiceAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> {
         adapter.refresh(model.getGoods());
         rv.setAdapter(adapter);
         Button btnRefund = holder.itemView.findViewById(R.id.btnRefund);
-        btnRefund.setVisibility(View.GONE);
-        if (model.getIs_refund() == 1) {
-            btnRefund.setVisibility(View.VISIBLE);
-            btnRefund.setOnClickListener(v -> {
-                if (onRefundButtonClickListener != null) {
-                    onRefundButtonClickListener.onRefund(model.getOrder_id());
-                }
-            });
+        btnRefund.setVisibility(View.VISIBLE);
+        String text = "";
+        switch (model.getOrder_status()) {
+            case 6:
+                text = ResUtil.getString(R.string.refund_tab_2);
+                btnRefund.setVisibility(View.GONE);
+                break;
+            case 7:
+                text = ResUtil.getString(R.string.refund_tab_3);
+                btnRefund.setVisibility(View.GONE);
+                break;
+            case 8:
+                text = ResUtil.getString(R.string.refund_tab_4);
+                break;
+            default:
+                text = ResUtil.getString(R.string.refund_tab_1);
+                break;
         }
+
+        holder.text(R.id.tv_item_stats, text);
+        btnRefund.setOnClickListener(v -> {
+            if (onRefundButtonClickListener != null) {
+                onRefundButtonClickListener.onRefund(model.getOrder_id());
+            }
+        });
     }
 
     public void setOnRefundButtonClickListener(OnRefundButtonClickListener onRefundButtonClickListener) {
