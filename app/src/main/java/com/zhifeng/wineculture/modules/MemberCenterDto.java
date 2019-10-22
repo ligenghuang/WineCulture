@@ -61,9 +61,26 @@ public class MemberCenterDto {
         private int id;
         private String avatar;
         private String remainder_money;
-        private int distribut_money;
+        private String distribut_money;
+        private String estimate_money;
         private int level;
         private String levelname;
+
+        public String getDistribut_money() {
+            return distribut_money == null ? "0" : distribut_money;
+        }
+
+        public void setDistribut_money(String distribut_money) {
+            this.distribut_money = distribut_money == null ? "0" : distribut_money;
+        }
+
+        public String getEstimate_money() {
+            return estimate_money == null ? "0" : estimate_money;
+        }
+
+        public void setEstimate_money(String estimate_money) {
+            this.estimate_money = estimate_money == null ? "0" : estimate_money;
+        }
 
         public String getRealname() {
             return realname == null ? "" : realname;
@@ -103,14 +120,6 @@ public class MemberCenterDto {
 
         public void setRemainder_money(String remainder_money) {
             this.remainder_money = remainder_money == null ? "0" : remainder_money;
-        }
-
-        public int getDistribut_money() {
-            return distribut_money;
-        }
-
-        public void setDistribut_money(int distribut_money) {
-            this.distribut_money = distribut_money;
         }
 
         public int getLevel() {

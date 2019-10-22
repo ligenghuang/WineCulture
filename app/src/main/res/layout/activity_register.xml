@@ -7,213 +7,230 @@
 
     <include layout="@layout/layout_title_black_bar" />
 
-    <ImageView
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/shape_login_image" />
+   <androidx.core.widget.NestedScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:fillViewport="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_10">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           android:paddingLeft="@dimen/dp_10"
+           android:paddingRight="@dimen/dp_10"
+           android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:drawableStart="@drawable/icon_login_countries"
-            android:drawablePadding="20dp"
-            android:text="@string/login_country" />
+           <ImageView
+               android:layout_width="75dp"
+               android:layout_height="75dp"
+               android:layout_marginTop="28dp"
+               android:layout_marginBottom="30dp"
+               android:background="@drawable/shape_login_image" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="@string/login_China"
-            android:textColor="@color/color_15"
-            android:textColorHint="@color/color_999999" />
-    </LinearLayout>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="5dp"
+               android:gravity="center_vertical"
+               android:orientation="horizontal"
+               android:padding="@dimen/dp_10">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="@dimen/dp_10"
-        android:background="@color/color_fbefdc" />
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="20dp"
+                   android:drawableStart="@drawable/icon_login_countries"
+                   android:drawablePadding="20dp"
+                   android:text="@string/login_country" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_10">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="20dp"
+                   android:text="@string/login_China"
+                   android:textColor="@color/color_15"
+                   android:textColorHint="@color/color_999999" />
+           </LinearLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:layout_marginStart="@dimen/dp_10"
+               android:background="@color/color_fbefdc" />
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="5dp"
+               android:gravity="center_vertical"
+               android:orientation="horizontal"
+               android:padding="@dimen/dp_10">
 
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:drawableStart="@drawable/icon_login_phone"
-            android:drawablePadding="20dp"
-            android:text="@string/login_num" />
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="20dp"
+                   android:drawableStart="@drawable/icon_login_phone"
+                   android:drawablePadding="20dp"
+                   android:text="@string/login_num" />
 
-        <EditText
-            android:id="@+id/etMobile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/login_numHint"
-            android:inputType="phone"
-            android:maxLength="11"
-            android:textColor="@color/color_15"
-            android:textColorHint="@color/color_999999"
-            android:textSize="@dimen/text_size15" />
-    </LinearLayout>
+               <EditText
+                   android:id="@+id/etMobile"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="20dp"
+                   android:layout_weight="1"
+                   android:background="@null"
+                   android:hint="@string/login_numHint"
+                   android:inputType="phone"
+                   android:maxLength="11"
+                   android:textColor="@color/color_15"
+                   android:textColorHint="@color/color_999999"
+                   android:textSize="@dimen/text_size15" />
+           </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="@dimen/dp_10"
-        android:background="@color/color_fbefdc" />
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:layout_marginStart="@dimen/dp_10"
+               android:background="@color/color_fbefdc" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_10">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="5dp"
+               android:gravity="center_vertical"
+               android:orientation="horizontal"
+               android:padding="@dimen/dp_10">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:drawableStart="@drawable/icon_login_pwd"
-            android:drawablePadding="20dp"
-            android:text="@string/register_newPwd" />
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="20dp"
+                   android:drawableStart="@drawable/icon_login_pwd"
+                   android:drawablePadding="20dp"
+                   android:text="@string/register_newPwd" />
 
-        <EditText
-            android:id="@+id/etPwd"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/register_newPwdHint"
-            android:inputType="textPassword"
-            android:maxLength="16"
-            android:textColor="@color/color_15"
-            android:textColorHint="@color/color_999999"
-            android:textSize="@dimen/text_size15" />
-    </LinearLayout>
+               <EditText
+                   android:id="@+id/etPwd"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="20dp"
+                   android:layout_weight="1"
+                   android:background="@null"
+                   android:hint="@string/register_newPwdHint"
+                   android:inputType="textPassword"
+                   android:maxLength="16"
+                   android:textColor="@color/color_15"
+                   android:textColorHint="@color/color_999999"
+                   android:textSize="@dimen/text_size15" />
+           </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="@dimen/dp_10"
-        android:background="@color/color_fbefdc" />
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:layout_marginStart="@dimen/dp_10"
+               android:background="@color/color_fbefdc" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_10">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="5dp"
+               android:gravity="center_vertical"
+               android:orientation="horizontal"
+               android:padding="@dimen/dp_10">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:drawableStart="@drawable/icon_login_pwd"
-            android:drawablePadding="20dp"
-            android:text="@string/register_comfirmPwd" />
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="20dp"
+                   android:drawableStart="@drawable/icon_login_pwd"
+                   android:drawablePadding="20dp"
+                   android:text="@string/register_comfirmPwd" />
 
-        <EditText
-            android:id="@+id/etConfirmPwd"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/register_comfirmPwdHint"
-            android:inputType="textPassword"
-            android:maxLength="16"
-            android:textColor="@color/color_15"
-            android:textColorHint="@color/color_999999"
-            android:textSize="@dimen/text_size15" />
+               <EditText
+                   android:id="@+id/etConfirmPwd"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="20dp"
+                   android:layout_weight="1"
+                   android:background="@null"
+                   android:hint="@string/register_comfirmPwdHint"
+                   android:inputType="textPassword"
+                   android:maxLength="16"
+                   android:textColor="@color/color_15"
+                   android:textColorHint="@color/color_999999"
+                   android:textSize="@dimen/text_size15" />
 
-    </LinearLayout>
+           </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="@dimen/dp_10"
-        android:background="@color/color_fbefdc" />
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:layout_marginStart="@dimen/dp_10"
+               android:background="@color/color_fbefdc" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_10">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="5dp"
+               android:gravity="center_vertical"
+               android:orientation="horizontal"
+               android:padding="@dimen/dp_10">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:drawableStart="@drawable/icon_register_auth_code"
-            android:drawablePadding="20dp"
-            android:text="@string/register_code" />
+               <TextView
+                   android:layout_width="100dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="20dp"
+                   android:drawableStart="@drawable/icon_register_auth_code"
+                   android:drawablePadding="20dp"
+                   android:text="@string/register_code" />
 
-        <EditText
-            android:id="@+id/etCode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/register_codeHint"
-            android:inputType="number"
-            android:maxLength="6"
-            android:textColor="@color/color_15"
-            android:textColorHint="@color/color_999999"
-            android:textSize="@dimen/text_size15" />
+               <EditText
+                   android:id="@+id/etCode"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="20dp"
+                   android:layout_weight="1"
+                   android:background="@null"
+                   android:hint="@string/register_codeHint"
+                   android:inputType="number"
+                   android:maxLength="6"
+                   android:textColor="@color/color_15"
+                   android:textColorHint="@color/color_999999"
+                   android:textSize="@dimen/text_size15" />
 
-        <TextView
-            android:id="@+id/tvGetCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
-            android:text="@string/register_getcode"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/text_size13" />
-    </LinearLayout>
+               <TextView
+                   android:id="@+id/tvGetCode"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="@dimen/dp_10"
+                   android:text="@string/register_getcode"
+                   android:textColor="@color/blue"
+                   android:textSize="@dimen/text_size13" />
+           </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="@dimen/dp_10"
-        android:background="@color/color_fbefdc" />
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1dp"
+               android:layout_marginStart="@dimen/dp_10"
+               android:background="@color/color_fbefdc" />
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="@dimen/dp_10"
-        android:background="@drawable/shape_login_btn"
-        android:text="@string/register_register"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size15"
-        android:textStyle="bold" />
+           <Button
+               android:id="@+id/btnRegister"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="@dimen/dp_10"
+               android:layout_marginTop="20dp"
+               android:layout_marginEnd="@dimen/dp_10"
+               android:background="@drawable/shape_login_btn"
+               android:text="@string/register_register"
+               android:textColor="@color/white"
+               android:textSize="@dimen/text_size15"
+               android:textStyle="bold" />
+
+       </LinearLayout>
+
+   </androidx.core.widget.NestedScrollView>
 </LinearLayout>

@@ -116,8 +116,8 @@ public class MemberCenterActivity extends UserBaseActivity<MemberCenterAction> i
         tvMemberCenterPhone.setText(mobile);
         GlideUtil.setImageCircle(mContext,dataBean.getAvatar(),ivAvatar,R.drawable.icon_avatar);
         tvMemberCenterBalance.setText("￥"+dataBean.getRemainder_money());
-        tvMemberCenterCanUse.setText("￥0.00");
-        tvMemberCenterToBeDetermined.setText("￥0.00");
+        tvMemberCenterCanUse.setText("￥"+dataBean.getDistribut_money());
+        tvMemberCenterToBeDetermined.setText("￥"+dataBean.getEstimate_money());
 
     }
 

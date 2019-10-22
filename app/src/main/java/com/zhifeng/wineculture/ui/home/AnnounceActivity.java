@@ -15,8 +15,11 @@ import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.AnnounceAction;
 import com.zhifeng.wineculture.adapters.AnnounceAdapter;
 import com.zhifeng.wineculture.modules.AnnounceDto;
+import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.AnnounceView;
+import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
+import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
 
@@ -120,7 +123,15 @@ public class AnnounceActivity extends UserBaseActivity<AnnounceAction> implement
     @Override
     public void onError(String message, int code) {
         loadDiss();
-        showNormalToast(message);
+        if (code == 999){
+            showToast(R.string.my_nologin);
+            MainActivity.Position = 0;
+            MySp.clearAllSP(mContext);
+            jumpActivity(mContext, LoginActivity.class);
+        }else {
+            showNormalToast(message);
+        }
+
     }
 
     @Override

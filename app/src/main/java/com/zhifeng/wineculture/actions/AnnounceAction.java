@@ -1,12 +1,14 @@
 package com.zhifeng.wineculture.actions;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.modules.AnnounceDto;
+import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.net.WebUrlUtil;
 import com.zhifeng.wineculture.ui.impl.AnnounceView;
 import com.zhifeng.wineculture.utils.config.MyApp;
@@ -70,15 +72,22 @@ public class AnnounceAction extends BaseAction<AnnounceView> {
                         //todo 获取公告列表
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            AnnounceDto announceDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<AnnounceDto>() {
-                            }.getType());
-                            if (announceDto.getStatus() == 200){
-                                //todo 获取公告列表
-                                view.getAnnounceSuccess(announceDto);
-                                return;
-                            }
-                            view.onError(announceDto.getMsg(),action.getErrorType());
-                            return;
+                          try {
+                              AnnounceDto announceDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<AnnounceDto>() {
+                              }.getType());
+                              if (announceDto.getStatus() == 200){
+                                  //todo 获取公告列表
+                                  view.getAnnounceSuccess(announceDto);
+                                  return;
+                              }
+                              view.onError(announceDto.getMsg(),action.getErrorType());
+                              return;
+                          }catch (JsonSyntaxException e){
+                              GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                              }.getType());
+                              view.onError(generalDto.getMsg(),generalDto.getStatus());
+                              return;
+                          }
                         }
                         view.onError(msg,action.getErrorType());
                         break;
