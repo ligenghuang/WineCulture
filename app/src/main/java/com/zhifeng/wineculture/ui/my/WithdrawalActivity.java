@@ -80,7 +80,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
     /**
      * 最大提现
      */
-    private int max;
+    private double max;
     /**
      * 手续费率
      */
@@ -319,7 +319,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
                 @Override
                 public void inputFinish(String password) {
                     loadDialog();
-                    baseAction.withdrawal(money, withdrawalType);
+                    baseAction.withdrawal(money, withdrawalType, password);
                 }
 
                 @Override

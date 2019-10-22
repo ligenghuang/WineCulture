@@ -59,8 +59,8 @@ public class WithdrawalAction extends BaseAction<WithdrawalView> {
     /**
      * 提交提现
      */
-    public void withdrawal(float money, int withdraw_type) {
-        post(WebUrlUtil.POST_WITHDRAWAL, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "money", money, "withdraw_type", withdraw_type), WebUrlUtil.POST_WITHDRAWAL)));
+    public void withdrawal(float money, int withdraw_type, String pwd) {
+        post(WebUrlUtil.POST_WITHDRAWAL, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "money", money, "withdraw_type", withdraw_type, "pwd", pwd), WebUrlUtil.POST_WITHDRAWAL)));
     }
 
     /**

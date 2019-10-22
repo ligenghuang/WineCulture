@@ -15,7 +15,7 @@ public class FansOrderAdapter extends BaseRecyclerAdapter<FansOrderDto.DataBeanX
         holder.setIsRecyclable(false);
         holder.text(R.id.tvOrderNo, model.getOrder_sn());
         holder.text(R.id.tvRealName, model.getRealname());
-        holder.text(R.id.tvId, model.getId());
+        holder.text(R.id.tvId, String.valueOf(model.getId()));
         holder.text(R.id.tvMoney, model.getTotal_amount());
         long time = model.getAdd_time() * (long) 1000;
         holder.text(R.id.tvDate, DynamicTimeFormat.LongToString5(time));

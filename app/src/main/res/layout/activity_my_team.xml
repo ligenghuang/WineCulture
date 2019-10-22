@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_f2"
@@ -13,7 +14,7 @@
         android:background="@drawable/shape_my_top_bg"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_title_white_right_bar" />
+        <include layout="@layout/layout_title_white_bar" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,14 +26,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/myteam_teamMemberNum" />
+                android:text="@string/myteam_teamMemberNum"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/tvMemberNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="0" />
+                android:text="0"
+                android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 
@@ -76,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="0"
+                    android:textColor="@color/color_e46910"
                     android:textSize="@dimen/text_size15" />
             </LinearLayout>
 
@@ -106,6 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="0"
+                    android:textColor="@color/color_e46910"
                     android:textSize="@dimen/text_size15" />
             </LinearLayout>
 
@@ -136,6 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="0"
+                    android:textColor="@color/color_e46910"
                     android:textSize="@dimen/text_size15" />
             </LinearLayout>
 
@@ -166,6 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="0"
+                    android:textColor="@color/color_e46910"
                     android:textSize="@dimen/text_size15" />
             </LinearLayout>
         </LinearLayout>
@@ -224,11 +231,20 @@
                 android:layout_marginEnd="@dimen/dp_10"
                 android:background="@color/black8" />
 
-            <include
-                layout="@layout/layout_smartrefreshlayout"
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_10" />
+                android:layout_marginStart="@dimen/dp_10">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_myteam" />
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

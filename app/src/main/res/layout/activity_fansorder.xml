@@ -10,69 +10,75 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/dp_10"
-        android:background="@drawable/shape_ll_orderdetail"
-        android:orientation="vertical">
+        android:background="@color/color_f2"
+        android:padding="@dimen/dp_10">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_ll_orderdetail"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/myteam_lookup_orderid"
-                android:textSize="@dimen/text_size16" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/myteam_lookup_name"
-                android:textSize="@dimen/text_size16" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/myteam_lookup_money"
-                android:textSize="@dimen/text_size16" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/myteam_lookup_date"
-                android:textSize="@dimen/text_size16" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:background="@color/black8" />
-
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/refreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:itemCount="2"
-                tools:listitem="@layout/layout_item_fansorder" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/myteam_lookup_orderid"
+                    android:textSize="@dimen/text_size16" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/myteam_lookup_name"
+                    android:textSize="@dimen/text_size16" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/myteam_lookup_money"
+                    android:textSize="@dimen/text_size16" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/myteam_lookup_date"
+                    android:textSize="@dimen/text_size16" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@color/black8" />
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/layout_item_fansorder" />
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

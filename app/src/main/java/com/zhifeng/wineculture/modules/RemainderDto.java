@@ -51,7 +51,7 @@ public class RemainderDto {
         private String alipay;
         private String alipay_name;
         private double rate;
-        private int max;
+        private double max;
 
         public int getPwd() {
             return pwd;
@@ -93,11 +93,11 @@ public class RemainderDto {
             this.rate = rate;
         }
 
-        public int getMax() {
+        public double getMax() {
             return max;
         }
 
-        public void setMax(int max) {
+        public void setMax(double max) {
             this.max = max;
         }
     }

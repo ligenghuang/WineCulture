@@ -82,12 +82,7 @@ public class MyTeamActivity extends UserBaseActivity<MyTeamAction> implements My
         refreshLayout.setOnRefreshListener(refreshLayout -> {
             getMyTeam();
         });
-       adapter.setOnClickListener(new TeamAdapter.OnClickListener() {
-           @Override
-           public void onClick(int id) {
-               startActivity(FansOrderActivity.class, "id", String.valueOf(id));
-           }
-       });
+       adapter.setOnClickListener(id -> startActivity(FansOrderActivity.class, "id", String.valueOf(id)));
     }
 
     /**
@@ -121,9 +116,14 @@ public class MyTeamActivity extends UserBaseActivity<MyTeamAction> implements My
     @Override
     public void getMyTeamSuccess(MyTeamDto myTeamDto) {
         refreshLayout.finishRefresh();
-        int teamCount = myTeamDto.getData().getTeam_count();
+        MyTeamDto.DataBean bean = myTeamDto.getData();
+        int teamCount = bean.getTeam_count();
         tvMemberNum.setText(String.valueOf(teamCount));
-        List<MyTeamDto.DataBean.ListBean> beans = myTeamDto.getData().getList();
+        tvTeam.setText(String.valueOf(teamCount));
+        tvNormalMember.setText(String.valueOf(bean.getPutong()));
+        tvVip.setText(String.valueOf(bean.getVip()));
+        tvVip1.setText(String.valueOf(bean.getVip1()));
+        List<MyTeamDto.DataBean.ListBean> beans = bean.getList();
         adapter.refresh(beans);
     }
 

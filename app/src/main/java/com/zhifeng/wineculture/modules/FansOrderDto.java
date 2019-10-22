@@ -109,7 +109,7 @@ public class FansOrderDto {
             private int add_time;
             private String order_sn;
             private String total_amount;
-            private String id;
+            private int id;
             private String realname;
 
             public int getAdd_time() {
@@ -136,12 +136,12 @@ public class FansOrderDto {
                 this.total_amount = total_amount == null ? "" : total_amount;
             }
 
-            public String getId() {
-                return id == null ? "" : id;
+            public int getId() {
+                return id;
             }
 
-            public void setId(String id) {
-                this.id = id == null ? "" : id;
+            public void setId(int id) {
+                this.id = id;
             }
 
             public String getRealname() {

@@ -7,8 +7,8 @@ public class MyTeamDto {
 
     /**
      * status : 200
-     * msg : success
-     * data : {"list":[{"id":27864,"realname":"默认昵称","mobile":"17875592622"},{"id":27868,"realname":"默认昵称","mobile":"13286971460"},{"id":27869,"realname":"默认昵称","mobile":"13719364739"}],"team_count":0}
+     * msg : 获取成功
+     * data : {"list":[{"id":27799,"realname":"啊波（秒审）","mobile":"15967684278"},{"id":27800,"realname":"共点","mobile":"13777610748"}],"team_count":2,"putong":1,"vip":0,"vip1":1}
      */
 
     private int status;
@@ -41,11 +41,17 @@ public class MyTeamDto {
 
     public static class DataBean {
         /**
-         * list : [{"id":27864,"realname":"默认昵称","mobile":"17875592622"},{"id":27868,"realname":"默认昵称","mobile":"13286971460"},{"id":27869,"realname":"默认昵称","mobile":"13719364739"}]
-         * team_count : 0
+         * list : [{"id":27799,"realname":"啊波（秒审）","mobile":"15967684278"},{"id":27800,"realname":"共点","mobile":"13777610748"}]
+         * team_count : 2
+         * putong : 1
+         * vip : 0
+         * vip1 : 1
          */
 
         private int team_count;
+        private int putong;
+        private int vip;
+        private int vip1;
         private List<ListBean> list;
 
         public int getTeam_count() {
@@ -54,6 +60,30 @@ public class MyTeamDto {
 
         public void setTeam_count(int team_count) {
             this.team_count = team_count;
+        }
+
+        public int getPutong() {
+            return putong;
+        }
+
+        public void setPutong(int putong) {
+            this.putong = putong;
+        }
+
+        public int getVip() {
+            return vip;
+        }
+
+        public void setVip(int vip) {
+            this.vip = vip;
+        }
+
+        public int getVip1() {
+            return vip1;
+        }
+
+        public void setVip1(int vip1) {
+            this.vip1 = vip1;
         }
 
         public List<ListBean> getList() {
@@ -69,9 +99,9 @@ public class MyTeamDto {
 
         public static class ListBean {
             /**
-             * id : 27864
-             * realname : 默认昵称
-             * mobile : 17875592622
+             * id : 27799
+             * realname : 啊波（秒审）
+             * mobile : 15967684278
              */
 
             private int id;

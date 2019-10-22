@@ -1,5 +1,6 @@
 package com.zhifeng.wineculture.ui.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,9 +11,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.config.GlideUtil;
+import com.lxj.xpopup.XPopup;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.ShareUrlAction;
 import com.zhifeng.wineculture.modules.SharePosterDto;
+import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.ShareUrlView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
@@ -123,6 +126,21 @@ public class PopularizeActivity extends UserBaseActivity<ShareUrlAction> impleme
 
     @OnClick(R.id.f_right_iv)
     public void OnClick(View view) {
-
+        //todo 导航栏右边菜单
+        new XPopup.Builder(mActicity)
+                .hasShadowBg(false)
+                .atView(view)
+                .hasStatusBarShadow(true) //启用状态栏阴影
+                .asAttachList(new String[]{"首页", "分类", "购物车", "我的"},
+                        new int[]{R.drawable.icon_home_y, R.drawable.icon_classify_y,
+                                R.drawable.icon_shopping_cart_y, R.drawable.icon_my_y},
+                        (position, text) -> {
+                            //todo 点击事件
+                            MainActivity.Position = position;
+                            startActivity(new Intent(mContext, MainActivity.class));
+                            ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class, PopularizeActivity.class);
+                            finish();
+                        })
+                .show();
     }
 }
