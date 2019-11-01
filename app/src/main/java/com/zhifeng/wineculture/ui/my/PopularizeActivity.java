@@ -31,10 +31,6 @@ import butterknife.OnClick;
  * @Date: 2019/9/28 18:07
  */
 public class PopularizeActivity extends UserBaseActivity<ShareUrlAction> implements ShareUrlView {
-
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.f_right_iv)

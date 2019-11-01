@@ -71,9 +71,10 @@ public class OrderFragment extends UserBaseFragment<OrderListAction> implements 
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
-        if (isVisible) {
+        if (isVisible && ((MyOrderActivity) mActivity).currentPosition == position) {
+            baseAction.toRegister();
             rv.setVisibility(View.GONE);
-            refreshLayout.autoRefresh();
+            getOrderList();
         }
     }
 

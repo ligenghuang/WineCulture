@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.lgh.huanglib.util.CheckNetwork;
-import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
@@ -45,7 +44,6 @@ import butterknife.OnClick;
  */
 
 public class CartFragment extends UserBaseFragment<CartAction> implements CartView {
-    View view;
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.tv_cart_title)
@@ -148,7 +146,7 @@ public class CartFragment extends UserBaseFragment<CartAction> implements CartVi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_cart, container, false);
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
         ButterKnife.bind(this, view);
         binding();
         ImmersionBar.setStatusBarView(getActivity(), topView);
@@ -157,7 +155,7 @@ public class CartFragment extends UserBaseFragment<CartAction> implements CartVi
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
-        if (isVisible && ((MainActivity) mActivity).Position == 2) {
+        if (isVisible && MainActivity.Position == 2) {
             getCartList();
         }
     }

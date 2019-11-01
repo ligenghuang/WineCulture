@@ -4,13 +4,13 @@ public class BindBankCardDto {
 
     /**
      * status : 200
-     * msg : 绑定成功！
-     * data : {"bankcard":"123456785456456","bankname":"4行"}
+     * msg : 编辑成功
+     * data : []
      */
 
     private int status;
     private String msg;
-    private DataBean data;
+    private Object data;
 
     public int getStatus() {
         return status;
@@ -28,37 +28,11 @@ public class BindBankCardDto {
         this.msg = msg == null ? "" : msg;
     }
 
-    public DataBean getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(DataBean data) {
+    public void setData(Object data) {
         this.data = data;
-    }
-
-    public static class DataBean {
-        /**
-         * bankcard : 123456785456456
-         * bankname : 4行
-         */
-
-        private String bankcard;
-        private String bankname;
-
-        public String getBankcard() {
-            return bankcard == null ? "" : bankcard;
-        }
-
-        public void setBankcard(String bankcard) {
-            this.bankcard = bankcard == null ? "" : bankcard;
-        }
-
-        public String getBankname() {
-            return bankname == null ? "" : bankname;
-        }
-
-        public void setBankname(String bankname) {
-            this.bankname = bankname == null ? "" : bankname;
-        }
     }
 }

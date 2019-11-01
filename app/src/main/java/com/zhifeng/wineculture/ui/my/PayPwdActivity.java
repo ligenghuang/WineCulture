@@ -1,13 +1,12 @@
 package com.zhifeng.wineculture.ui.my;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
@@ -30,9 +29,6 @@ import butterknife.OnClick;
  */
 
 public class PayPwdActivity extends UserBaseActivity {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

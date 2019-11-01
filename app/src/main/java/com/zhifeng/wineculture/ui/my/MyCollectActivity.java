@@ -1,7 +1,6 @@
 package com.zhifeng.wineculture.ui.my;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +14,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhifeng.wineculture.R;
-import com.zhifeng.wineculture.actions.BaseAction;
 import com.zhifeng.wineculture.actions.MyCollectAction;
 import com.zhifeng.wineculture.adapters.CollectionListAdapter;
 import com.zhifeng.wineculture.modules.CollectionListDto;
@@ -34,8 +32,6 @@ import butterknife.BindView;
  * @Date: 2019/9/28 18:05
  */
 public class MyCollectActivity extends UserBaseActivity<MyCollectAction> implements MyCollectView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

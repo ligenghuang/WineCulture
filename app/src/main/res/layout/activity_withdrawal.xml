@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -154,83 +153,87 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:background="@drawable/icon_member_center_card_bg"
-        android:orientation="vertical"
-        android:padding="15dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/balance_withdrawal_tab_7"
-            android:textColor="@color/color_15"
-            android:textSize="@dimen/text_size12" />
-
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
-            >
-
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@drawable/icon_member_center_card_bg"
+            android:orientation="vertical"
+            android:padding="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥"
+                android:text="@string/balance_withdrawal_tab_7"
                 android:textColor="@color/color_15"
-                android:textSize="@dimen/text_size12"
-                android:layout_marginRight="@dimen/dp_10"
-                />
+                android:textSize="@dimen/text_size12" />
 
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="@dimen/dp_10"
-                android:background="@color/color_7d"
-                android:layout_marginRight="7dp"
-                />
-
-            <EditText
-                android:id="@+id/et_withdrawal_money"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                android:textSize="@dimen/text_size11"
-                android:textColor="@color/color_15"
-                android:textColorHint="@color/color_9"
-                android:inputType="numberDecimal"
-                android:hint="@string/balance_withdrawal_tab_8"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size12"
+                    android:layout_marginRight="@dimen/dp_10"
+                    />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/color_7d"
+                    android:layout_marginRight="7dp"
+                    />
+
+                <EditText
+                    android:id="@+id/et_withdrawal_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:textSize="@dimen/text_size11"
+                    android:textColor="@color/color_15"
+                    android:textColorHint="@color/color_9"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/balance_withdrawal_tab_8"/>
+
+                <TextView
+                    android:id="@+id/tv_withdrawal_money_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:textColor="@color/color_006cff"
+                    android:textSize="@dimen/text_size11"
+                    android:text="@string/balance_withdrawal_tab_9"/>
+
+
+            </LinearLayout>
+
+            <View style="@style/line_1"/>
 
             <TextView
-                android:id="@+id/tv_withdrawal_money_all"
+                android:id="@+id/tv_withdrawal_money_poundage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:textColor="@color/color_006cff"
-                android:textSize="@dimen/text_size11"
-                android:text="@string/balance_withdrawal_tab_9"/>
-
+                android:textSize="@dimen/text_size12"
+                android:textColor="@color/color_15"
+                android:layout_marginTop="5dp"/>
 
         </LinearLayout>
-
-        <View style="@style/line_1"/>
-
-        <TextView
-            android:id="@+id/tv_withdrawal_money_poundage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size12"
-            android:textColor="@color/color_15"
-            android:layout_marginTop="5dp"/>
-
-    </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/tv_withdrawal_confirm"

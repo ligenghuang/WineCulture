@@ -1,14 +1,12 @@
 package com.zhifeng.wineculture.ui.my;
 
+import android.os.Bundle;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
@@ -37,9 +35,6 @@ import butterknife.BindView;
  */
 
 public class WithdrawalRecordActivity extends UserBaseActivity<WithdrawalRecordAction> implements WithdrawalRecordView {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

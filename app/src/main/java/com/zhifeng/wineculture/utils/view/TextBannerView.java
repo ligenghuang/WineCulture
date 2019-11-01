@@ -65,7 +65,7 @@ public class TextBannerView extends RelativeLayout {
      * 默认1.5s
      */
 
-    private List<String> mDatas;
+    public List<String> mDatas;
     private ITextBannerItemClickListener mListener;
     private boolean isStarted;
     private boolean isDetachedFromWindow;

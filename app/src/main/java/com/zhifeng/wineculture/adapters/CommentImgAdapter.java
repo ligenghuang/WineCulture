@@ -26,6 +26,6 @@ public class CommentImgAdapter extends BaseRecyclerAdapter<String>{
     protected void onBindViewHolder(SmartViewHolder holder, String model, int position) {
         holder.setIsRecyclable(false);
         ImageView imageView = holder.itemView.findViewById(R.id.iv_item_comment_img);
-        GlideUtil.setImage(context,model,imageView,R.drawable.icon_comment_img);
+        GlideUtil.setImage(context,model,imageView,R.drawable.icon_goods_img);
     }
 }

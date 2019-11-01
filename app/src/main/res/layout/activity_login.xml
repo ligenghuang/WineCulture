@@ -173,7 +173,7 @@
                    android:id="@+id/tvRegister"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:background="@drawable/selector_login_text_bg"
+                   android:background="@drawable/shape_login_line"
                    android:text="@string/login_register" />
 
                <View
@@ -185,7 +185,7 @@
                    android:id="@+id/tvForgetPwd"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:background="@drawable/selector_login_text_bg"
+                   android:background="@drawable/shape_login_line"
                    android:text="@string/login_forgetPwd" />
            </LinearLayout>
 

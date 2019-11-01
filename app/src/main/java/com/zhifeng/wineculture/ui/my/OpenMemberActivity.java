@@ -2,13 +2,11 @@ package com.zhifeng.wineculture.ui.my;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
@@ -37,9 +35,6 @@ import butterknife.BindView;
  */
 
 public class OpenMemberActivity extends UserBaseActivity<OpenMemberAction> implements OpenMemberView {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

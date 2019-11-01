@@ -46,8 +46,6 @@ import butterknife.OnClick;
  * @Date: 2019/10/15 15:56
  */
 public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> implements OrderDetailView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
@@ -133,18 +131,14 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
 
     @Override
     protected void loadView() {
-        super.loadView();
-        payTypeAdapter.setOnClickListener(new PayTypeAdapter.OnClickListener() {
-            @Override
-            public void onClick(int type, String name) {
-                List<Temporary.DataBean.PayTypeBean> list = payTypeAdapter.getAllData();
-                for (int i = 0; i < list.size(); i++) {
-                    list.get(i).setSelect(list.get(i).getPay_type() == type);
-                }
-                payTypeNam = name;
-                payType = type;
-                payTypeAdapter.notifyDataSetChanged();
+        payTypeAdapter.setOnClickListener((type, name) -> {
+            List<Temporary.DataBean.PayTypeBean> list = payTypeAdapter.getAllData();
+            for (int i = 0; i < list.size(); i++) {
+                list.get(i).setSelect(list.get(i).getPay_type() == type);
             }
+            payTypeNam = name;
+            payType = type;
+            payTypeAdapter.notifyDataSetChanged();
         });
     }
 
@@ -298,9 +292,10 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     @Override
     public void getPayTypeSuccess(PayTypeDto payTypeDto) {
         List<Temporary.DataBean.PayTypeBean> payTypeBeans = payTypeDto.getData();
-        payTypeBeans.get(0).setSelect(true);
-        payTypeNam = payTypeBeans.get(0).getPay_name();
-        payType = payTypeBeans.get(0).getPay_type();
+        Temporary.DataBean.PayTypeBean payTypeBean = payTypeBeans.get(0);
+        payTypeBean.setSelect(true);
+        payTypeNam = payTypeBean.getPay_name();
+        payType = payTypeBean.getPay_type();
         payTypeAdapter.refresh(payTypeBeans);
     }
 
@@ -312,7 +307,9 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     @Override
     public void cancelOrderOrConfirmToReceive(int status) {
         //todo 取消订单/确认收货
-        baseAction.cancelOrderOrConfirmToReceive(order_id, status);
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.cancelOrderOrConfirmToReceive(order_id, status);
+        }
     }
 
     @Override

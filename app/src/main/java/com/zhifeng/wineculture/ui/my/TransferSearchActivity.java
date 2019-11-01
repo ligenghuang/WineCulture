@@ -20,16 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
-import com.lgh.huanglib.util.data.ValidateUtils;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.TransferSearchAction;
 import com.zhifeng.wineculture.adapters.TransferSearchAdapter;
 import com.zhifeng.wineculture.modules.SearchPhoneDto;
-import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.TransferSearchView;
-import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
-import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
 
@@ -45,9 +41,6 @@ import butterknife.OnClick;
  */
 
 public class TransferSearchActivity extends UserBaseActivity<TransferSearchAction> implements TransferSearchView {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.f_right_iv)

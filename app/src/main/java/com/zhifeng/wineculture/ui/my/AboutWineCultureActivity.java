@@ -3,7 +3,6 @@ package com.zhifeng.wineculture.ui.my;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -16,7 +15,6 @@ import com.lgh.huanglib.util.cusview.richtxtview.ImageLoader;
 import com.lgh.huanglib.util.cusview.richtxtview.XRichText;
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.AboutWineCultureAction;
-import com.zhifeng.wineculture.actions.BaseAction;
 import com.zhifeng.wineculture.modules.GeneralDto;
 import com.zhifeng.wineculture.ui.impl.AboutWineCultureView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
@@ -35,8 +33,6 @@ import butterknife.BindView;
  * @Date: 2019/9/28 18:05
  */
 public class AboutWineCultureActivity extends UserBaseActivity<AboutWineCultureAction> implements AboutWineCultureView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

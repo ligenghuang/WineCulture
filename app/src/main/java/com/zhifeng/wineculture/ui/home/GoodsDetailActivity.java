@@ -734,10 +734,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                                 myBitmap = Bitmap.createScaledBitmap(myBitmap, screen_width, widget_height, false);
 //
                                 return myBitmap;
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                                return BitmapFactory.decodeResource(getResources(), R.drawable.icon_good_detail);
-                            } catch (ExecutionException e) {
+                            } catch (InterruptedException | ExecutionException e) {
                                 e.printStackTrace();
                                 return BitmapFactory.decodeResource(getResources(), R.drawable.icon_good_detail);
                             }

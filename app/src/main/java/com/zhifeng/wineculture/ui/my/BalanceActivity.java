@@ -16,7 +16,6 @@ import com.zhifeng.wineculture.ui.impl.BalanceView;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
-import java.text.DecimalFormat;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,9 +29,6 @@ import butterknife.OnClick;
  */
 
 public class BalanceActivity extends UserBaseActivity<BalanceAction> implements BalanceView {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

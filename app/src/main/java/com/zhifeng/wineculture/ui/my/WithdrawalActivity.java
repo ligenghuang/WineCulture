@@ -3,6 +3,7 @@ package com.zhifeng.wineculture.ui.my;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -44,8 +45,6 @@ import butterknife.OnClick;
  */
 
 public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> implements WithdrawalView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
@@ -75,7 +74,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
     /**
      * 全部余额
      */
-    private String remainder_money = "0";
+    private String remainder_money = "0.00";
 
     /**
      * 最大提现
@@ -143,7 +142,26 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
 
     @Override
     protected void loadView() {
+        etWithdrawalMoney.setFilters(new InputFilter[]{(source, start, end, dest, dstart, dend) -> {
+            String destString = dest.toString();
+            if (source.equals(".") && destString.length() == 0) {
+                return "0.";
+            }
+            if (destString.equals("0") && !source.equals(".")) {
+                return "";
+            }
+            if (destString.contains(".")) {
+                int index = destString.indexOf(".");
+                int length = destString.substring(index).length();
+                if (length == 3) {
+                    return "";
+                }
+            }
+            return null;
+        }});
         etWithdrawalMoney.addTextChangedListener(new TextWatcher() {
+            private DecimalFormat df = new DecimalFormat("######0.00");
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -156,14 +174,19 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
                 if (!TextUtils.isEmpty(string)) {
                     money = Double.parseDouble(string);
                 }
-                double totalMoney = Double.parseDouble(remainder_money);
-                if (money > totalMoney) {
-                    money = totalMoney;
-                    etWithdrawalMoney.setText(remainder_money);
-                    etWithdrawalMoney.setSelection(remainder_money.length());
+                if (money > max) {
+                    money = max;
+                    etWithdrawalMoney.setText(String.valueOf(max));
+                    etWithdrawalMoney.setSelection(String.valueOf(max).length());
+                } else {
+                    double remainder = Double.parseDouble(remainder_money);
+                    if (money > remainder) {
+                        money = remainder;
+                        etWithdrawalMoney.setText(String.valueOf(remainder));
+                        etWithdrawalMoney.setSelection(String.valueOf(remainder).length());
+                    }
                 }
                 double poundAge = money * rate;
-                DecimalFormat df = new DecimalFormat("######0.00");
                 tvWithdrawalMoneyPoundage.setText(ResUtil.getFormatString(R.string.balance_withdrawal_tab_10, String.valueOf(df.format(poundAge))));
             }
 
@@ -207,7 +230,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
         RemainderDto.DataBean bean = remainderDto.getData();
         remainder_money = bean.getRemainder_money();
         tvWithdrawalBalance.setText(ResUtil.getFormatString(R.string.balance_withdrawal_tab_18, remainder_money));
-        max = remainderDto.getData().getMax();
+        max = bean.getMax();
         tvWithdrawalLimit.setText(ResUtil.getFormatString(R.string.balance_withdrawal_tab_2, String.valueOf(max)));
         rate = bean.getRate();
         pwd = bean.getPwd();
@@ -215,9 +238,6 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
 
     /**
      * 失败
-     *
-     * @param message
-     * @param code
      */
     @Override
     public void onError(String message, int code) {
@@ -239,8 +259,8 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
         alipay = bean.getAlipay();
         if (!TextUtils.isEmpty(aliPayName) && !TextUtils.isEmpty(alipay)) {
             boolean phone2 = ValidateUtils.isPhone2(alipay);
-            aliPayAccount = aliPayName + "(" + alipay.replaceAll(phone2 ? "(\\d{3})(\\d{4})(\\d{4})"
-                    : "(.{2}).+(.{2}@.+)", phone2 ? "$1****$3" : "$1****$2") + ")";
+            aliPayAccount = aliPayName + "(" + alipay.replaceAll(phone2 ? "(\\d{3})\\d{4}(\\d{4})"
+                    : "(.{2}).+(.{2}@.+)", "$1****$2") + ")";
             if (withdrawalType == 3) {
                 tv_withdrawal_account.setText(aliPayAccount);
             }
@@ -265,7 +285,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
         bankName = bean.getBank_name();
         bankCard = bean.getBank_card();
         if (!TextUtils.isEmpty(bankName) && !TextUtils.isEmpty(bankCard)) {
-            bankAccount = bankName + "(" + bankCard.replaceAll("(\\d{15})(\\d{4})", "***************$2") + ")";
+            bankAccount = bankName + "(" + bankCard.replaceAll("\\d{15}(\\d{4})", "***************$1") + ")";
             if (withdrawalType == 4) {
                 tv_withdrawal_account.setText(bankAccount);
             }
@@ -288,8 +308,21 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
             return;
         }
         float money = Float.parseFloat(moneyString);
-        float a = 100f;
-        if (money % a != 0) {
+        if (money == 0) {
+            showNormalToast(R.string.balance_withdrawal_tab_20);
+            return;
+        }
+        double remainder = Double.parseDouble(remainder_money);
+        if (remainder == 0) {
+            showNormalToast(R.string.balance_withdrawal_tab_15);
+            return;
+        }
+        if (max == 0) {
+            showNormalToast(R.string.balance_withdrawal_tab_19);
+            return;
+        }
+        float divisor = 100f;
+        if (money % divisor != 0) {
             showNormalToast(R.string.balance_withdrawal_tab_17);
             return;
         }
@@ -299,10 +332,6 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
         }
         if (withdrawalType == 4 && TextUtils.isEmpty(bankCard)) {
             showNormalToast(R.string.balance_withdrawal_tab_16);
-            return;
-        }
-        if (money == 0) {
-            showNormalToast(R.string.balance_withdrawal_tab_15);
             return;
         }
         if (pwd == 0) {
@@ -354,12 +383,11 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
 
     private void withdrawalAll() {
         double money = Double.parseDouble(remainder_money);
-        if (money > max) {
+        if (money >= max) {
             etWithdrawalMoney.setText(String.valueOf(max));
             etWithdrawalMoney.setSelection(String.valueOf(max).length());
         } else {
             etWithdrawalMoney.setText(remainder_money);
-            etWithdrawalMoney.setSelection(remainder_money.length());
         }
     }
 

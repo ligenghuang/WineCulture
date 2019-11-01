@@ -34,8 +34,6 @@ import butterknife.OnClick;
  * @Date: 2019/10/10 14:16
  */
 public class RegisterActivity extends UserBaseActivity<RegisterAction> implements RegisterView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

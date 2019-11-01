@@ -39,8 +39,6 @@ import butterknife.BindView;
  * @Date: 2019/9/28 18:07
  */
 public class ServiceActivity extends UserBaseActivity<ServiceAction> implements ServiceView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

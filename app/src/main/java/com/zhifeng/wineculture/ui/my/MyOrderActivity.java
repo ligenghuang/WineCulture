@@ -28,8 +28,6 @@ import butterknife.OnTouch;
  * @Date: 2019/9/28 18:06
  */
 public class MyOrderActivity extends UserBaseActivity {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
@@ -152,9 +150,9 @@ public class MyOrderActivity extends UserBaseActivity {
                 position = position4;
                 break;
         }
-        currentPosition=position;
+        currentPosition = position;
         vp.setCurrentItem(position);
         setSelect(position);
-        return  false;
+        return false;
     }
 }

@@ -1,7 +1,6 @@
 package com.zhifeng.wineculture.ui.my;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,8 +33,6 @@ import butterknife.BindView;
  * @Date: 2019/10/15 18:27
  */
 public class FansOrderActivity extends UserBaseActivity<FansOrderAction> implements FansOrderView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

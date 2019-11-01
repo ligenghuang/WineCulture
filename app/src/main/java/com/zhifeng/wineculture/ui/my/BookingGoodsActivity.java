@@ -34,9 +34,6 @@ import butterknife.OnClick;
  */
 
 public class BookingGoodsActivity extends UserBaseActivity<BookingGoodsAction> implements BookingGoodsView {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

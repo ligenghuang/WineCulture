@@ -1,6 +1,7 @@
 package com.zhifeng.wineculture.ui.my;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,8 +37,6 @@ import butterknife.OnClick;
  * @Date: 2019/9/28 18:06
  */
 public class MyFootPrintActivity extends UserBaseActivity<MyFootPrintAction> implements MyFootPrintView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
@@ -165,6 +164,10 @@ public class MyFootPrintActivity extends UserBaseActivity<MyFootPrintAction> imp
      */
     @Override
     public void deleteFootPrint(String id) {
+        if (TextUtils.isEmpty(id)){
+            showNormalToast(R.string.my_foot_print_tab_5);
+            return;
+        }
         if (CheckNetwork.checkNetwork2(mContext)){
             loadDialog();
             baseAction.deleteFootPrint(id);
@@ -249,21 +252,18 @@ public class MyFootPrintActivity extends UserBaseActivity<MyFootPrintAction> imp
      */
     private void delete(){
         List<FootPrintDto.DataBean> list = myFootPrintAdapter.getAllData();
-        String id = "";
-        int num = 0;
+        StringBuilder id = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
-           if (list.get(i).isClick()){
-               num++;
+            FootPrintDto.DataBean dataBean = list.get(i);
+            if (dataBean.isClick()){
                //todo 拼接id
-               if (num == 1) {
-                   id = list.get(i).getGoods_id() + "";
-               } else {
-                   id = id + "," + list.get(i).getGoods_id();
+               if (id.length() > 0) {
+                   id.append(",");
                }
+               id.append(dataBean.getGoods_id());
            }
-
         }
-        deleteFootPrint(id);
+        deleteFootPrint(id.toString());
     }
 
     private void setManagement() {

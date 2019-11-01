@@ -45,8 +45,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class CommentActivity extends UserBaseActivity<CommentAction> implements CommentView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.f_right_tv)

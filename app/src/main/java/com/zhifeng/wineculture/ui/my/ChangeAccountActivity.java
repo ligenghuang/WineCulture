@@ -2,7 +2,6 @@ package com.zhifeng.wineculture.ui.my;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -35,8 +34,6 @@ import butterknife.OnClick;
  */
 
 public class ChangeAccountActivity extends UserBaseActivity {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
@@ -107,7 +104,6 @@ public class ChangeAccountActivity extends UserBaseActivity {
                 .navigationBarWithKitkatEnable(false)
                 .init();
         toolbar.setNavigationOnClickListener(view -> finish());
-//        fTitleTv.setText(R.string.myteam_lookup_title);
     }
 
     @OnClick(R.id.tvChangeAccount)

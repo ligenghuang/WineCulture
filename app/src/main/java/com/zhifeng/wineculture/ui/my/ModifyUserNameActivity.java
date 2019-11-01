@@ -2,7 +2,6 @@ package com.zhifeng.wineculture.ui.my;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -31,8 +30,6 @@ import butterknife.OnClick;
  */
 
 public class ModifyUserNameActivity extends UserBaseActivity<ModifyUserNameAction> implements ModifyUserNameView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

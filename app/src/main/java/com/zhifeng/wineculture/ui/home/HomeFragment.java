@@ -3,6 +3,7 @@ package com.zhifeng.wineculture.ui.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +96,6 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
     HotGoodsAdapter hotGoodsAdapter;
     LikeGoodsAdapter likeGoodsAdapter;
 
-
     @Override
     protected HomeAction initAction() {
         return new HomeAction((RxAppCompatActivity) getActivity(), this);
@@ -110,22 +110,7 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
 
     @Override
     protected void initialize() {
-        init();
-        loadView();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-        ButterKnife.bind(this, view);
-        binding();
-        ImmersionBar.setStatusBarView(getActivity(), topView);
-        return view;
-    }
-
-    @Override
-    protected void init() {
-        super.init();
+        baseAction.toRegister();
         refreshLayout.setEnableLoadMore(false);//禁止上拉加载更多
 
         //轮播图
@@ -148,15 +133,24 @@ public class HomeFragment extends UserBaseFragment<HomeAction> implements HomeVi
         likeGoodsAdapter = new LikeGoodsAdapter(mContext);
         rvLikeGoods.setLayoutManager(new GridLayoutManager(mContext, 2));
         rvLikeGoods.setAdapter(likeGoodsAdapter);
-
-        loadDialog();
-        getHomeData();
+        loadView();
+        new Handler().postDelayed(()->{
+            loadDialog();
+            getHomeData();
+        },1000);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, view);
+        binding();
+        ImmersionBar.setStatusBarView(getActivity(), topView);
+        return view;
+    }
 
     @Override
     protected void loadView() {
-        super.loadView();
         //todo 公告列表点击事件
         tvBanner.setItemOnClickListener(new ITextBannerItemClickListener() {
             @Override

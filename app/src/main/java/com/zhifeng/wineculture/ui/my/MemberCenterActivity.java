@@ -29,8 +29,6 @@ import butterknife.OnClick;
  * @Date: 2019/9/28 18:05
  */
 public class MemberCenterActivity extends UserBaseActivity<MemberCenterAction> implements MemberCenterView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

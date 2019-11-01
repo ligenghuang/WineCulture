@@ -40,9 +40,6 @@ import butterknife.BindView;
  */
 
 public class AdvertisingActivity extends UserBaseActivity {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

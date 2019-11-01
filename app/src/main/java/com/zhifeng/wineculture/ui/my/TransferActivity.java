@@ -1,6 +1,5 @@
 package com.zhifeng.wineculture.ui.my;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -19,13 +18,9 @@ import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.TransferAction;
 import com.zhifeng.wineculture.modules.BalanceDto;
 import com.zhifeng.wineculture.modules.GeneralDto;
-import com.zhifeng.wineculture.modules.post.SubmitOrderPost;
 import com.zhifeng.wineculture.modules.post.TransferPost;
-import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.TransferView;
-import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
-import com.zhifeng.wineculture.utils.data.MySp;
 import com.zhifeng.wineculture.utils.dialog.BuyPwdDialog;
 
 import java.lang.ref.WeakReference;
@@ -42,9 +37,6 @@ import butterknife.OnClick;
  */
 
 public class TransferActivity extends UserBaseActivity<TransferAction> implements TransferView {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

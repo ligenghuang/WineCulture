@@ -58,9 +58,6 @@ import static com.lgh.huanglib.util.data.DensityUtil.dp2px;
  */
 
 public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> implements SearchGoodsView {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.et_search)
     EditText etSearch;
     @BindView(R.id.toolbar)
@@ -244,7 +241,7 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
      */
     @Override
     public void deleteHistory() {
-        if (CheckNetwork.checkNetwork2(mContext)) {
+        if (CheckNetwork.checkNetwork2(mContext) && searchGoodsHistoryAdapter.getAllData().size() > 0) {
             loadDialog();
             baseAction.delHistory();
         }

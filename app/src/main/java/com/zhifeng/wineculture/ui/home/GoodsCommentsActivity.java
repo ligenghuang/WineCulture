@@ -1,7 +1,6 @@
 package com.zhifeng.wineculture.ui.home;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,8 +29,6 @@ import java.util.List;
 import butterknife.BindView;
 
 public class GoodsCommentsActivity extends UserBaseActivity<CommentsListAction> implements CommentsListView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

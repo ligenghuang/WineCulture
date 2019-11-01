@@ -36,8 +36,6 @@ import butterknife.OnClick;
  * @Date: 2019/9/28 15:35
  */
 public class LoginActivity extends UserBaseActivity<LoginAction> implements LoginView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
@@ -85,7 +83,7 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         String phone = getIntent().getStringExtra("phone");
         etMobile.setText(phone);
         if (phone != null) {
-            etMobile.setSelection(phone.length());
+            etPwd.requestFocus();
         }
         loadView();
     }

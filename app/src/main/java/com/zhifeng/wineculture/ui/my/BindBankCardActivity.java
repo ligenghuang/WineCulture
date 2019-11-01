@@ -22,6 +22,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 /**
  * @ClassName:
  * @Description: 会员中心-提现-绑定银行卡
@@ -29,8 +30,6 @@ import butterknife.OnClick;
  * @Date: 2019/10/21 16:36
  */
 public class BindBankCardActivity extends UserBaseActivity<BindBankCardAction> implements BindBankCardView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
@@ -89,21 +88,21 @@ public class BindBankCardActivity extends UserBaseActivity<BindBankCardAction> i
 
     @Override
     public void bindBankCard() {
+        String card = etBankCard.getText().toString();
+        if (TextUtils.isEmpty(card)) {
+            showNormalToast(R.string.bindbankcard_cardhint);
+            return;
+        }
+        if (!ValidateUtils.isBankNo(card)) {
+            showNormalToast(R.string.bindbankcard_rightcardhint);
+            return;
+        }
+        String bankName = etBankName.getText().toString();
+        if (TextUtils.isEmpty(bankName)) {
+            showNormalToast(R.string.bindbankcard_banknamehint);
+            return;
+        }
         if (CheckNetwork.checkNetwork2(mContext)) {
-            String card = etBankCard.getText().toString();
-            if (TextUtils.isEmpty(card)) {
-                showNormalToast(R.string.bindbankcard_cardhint);
-                return;
-            }
-            if (!ValidateUtils.isBankNo(card)) {
-                showNormalToast(R.string.bindbankcard_rightcardhint);
-                return;
-            }
-            String bankName = etBankName.getText().toString();
-            if (TextUtils.isEmpty(bankName)) {
-                showNormalToast(R.string.bindbankcard_banknamehint);
-                return;
-            }
             baseAction.bindBankCard(card, bankName);
         }
     }

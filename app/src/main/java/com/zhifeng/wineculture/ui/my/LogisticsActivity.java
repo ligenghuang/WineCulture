@@ -1,7 +1,6 @@
 package com.zhifeng.wineculture.ui.my;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -12,8 +11,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.config.GlideUtil;
@@ -22,12 +19,8 @@ import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.actions.LogisticsAction;
 import com.zhifeng.wineculture.adapters.LogisticsListAdapter;
 import com.zhifeng.wineculture.modules.LogisticsDto;
-import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.LogisticsView;
-import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
-import com.zhifeng.wineculture.utils.data.MySp;
-import com.zhifeng.wineculture.utils.json.GetJsonDataUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -45,9 +38,6 @@ import butterknife.OnClick;
  */
 
 public class LogisticsActivity extends UserBaseActivity<LogisticsAction> implements LogisticsView {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

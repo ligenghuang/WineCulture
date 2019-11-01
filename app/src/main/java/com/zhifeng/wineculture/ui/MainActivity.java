@@ -1,5 +1,6 @@
 package com.zhifeng.wineculture.ui;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Process;
@@ -26,6 +27,7 @@ import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -68,7 +70,6 @@ public class MainActivity extends UserBaseActivity {
 
     // 上次按退出的时间
     private long downTime;
-    public static boolean isLogin;
 
     @Override
     public int intiLayout() {
@@ -82,7 +83,11 @@ public class MainActivity extends UserBaseActivity {
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         binding();
         //解决布局被底部虚拟按键遮住问题
-        initSystemBarTint();
+//        initSystemBarTint();
+        if(checkDeviceHasNavigationBar()){
+            View rootView = findViewById(android.R.id.content);
+            rootView.setPadding(0, 0, 0, getNavigationBarHeight());
+        }
     }
 
     /**
@@ -164,13 +169,10 @@ public class MainActivity extends UserBaseActivity {
 
         fragmentPagerAdapter.setFragments(fragments);
         setSelectedLin(Position);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                myPager.setAdapter(fragmentPagerAdapter);
-                myPager.setCurrentItem(Position, false);
-                myPager.setOffscreenPageLimit(fragmentSize);
-            }
+        new Handler().postDelayed(() -> {
+            myPager.setAdapter(fragmentPagerAdapter);
+            myPager.setCurrentItem(Position, false);
+            myPager.setOffscreenPageLimit(fragmentSize);
         }, 500);
 
     }
@@ -292,5 +294,41 @@ public class MainActivity extends UserBaseActivity {
                 break;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    /**
+     * 判断是否存在NavigationBar
+     */
+    private boolean checkDeviceHasNavigationBar() {
+        boolean hasNavigationBar = false;
+        Resources rs = getResources();
+        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id);
+        }
+        try {
+            Class<?> clazz = Class.forName("android.os.SystemProperties");
+            Method m = clazz.getMethod("get", String.class);
+            String navBarOverride = (String) m.invoke(clazz, "qemu.hw.mainkeys");
+            if ("1".equals(navBarOverride)) {
+                hasNavigationBar = false;
+            } else if ("0".equals(navBarOverride)) {
+                hasNavigationBar = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hasNavigationBar;
+    }
+
+    /**
+     * 获取底部导航栏高度
+     */
+    public int getNavigationBarHeight() {
+        Resources resources = getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        //获取NavigationBar的高度
+        return resources.getDimensionPixelSize(resourceId);
     }
 }

@@ -1,8 +1,5 @@
 package com.zhifeng.wineculture.ui.my;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +9,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
@@ -41,9 +40,6 @@ import butterknife.OnClick;
  */
 
 public class ForgetPwdActivity extends UserBaseActivity<ForgetPwdAction> implements ForgetPwdView {
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

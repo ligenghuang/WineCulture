@@ -36,7 +36,7 @@ public class ServiceAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean> {
         rv.setAdapter(adapter);
         Button btnRefund = holder.itemView.findViewById(R.id.btnRefund);
         btnRefund.setVisibility(View.VISIBLE);
-        String text = "";
+        String text;
         switch (model.getOrder_status()) {
             case 6:
                 text = ResUtil.getString(R.string.refund_tab_2);

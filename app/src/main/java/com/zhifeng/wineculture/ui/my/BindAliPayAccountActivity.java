@@ -21,6 +21,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 /**
  * @ClassName:
  * @Description: 会员中心-提现-绑定支付宝
@@ -28,8 +29,6 @@ import butterknife.OnClick;
  * @Date: 2019/10/21 16:36
  */
 public class BindAliPayAccountActivity extends UserBaseActivity<BindAliPayAccountAction> implements BindAliPayAccountView {
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
@@ -88,17 +87,17 @@ public class BindAliPayAccountActivity extends UserBaseActivity<BindAliPayAccoun
 
     @Override
     public void bindAliPayAccount() {
+        String userName = etUserName.getText().toString();
+        if (TextUtils.isEmpty(userName)) {
+            showNormalToast(R.string.bindalipayaccount_namehint);
+            return;
+        }
+        String aliPay = etAliPay.getText().toString();
+        if (TextUtils.isEmpty(aliPay)) {
+            showNormalToast(R.string.bindalipayaccount_alipayhint);
+            return;
+        }
         if (CheckNetwork.checkNetwork2(mContext)) {
-            String userName = etUserName.getText().toString();
-            if (TextUtils.isEmpty(userName)) {
-                showNormalToast(R.string.bindalipayaccount_namehint);
-                return;
-            }
-            String aliPay = etAliPay.getText().toString();
-            if (TextUtils.isEmpty(aliPay)) {
-                showNormalToast(R.string.bindalipayaccount_alipayhint);
-                return;
-            }
             baseAction.bindAliPayAccount(userName, aliPay);
         }
     }

@@ -2,7 +2,6 @@ package com.zhifeng.wineculture.ui.my;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,8 +37,6 @@ import butterknife.BindView;
  */
 public class MyCommentsListActivity extends UserBaseActivity<MyCommentsListAction> implements MyCommentsListView {
     private final int REQUEST_CODE = 0;
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
@@ -86,9 +83,7 @@ public class MyCommentsListActivity extends UserBaseActivity<MyCommentsListActio
 
     @Override
     protected void loadView() {
-        refreshLayout.setOnRefreshListener(refreshLayout -> {
-            getCommentList();
-        });
+        refreshLayout.setOnRefreshListener(refreshLayout -> getCommentList());
         adapter.setOnButtonClickListener(order_id -> {
             //todo 评价
             Intent intent = new Intent(mContext, CommentActivity.class);

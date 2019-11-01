@@ -31,13 +31,9 @@ import butterknife.OnTouch;
  */
 
 public class BalanceOfPaymentActivity extends UserBaseActivity {
-
     public static int Position = 0;
     private static final int POIONTONE = 0;
     private static final int POIONTTWO = 1;
-
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)

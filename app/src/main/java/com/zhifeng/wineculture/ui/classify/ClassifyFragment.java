@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.wineculture.R;
@@ -75,7 +76,7 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
         view = inflater.inflate(R.layout.fragment_classify, container, false);
         ButterKnife.bind(this, view);
         binding();
-        mImmersionBar.setStatusBarView(getActivity(), topView);
+        ImmersionBar.setStatusBarView(getActivity(), topView);
         return view;
     }
 

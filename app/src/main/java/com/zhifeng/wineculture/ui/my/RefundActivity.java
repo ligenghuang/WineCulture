@@ -45,8 +45,6 @@ public class RefundActivity extends UserBaseActivity<RefundAction> implements Re
     public static final int REQUEST_CODE_SELECT = 100;
     public static final int REQUEST_CODE_PREVIEW = 101;
     public static final int IMAGE_ITEM_ADD = -1;
-    @BindView(R.id.top_view)
-    View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
