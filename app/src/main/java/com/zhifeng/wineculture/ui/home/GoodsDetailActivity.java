@@ -275,8 +275,10 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, dataBean.getStock() + ""));//库存
         double freight = Double.parseDouble(dataBean.getShipping_price());
         tvGoodsFreight.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "￥" + dataBean.getShipping_price());//运费
+        L.e("lgh_collection","collection   =  "+dataBean.getCollection());
         isCollection = dataBean.getCollection() == 1;
         tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
+        tvGoodsAttention.setSelected(isCollection);
         tvGoodsAddress.setText(dataBean.getAddress());
         comment_count = dataBean.getComment_count();
         tvGoodsCommentCount.setText(ResUtil.getFormatString(R.string.goods_detail_tab_12, comment_count + ""));//评价数量
@@ -316,6 +318,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         showNormalToast(msg);
         isCollection = !isCollection;
         tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
+        tvGoodsAttention.setSelected(isCollection);
     }
 
     /**

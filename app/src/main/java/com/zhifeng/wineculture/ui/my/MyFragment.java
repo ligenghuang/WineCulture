@@ -15,6 +15,7 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.config.GlideUtil;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -158,7 +159,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
         UserInfoDto.DataBean dataBean = userInfoDto.getData();
         GlideUtil.setImageCircle(mContext, dataBean.getAvatar(), iv, R.drawable.icon_avatar);
         tvName.setText(dataBean.getRealname());
-        tvId.setText(String.valueOf(dataBean.getId()));
+        tvId.setText(ResUtil.getFormatString(R.string.my_id,String.valueOf(dataBean.getId())));
         MySp.setMobile(mContext, dataBean.getMobile());
         MySp.setName(mContext,dataBean.getRealname());
         MySp.setAvatar(mContext,dataBean.getAvatar());

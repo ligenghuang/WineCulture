@@ -129,6 +129,7 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     @Override
     public void loginSuccess(LoginDto loginDto) {
         loadDiss();
+        MySp.setMobile(mContext, loginDto.getData().getMobile());
         MySp.setAccessToken(mContext, loginDto.getData().getToken());
         jumpActivity(mContext, MainActivity.class);
     }

@@ -415,11 +415,14 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
                         .atView(llSearch)
                         .asCustom(new CustomDrawerPopupView(mActicity, list, new CustomDrawerPopupView.OnListClickListener() {
                             @Override
-                            public void onClick(boolean t1, boolean t2, boolean t3, boolean t4) {
+                            public void onClick(boolean t1, boolean t2, boolean t3, boolean t4,boolean isClick,List<ScreenDto> List) {
                                 shipping_price = t1?1:0;//仅看包邮
                                 stock = t1?1:0;//仅看有货
                                 sales = t1?1:0;//促销商品
-                                refreshLayout.autoRefresh();
+                                list = List;
+                                if (isClick){
+                                    refreshLayout.autoRefresh();
+                                }
                             }
                         }))
                         .show();

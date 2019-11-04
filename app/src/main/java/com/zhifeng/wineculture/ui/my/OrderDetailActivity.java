@@ -258,8 +258,8 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         tvRemainder.setText(ResUtil.getFormatString(R.string.orderdetail_goodsPrice, orderDetailDto.getData().getUser_money()));
         tvPostage.setText(ResUtil.getFormatString(R.string.orderdetail_goodsPrice, orderDetailDto.getData().getShipping_price()));
         tvpayPrice.setText(ResUtil.getFormatString(R.string.orderdetail_goodsPrice, orderDetailDto.getData().getTotal_amount()));
-        String user_note = orderDetailDto.getData().getUser_note();
-        tvRemark.setText(TextUtils.isEmpty(user_note) ? ResUtil.getString(R.string.orderdetail_remark_no) : user_note);
+//        String user_note = orderDetailDto.getData().getUser_note();
+//        tvRemark.setText(TextUtils.isEmpty(user_note) ? ResUtil.getString(R.string.orderdetail_remark_no) : user_note);
         tvOrderNo.setText(orderDetailDto.getData().getOrder_sn());
         tvCreateTime.setText(DynamicTimeFormat.LongToString2(orderDetailDto.getData().getAdd_time() * (long) 1000));
         money = Double.parseDouble(orderDetailDto.getData().getTotal_amount());

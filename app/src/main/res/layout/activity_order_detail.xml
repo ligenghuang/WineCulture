@@ -126,22 +126,13 @@
                         android:src="@drawable/icon_zebra_crossing" />
                 </RelativeLayout>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="1dp"
-                    app:contentPadding="@dimen/dp_10">
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         tools:itemCount="2" />
-                </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -250,6 +241,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="5dp"
+                    android:visibility="gone"
                     app:cardElevation="1dp"
                     app:contentPadding="@dimen/dp_10">
 

@@ -2,50 +2,70 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_ll_orderdetail"
-    android:orientation="horizontal"
-    android:padding="@dimen/dp_10">
-
-    <ImageView
-        android:id="@+id/ivGoods"
-        android:layout_width="@dimen/item_height60"
-        android:layout_height="@dimen/item_height60" />
-
-    <TextView
-        android:id="@+id/tvGoodsName"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_marginStart="@dimen/dp_10"
-        android:textSize="@dimen/text_size15" />
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:gravity="end"
-        android:orientation="vertical">
+        android:background="@drawable/shape_ll_orderdetail"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10">
+
+
+        <ImageView
+            android:id="@+id/ivGoods"
+            android:layout_width="@dimen/item_height60"
+            android:layout_height="@dimen/item_height60" />
 
         <TextView
-            android:id="@+id/tvGoodsPrice"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvGoodsName"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:textColor="@color/red"
-            android:textSize="@dimen/text_size12" />
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_weight="1"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size15" />
 
-        <TextView
-            android:id="@+id/tvGoodsOriginPrice"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_10"
-            android:textSize="@dimen/text_size11" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:gravity="end"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvGoodsNum"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_10"
-            android:textSize="@dimen/text_size12" />
+            <TextView
+                android:id="@+id/tvGoodsPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size12" />
+
+            <TextView
+                android:id="@+id/tvGoodsOriginPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textSize="@dimen/text_size11" />
+
+            <TextView
+                android:id="@+id/tvGoodsNum"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textSize="@dimen/text_size12" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_item_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_15"
+        android:padding="@dimen/dp_10"
+        android:textSize="@dimen/text_size15"
+        android:background="@drawable/shape_ll_orderdetail"/>
 </LinearLayout>

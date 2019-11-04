@@ -17,9 +17,11 @@ import java.util.List;
 
 public class CustomDrawerPopupView extends DrawerPopupView {
     Context context;
+    boolean isClick = false;
     List<ScreenDto> list = new ArrayList<>();
 
     OnListClickListener onListClickListener;
+    ScreenAdapter screenAdapter;
 
     public void setOnListClickListener(OnListClickListener onListClickListener) {
         this.onListClickListener = onListClickListener;
@@ -41,9 +43,15 @@ public class CustomDrawerPopupView extends DrawerPopupView {
     protected void onCreate() {
         super.onCreate();
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        ScreenAdapter screenAdapter = new ScreenAdapter();
+        screenAdapter = new ScreenAdapter();
         recyclerView.setLayoutManager(new GridLayoutManager(context,2));
         recyclerView.setAdapter(screenAdapter);
+        screenAdapter.setOnClickListener(new ScreenAdapter.OnClickListener() {
+            @Override
+            public void onClick() {
+                isClick = true;
+            }
+        });
         screenAdapter.refresh(list);
         findViewById(R.id.iv_back).setOnClickListener(new OnClickListener() {
             @Override
@@ -61,13 +69,13 @@ public class CustomDrawerPopupView extends DrawerPopupView {
 
     @Override
     protected void onDismiss() {
-        onListClickListener.onClick(list.get(0).isClick(),list.get(1).isClick(),list.get(2).isClick(),list.get(3).isClick());
+        onListClickListener.onClick(list.get(0).isClick(),list.get(1).isClick(),list.get(2).isClick(),list.get(3).isClick(),isClick,screenAdapter.getAllData());
         super.onDismiss();
 
     }
 
     public interface OnListClickListener {
-        void onClick(boolean t1,boolean t2,boolean t3,boolean t4);
+        void onClick(boolean t1,boolean t2,boolean t3,boolean t4,boolean isClick,List<ScreenDto> list);
     }
 
 }

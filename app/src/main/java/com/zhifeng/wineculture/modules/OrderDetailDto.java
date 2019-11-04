@@ -346,6 +346,15 @@ public class OrderDetailDto {
             private String goods_price;
             private String original_price;
             private String img;
+            private String user_note;
+
+            public String getUser_note() {
+                return user_note == null ? "" : user_note;
+            }
+
+            public void setUser_note(String user_note) {
+                this.user_note = user_note == null ? "" : user_note;
+            }
 
             public int getGoods_id() {
                 return goods_id;

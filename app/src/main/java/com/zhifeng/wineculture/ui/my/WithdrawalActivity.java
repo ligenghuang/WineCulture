@@ -2,6 +2,7 @@ package com.zhifeng.wineculture.ui.my;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -25,7 +26,9 @@ import com.zhifeng.wineculture.modules.AliPayAccountDto;
 import com.zhifeng.wineculture.modules.BankCardDto;
 import com.zhifeng.wineculture.modules.RemainderDto;
 import com.zhifeng.wineculture.modules.WithdrawalDto;
+import com.zhifeng.wineculture.ui.MainActivity;
 import com.zhifeng.wineculture.ui.impl.WithdrawalView;
+import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseActivity;
 import com.zhifeng.wineculture.utils.data.MySp;
 import com.zhifeng.wineculture.utils.dialog.PayPwdDialog;
@@ -372,7 +375,12 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
         if (payPwdDialog != null) {
             payPwdDialog.dismiss();
         }
-        getBalance();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 2000);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.zhifeng.wineculture.utils;
 
+import java.util.List;
+
 public class Util {
     private static long lastClickTime;
 
@@ -16,4 +18,5 @@ public class Util {
         lastClickTime = time;
         return false;
     }
+
 }

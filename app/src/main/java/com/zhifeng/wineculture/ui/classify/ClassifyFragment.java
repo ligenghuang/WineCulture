@@ -2,11 +2,14 @@ package com.zhifeng.wineculture.ui.classify;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +26,7 @@ import com.zhifeng.wineculture.ui.impl.ClassifyView;
 import com.zhifeng.wineculture.ui.loginandregister.LoginActivity;
 import com.zhifeng.wineculture.utils.base.UserBaseFragment;
 import com.zhifeng.wineculture.utils.data.MySp;
+import com.zhifeng.wineculture.utils.diffUtils.ClissifyDiffCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +56,11 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
 
     CategoryListAdapter categoryListAdapter;
     CategoryAdapter categoryAdapter;
+
+    List<ClassifyDto.DataBean> mDatas = new ArrayList<>();
+    private static final int H_CODE_UPDATE = 1;
+    private List<ClassifyDto.DataBean> mNewDatas;//增加一个变量暂存newList
+    int position = 0;
 
     @Override
     protected ClassifyAction initAction() {
@@ -105,7 +114,8 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
         super.loadView();
         categoryListAdapter.setOnClickListener(new CategoryListAdapter.OnClickListener() {
             @Override
-            public void OnListClick(int id, ClassifyDto.DataBean goodsBean) {
+            public void OnListClick(int id, ClassifyDto.DataBean goodsBean,int Position) {
+                position = Position;
                 List<ClassifyDto.DataBean> list = categoryListAdapter.getAllData();
                 for (int i = 0; i < list.size(); i++) {
                     list.get(i).setClick(list.get(i).getCat_id() == id);
@@ -136,15 +146,44 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
         loadDiss();
         List<ClassifyDto.DataBean> list =classifyDto.getData();
         if (list.size() != 0){
-            list.get(0).setClick(true);
-            categoryListAdapter.refresh(list);
-            List<ClassifyDto.DataBean> dataBeanList = new ArrayList<>();
-            dataBeanList.add(list.get(0));
-            categoryAdapter.refresh(dataBeanList);
+            mNewDatas = classifyDto.getData();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    //放在子线程中计算DiffResult
+                    DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ClissifyDiffCallBack(mDatas, mNewDatas), true);
+                    Message message = mHandler.obtainMessage(H_CODE_UPDATE);
+                    message.obj = diffResult;//obj存放DiffResult
+                    message.sendToTarget();
+                }
+            }).start();
+
+
         }else {
             //todo 暂无数据
         }
     }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case H_CODE_UPDATE:
+                    //取出Result
+                    DiffUtil.DiffResult diffResult = (DiffUtil.DiffResult) msg.obj;
+                    //利用DiffUtil.DiffResult对象的dispatchUpdatesTo（）方法，传入RecyclerView的Adapter，轻松成为文艺青年
+                    diffResult.dispatchUpdatesTo(categoryListAdapter);
+                    //别忘了将新数据给Adapter
+                    mDatas = mNewDatas;
+                    mDatas.get(position).setClick(true);
+                    categoryListAdapter.refresh(mDatas);
+                    List<ClassifyDto.DataBean> dataBeanList = new ArrayList<>();
+                    dataBeanList.add(mDatas.get(position));
+                    categoryAdapter.refresh(dataBeanList);
+                    break;
+            }
+        }
+    };
 
     /**
      * 失败

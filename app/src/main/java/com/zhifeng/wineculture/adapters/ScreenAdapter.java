@@ -8,6 +8,11 @@ import com.zhifeng.wineculture.modules.ScreenDto;
 
 public class ScreenAdapter extends BaseRecyclerAdapter<ScreenDto> {
 
+    OnClickListener onClickListener;
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
     public ScreenAdapter() {
         super(R.layout.layout_item_screen);
@@ -24,7 +29,12 @@ public class ScreenAdapter extends BaseRecyclerAdapter<ScreenDto> {
             public void onClick(View v) {
                 model.setClick(!model.isClick());
                 textView.setSelected(model.isClick());
+                onClickListener.onClick();
             }
         });
+    }
+
+    public interface OnClickListener{
+        void onClick();
     }
 }

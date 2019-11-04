@@ -58,7 +58,10 @@ public class CartSubmitOrdersAction extends BaseAction<CartSubmitOrdersView> {
                 .addFormDataPart("cart_id",submitOrderPost.getCart_id())
                 .addFormDataPart("address_id",submitOrderPost.getAddress_id())
                 .addFormDataPart("pay_type",submitOrderPost.getPay_type())
-                .addFormDataPart("user_note[]",submitOrderPost.getUser_note().toString());
+                ;
+        for (int i = 0; i <submitOrderPost.getUser_note().size() ; i++) {
+            build.addFormDataPart("user_note["+i+"]",submitOrderPost.getUser_note().get(i));
+        }
         RequestBody body = build.build();
         post(WebUrlUtil.POST_SUBMITORDER,false,service -> manager.runHttp(
                 service.PostData(body,WebUrlUtil.POST_SUBMITORDER)

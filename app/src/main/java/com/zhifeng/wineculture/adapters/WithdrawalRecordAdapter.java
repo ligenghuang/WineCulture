@@ -36,10 +36,12 @@ public class WithdrawalRecordAdapter extends BaseRecyclerAdapter<WithdrawalRecor
         holder.text(R.id.tv_item_money,"￥"+ model.getMoney());
         holder.text(R.id.tv_item_poundage,"￥"+model.getTaxfee());
         String status = ResUtil.getString(R.string.withdrawal_record_tab_5);
+        int ColorRsId = R.color.color_15;
         switch (model.getStatus()){
             case 1:
                 //todo 待审核
                 status = ResUtil.getString(R.string.withdrawal_record_tab_5);
+                ColorRsId = R.color.color_cb1821;
                 break;
             case 2:
                 //todo 审核通过
@@ -50,6 +52,7 @@ public class WithdrawalRecordAdapter extends BaseRecyclerAdapter<WithdrawalRecor
                 status = ResUtil.getString(R.string.withdrawal_record_tab_6);
                 break;
         }
+        holder.textColorId(R.id.tv_item_stats,ColorRsId);
         holder.text(R.id.tv_item_stats,status);
     }
 }

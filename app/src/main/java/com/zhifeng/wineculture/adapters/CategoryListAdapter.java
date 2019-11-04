@@ -34,12 +34,12 @@ public class CategoryListAdapter extends BaseRecyclerAdapter<ClassifyDto.DataBea
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickListener.OnListClick(model.getCat_id(),model);
+                onClickListener.OnListClick(model.getCat_id(),model,position);
             }
         });
     }
 
     public interface OnClickListener{
-        void OnListClick(int id, ClassifyDto.DataBean goodsBean);
+        void OnListClick(int id, ClassifyDto.DataBean goodsBean,int position);
     }
 }

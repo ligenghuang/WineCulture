@@ -267,7 +267,9 @@ public class CartFragment extends UserBaseFragment<CartAction> implements CartVi
     public void onResume() {
         super.onResume();
         baseAction.toRegister();
-        getCartList();
+        if (MySp.iSLoginLive(mContext)){
+            getCartList();
+        }
     }
 
     @Override

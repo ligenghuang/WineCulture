@@ -152,6 +152,7 @@ public class RegisterActivity extends UserBaseActivity<RegisterAction> implement
     @Override
     public void registerSuccess(RegisterDto registerDto) {
         showNormalToast(R.string.register_success);
+        MySp.setMobile(mContext, registerDto.getData().getMobile());
         MySp.setAccessToken(mContext, registerDto.getData().getToken());
         ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class);
         jumpActivity(mContext, MainActivity.class);

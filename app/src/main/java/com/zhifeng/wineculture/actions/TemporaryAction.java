@@ -48,14 +48,18 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
      * @param submitOrderPost
      */
     public void submitOrder(SubmitOrderPost submitOrderPost){
-        String note = new Gson().toJson(submitOrderPost.getUser_note());
+        String note = "";
+        if (submitOrderPost.getUser_note().size() != 0){
+            note = submitOrderPost.getUser_note().get(0);
+        }
 
         MultipartBody.Builder build = new MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart("token", MySp.getAccessToken(MyApp.getContext()))
                 .addFormDataPart("cart_id",submitOrderPost.getCart_id())
                 .addFormDataPart("address_id",submitOrderPost.getAddress_id())
                 .addFormDataPart("pay_type",submitOrderPost.getPay_type())
-                .addFormDataPart("user_note[]",note);
+                .addFormDataPart("user_note[0]",note);
+
         RequestBody body = build.build();
         post(WebUrlUtil.POST_SUBMITORDER,false,service -> manager.runHttp(
                 service.PostData(body,WebUrlUtil.POST_SUBMITORDER)

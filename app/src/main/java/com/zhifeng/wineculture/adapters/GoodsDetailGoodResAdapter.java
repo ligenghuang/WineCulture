@@ -38,6 +38,7 @@ public class GoodsDetailGoodResAdapter extends BaseRecyclerAdapter<OrderDetailDt
         tvGoodsOriginPrice.setText(ResUtil.getFormatString(R.string.temporary_tab_14, model.getOriginal_price()));
         tvGoodsOriginPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
         holder.text(R.id.tvGoodsNum, ResUtil.getFormatString(R.string.temporary_tab_15, model.getGoods_num()));
+        holder.text(R.id.tv_item_note,ResUtil.getFormatString(R.string.orderdetail_tab_1,model.getUser_note()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
