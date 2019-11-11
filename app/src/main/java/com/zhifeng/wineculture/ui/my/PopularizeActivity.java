@@ -8,8 +8,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.config.GlideApp;
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.lxj.xpopup.XPopup;
 import com.zhifeng.wineculture.R;
@@ -100,7 +103,12 @@ public class PopularizeActivity extends UserBaseActivity<ShareUrlAction> impleme
         GlideUtil.setImageCircle(mContext, dataBean.getAvatar(), ivAvatar, R.drawable.icon_avatar);
         tvUserName.setText(dataBean.getRealname());
         tvUserId.setText(String.valueOf(dataBean.getId()));
-        GlideUtil.setImage(mContext, sharePosterDto.getData().getQrcode(), iv);
+        L.e("lgh_qc","qc  = "+sharePosterDto.getData().getQrcode());
+        GlideApp.with(mContext).load(sharePosterDto.getData().getQrcode())
+                .skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(iv);
+
     }
 
     @Override
