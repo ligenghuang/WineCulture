@@ -329,4 +329,9 @@ public class WebUrlUtil {
      * 获取支付方式
      */
     public static final String POST_PAY_TYPE = "Order/get_pay_type";
+
+    /**
+     * 公告详情
+     */
+    public static final String POST_ANNOUNCE_DETAIL = "user/announce_edit";
 }

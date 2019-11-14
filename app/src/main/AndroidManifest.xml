@@ -20,6 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/activity_theme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.home.AnnounceDetailActivity"></activity>
         <activity android:name=".ui.my.LogisticsActivity" />
         <activity android:name=".ui.home.AdvertisingActivity" />
         <activity android:name=".ui.my.RefundActivity" />

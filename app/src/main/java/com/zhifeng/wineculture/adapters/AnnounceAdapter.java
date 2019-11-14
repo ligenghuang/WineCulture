@@ -1,7 +1,12 @@
 package com.zhifeng.wineculture.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+
 import com.zhifeng.wineculture.R;
 import com.zhifeng.wineculture.modules.AnnounceDto;
+import com.zhifeng.wineculture.ui.home.AnnounceDetailActivity;
 import com.zhifeng.wineculture.utils.data.DynamicTimeFormat;
 
 /**
@@ -14,8 +19,11 @@ import com.zhifeng.wineculture.utils.data.DynamicTimeFormat;
  */
 
 public class AnnounceAdapter extends BaseRecyclerAdapter<AnnounceDto.DataBean.ListBean> {
-    public AnnounceAdapter() {
+    Context context;
+
+    public AnnounceAdapter(Context context) {
         super(R.layout.layout_item_announce);
+        this.context = context;
     }
 
     @Override
@@ -25,5 +33,13 @@ public class AnnounceAdapter extends BaseRecyclerAdapter<AnnounceDto.DataBean.Li
         holder.text(R.id.tv_item_desc,model.getBrief());
         long time = model.getCreate_time() * (long)1000;
         holder.text(R.id.tv_item_time, DynamicTimeFormat.LongToString2(time));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, AnnounceDetailActivity.class);
+                intent.putExtra("id",model.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 }

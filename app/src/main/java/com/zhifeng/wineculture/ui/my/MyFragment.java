@@ -129,6 +129,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     @Override
     public void updataAvatarSuccess(String url) {
         loadDiss();
+        showToast("修改头像成功");
         GlideUtil.setImageCircle(mContext, url, iv, R.drawable.icon_avatar);
         MySp.setAvatar(mContext,url);
         images = new ArrayList<>();

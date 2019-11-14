@@ -83,7 +83,7 @@ public class AnnounceActivity extends UserBaseActivity<AnnounceAction> implement
         mActicity = this;
         mContext = this;
 
-        announceAdapter = new AnnounceAdapter();
+        announceAdapter = new AnnounceAdapter(this);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(announceAdapter);
 
