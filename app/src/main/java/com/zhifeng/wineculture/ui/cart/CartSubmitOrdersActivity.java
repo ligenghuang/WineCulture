@@ -210,6 +210,8 @@ public class CartSubmitOrdersActivity extends UserBaseActivity<CartSubmitOrdersA
             L.e("lgh_note","note  = "+list.get(i).getNote());
           if (!TextUtils.isEmpty(list.get(i).getNote())){
               note.add(list.get(i).getNote());
+          }else {
+              note.add("");
           }
         }
         post.setUser_note(note);

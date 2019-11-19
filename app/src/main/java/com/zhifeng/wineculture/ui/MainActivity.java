@@ -81,13 +81,12 @@ public class MainActivity extends UserBaseActivity {
         super.onCreate(savedInstanceState);
 
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
+        //状态栏 @ 顶部
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//A
         binding();
-        //解决布局被底部虚拟按键遮住问题
-//        initSystemBarTint();
-        if(checkDeviceHasNavigationBar()){
-            View rootView = findViewById(android.R.id.content);
-            rootView.setPadding(0, 0, 0, getNavigationBarHeight());
-        }
+
+//        //导航栏 @ 底部
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//B//
     }
 
     /**
